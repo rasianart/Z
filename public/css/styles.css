@@ -1,0 +1,137 @@
+html {
+    overflow: hidden;
+    background-color: #666;
+}
+
+/*#login-container {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+}*/
+
+#activate {
+    position: absolute;
+    z-index: 12;
+    background-color: transparent;
+    font-size: 18px;
+    left: 0;
+    top: 0;
+    margin-left: 46%;
+    margin-top: 50px;
+    border: 1px solid black;
+    /*opacity: .5;*/
+}
+
+#instructions {
+    position: absolute;
+    z-index: 12;
+    background-color: transparent;
+    font-size: 14px;
+    left: 0;
+    top: 0;
+    margin-left: 31%;
+    margin-top: 15px;
+}
+
+#activate:hover {
+    cursor: pointer;
+}
+
+#login {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    width: 100%;
+}
+
+#user-input {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    width: 350px;
+    left: 0;
+}
+
+#login-button {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    left: 0;
+    margin-left: 35%;
+}
+
+#create-button {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    left: 0;
+    margin-left: 45%;
+}
+
+#video {
+  height: 400px;
+  height: 300px;
+  position: absolute;
+  width: 400px;
+  padding-top: 66px;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+#canvas {
+    border: 1px solid black;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    margin-left: 34.5%;
+    margin-top: 200px;
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+    /*opacity: 0;*/
+}
+
+#video {
+    opacity: 0;
+}
+
+/*#my-button {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+}
+
+#my-button2 {
+    position: absolute;
+    margin-top: 50px;
+    z-index: 2;
+    left: 0;
+}
+
+#my-button3 {
+     position: absolute;
+     margin-top: 100px;
+     z-index: 3;
+     left: 0;
+ }*/
+
+#canvas-wrap {
+    position: relative;
+}
+
+.draw-frame {
+  width: 100%;
+  height: 100%;
+  /*border: 1px solid #ccc;*/
+  position: absolute;
+}
+
+canvas, video, {
+  -moz-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  filter: FlipH;
+  transform: scale(-1, 1);
+}
