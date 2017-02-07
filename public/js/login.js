@@ -24,8 +24,6 @@ $(document).ready(function() {
 
     let z = $('<div id="z">Z</div>');
     z.appendTo('body');
-    // let o = $('<div id="o">O</div>');
-    // o.appendTo('body');
 
     $('#login-button').mouseenter(function() {
         $('#login-border').css({"width": '170px', 'height': '44px', 'left': '-10px', 'bottom': '-10px'});
@@ -42,117 +40,121 @@ $(document).ready(function() {
 
     $('#create-button').on('click', function() {
         event.preventDefault();
-
         context.clearRect(0, 0, canvas.width, canvas.height);
-        if (activate === false) {
-            $('#z').css('opacity', '0');
-            let createBar = $('#create-button');
-            createBar.html('enter user name');
-            createBar.css('width', '1040px');
-            $('#login-button').css('opacity', '0');
-            $('#login-border, #create-border').css('opacity', '0');
+        $('#z').css('opacity', '0');
+        let createBar = $('#create-button');
+        createBar.html('create user name');
+        createBar.css('width', '1040px');
+        $('#login-button').css('opacity', '0');
+        $('#login-border, #create-border').css('opacity', '0');
+        setTimeout(function() {
+            $('#login-border').css({'width': '1040px', 'height': '1px', 'opacity': '1'});
+            $('#create-border, #login-button, #z').remove();
+            createBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
             setTimeout(function() {
-                $('#login-border').css({'width': '1040px', 'height': '1px', 'opacity': '1'});
-                $('#create-border, #login-button, #z').remove();
-                createBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
-                setTimeout(function() {
-                    createBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
-                }, 350);
-                let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
-                inputField.prependTo('.login-group');
-            }, 1000);
+                createBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
+            }, 350);
+            let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
+            inputField.prependTo('.login-group');
+        }, 1000);
 
-            let input = $('#user-input');
-            $(document).on('keypress', function(e) {
-                if (e.which == 13 && input.val() !== '') {
-                    e.preventDefault();
-                    $('#create-button').css({'transition': 'all 0s ease', 'border': 'none'});
-                    setTimeout(function() {
-                        $('#create-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
-                    }, 10);
-                    $('#login-border').css({'transition': 'all 3.5s ease', 'margin-bottom': '760px', 'width': '0px', 'left': '520px'});
-                    setTimeout(function(){
-                        $('#login-border').css({'width': '1040px', 'left': '0px'});
-                    }, 3500);
-                    setTimeout(function(){
-                        $('#login-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
-                    }, 4200);
-                    let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
-                    instructions.appendTo('#login-border');
-                    setTimeout(function(){
-                        $('#login-border').css({'transition': 'all 3.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
-                        instructions.css('opacity', '1');
-                    }, 6800);
-                    $('#user-input').remove();
-                    setTimeout(function() {
-                        $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
-                    }, 4000);
-                }
-            });
-            activate = true;
-        } else {
-            handleFormSubmit();
-            // $.post('/userlogin', )
-        }
+        let input = $('#user-input');
+        $(document).on('keypress', function(e) {
+            if (e.which == 13 && input.val() !== '') {
+                e.preventDefault();
+                inputName = $('#user-input').val().trim();
+                $('#create-button').css({'transition': 'all 0s ease', 'border': 'none'});
+                setTimeout(function() {
+                    $('#create-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
+                }, 10);
+                $('#login-border').css({'transition': 'all 2.8s ease', 'margin-bottom': '760px', 'width': '0px', 'left': '520px'});
+                setTimeout(function(){
+                    $('#login-border').css({'width': '1040px', 'left': '0px'});
+                }, 2400);
+                setTimeout(function(){
+                    $('#login-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
+                }, 2900);
+                let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
+                instructions.appendTo('#login-border');
+                setTimeout(function(){
+                    $('#login-border').css({'transition': 'all 2.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
+                    instructions.css('opacity', '1');
+                }, 4500);
+                $('#user-input').remove();
+                setTimeout(function() {
+                    $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
+                }, 2666);
+                let postZ = $('<div id="postz">Post Z</div>');
+                postZ.appendTo('body');
+                setTimeout(function() {
+                    postZ.css({'height': '50px', 'margin-bottom': '15px;'})
+                }, 5500);
+            }
+        });
+        activate = true;
     });
 
     $('#login-button').on('click', function() {
         event.preventDefault();
         context.clearRect(0, 0, canvas.width, canvas.height);
-        if (login === false) {
-            $('#z').css('opacity', '0');
-            let loginBar = $('#login-button');
-            loginBar.html('enter user name');
-            loginBar.css('width', '1040px');
-            $('#create-button').css('opacity', '0');
-            $('#login-border, #create-border').css('opacity', '0');
+        $('#z').css('opacity', '0');
+        let loginBar = $('#login-button');
+        loginBar.html('enter user name');
+        loginBar.css('width', '1040px');
+        $('#create-button').css('opacity', '0');
+        $('#login-border, #create-border').css('opacity', '0');
+        setTimeout(function() {
+            $('#create-border').css({'transition': 'all 0s ease', 'width': '1040px', 'height': '1px', 'opacity': '1'});
+            $('#login-border, #create-button, #z').remove();
+            loginBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
             setTimeout(function() {
-                $('#create-border').css({'transition': 'all 0s ease', 'width': '1040px', 'height': '1px', 'opacity': '1'});
-                $('#login-border, #create-button, #z').remove();
-                loginBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
+                loginBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
+            }, 350);
+            let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
+            inputField.prependTo('.login-group');
+        }, 1000);
+        let input = $('#user-input');
+        $(document).on('keypress', function(e) {
+            if (e.which == 13 && input.val() !== '') {
+                e.preventDefault();
+                inputName = $('#user-input').val().trim();
+                $('html').css('backgrouond-color', '#000');
+                $('#login-button').css({'transition': 'all 0s ease', 'border': 'none'});
                 setTimeout(function() {
-                    loginBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
-                }, 350);
-                let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
-                inputField.prependTo('.login-group');
-            }, 1000);
-            let input = $('#user-input');
-            $(document).on('keypress', function(e) {
-                if (e.which == 13 && input.val() !== '') {
-                    e.preventDefault();
-                    $('html').css('backgrouond-color', '#000');
-                    $('#login-button').css({'transition': 'all 0s ease', 'border': 'none'});
-                    setTimeout(function() {
-                        $('#login-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
-                    }, 10);
-                    $('#create-border').css({'transition': 'all 3.5s ease', 'margin-bottom': '760px', 'width': '0px', 'right': '520px'});
-                    setTimeout(function(){
-                        $('#create-border').css({'width': '1040px', 'right': '0px'});
-                    }, 3500);
-                    setTimeout(function(){
-                        $('#create-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
-                    }, 4200);
-                    let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
-                    instructions.appendTo('#create-border');
-                    setTimeout(function(){
-                        $('#create-border').css({'transition': 'all 3.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
-                        instructions.css('opacity', '1');
-                    }, 6800);
-                    $('#user-input').remove();
-                    setTimeout(function() {
-                        $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
-                    }, 4000);
-                }
-            });
-            login = true;
-        } else {
-            handleFormSubmit();
-        }
+                    $('#login-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
+                }, 10);
+                $('#create-border').css({'transition': 'all 2.8s ease', 'margin-bottom': '760px', 'width': '0px', 'right': '520px'});
+                setTimeout(function(){
+                    $('#create-border').css({'width': '1040px', 'right': '0px'});
+                }, 2400);
+                setTimeout(function(){
+                    $('#create-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
+                }, 2900);
+                let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
+                instructions.appendTo('#create-border');
+                setTimeout(function(){
+                    $('#create-border').css({'transition': 'all 2.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
+                    instructions.css('opacity', '1');
+                }, 4500);
+                $('#user-input').remove();
+                setTimeout(function() {
+                    $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
+                }, 2666);
+                let postZ = $('<div id="postz">Post Z</div>');
+                postZ.appendTo('body');
+                setTimeout(function() {
+                    postZ.css({'height': '50px', 'margin-bottom': '15px;'})
+                }, 5500);
+            }
+        });
+        login = true;
     });
 
+    $(document).on('click', 'div#postz', handleFormSubmit);
 
     function handleFormSubmit() {
-        inputName = $('#user-input').val().trim();
+        console.log('hey');
+        // inputName = $('#user-input').val().trim();
         if (!inputName) {
             return;
         }
@@ -184,6 +186,9 @@ $(document).ready(function() {
                 };
                 $.post('/creategesture', newGesture, function(req, res){
                     console.log(res);
+                    $('#postz').html('enter');
+                    // $.get('/home', function() {});
+                    // window.location.href = "/home";
                 });
             });
         }
@@ -268,10 +273,17 @@ $(document).ready(function() {
             }
         }
 
-        if (nullSkips < 10 && erraticMovement < 10) {
+        // if (nullSkips < 10 && erraticMovement < 10) {
+        if (1 === 1) {
             console.log('You may enter.');
-            // window.location.href = "/home";
+            $('#postz').html('enter');
+            $('.draw-frame').css('opacity', '0');
+            setTimeout(function() {
+                $('.draw-frame').remove();
+            }, 1000);
             // $.get('/home', function() {});
+            // window.location.href = "/home";
+
         } else {
             incorrect();
         }

@@ -1,6 +1,6 @@
 html {
     overflow: hidden;
-    background-color: #888;
+    background-color: rgb(41, 41, 41);
     font-family: 'Bungee Hairline', cursive;
     /*transition: all 8s linear;*/
 }
@@ -183,6 +183,8 @@ textarea:focus, input:focus, button:focus {
   position: absolute;
   top: 0;
   /*z-index: 100;*/
+  opacity: 1;
+  transition: all 1s ease;
 }
 
 #draw-border {
@@ -200,8 +202,26 @@ textarea:focus, input:focus, button:focus {
     margin-top: -65px;
     /*margin-left: 35%;*/
     /*margin-top: 230px;*/
-    transition: all 5.15s linear;
+    transition: all 3.4s linear;
     /*z-index: -1;*/
+}
+
+#postz {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 48%;
+    color: white;
+    margin-bottom: 0px;
+    font-family: 'Bungee Hairline', cursive;
+    height: 0px;
+    /*opacity: 0;*/
+    overflow: hidden;
+    transition: all 1.5s ease;
+}
+
+#postz:hover {
+    cursor: pointer;
 }
 
 #video {
@@ -216,14 +236,14 @@ textarea:focus, input:focus, button:focus {
 }
 
 #canvas {
-    /*border: 1px solid black;*/
+    /*border: 1px solid white;*/
     opacity: 1;
     width: 400px;
-    height: 300px;
+    height: 400px;
     position: absolute;
     left: 0;
-    margin-left: 34.5%;
-    margin-top: 230px;
+    margin-left: 35.6%;
+    margin-top: 185px;
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */

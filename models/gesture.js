@@ -27,6 +27,6 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   );
-  Gesture.sync();
+  // Gesture.sync();
   return Gesture;
 };

@@ -62,7 +62,11 @@ function init() {
     // controls = new THREE.OrbitControls( camera, container );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color("rgb(125, 125, 125)");
+    if ($('#create-hole').html() === 'Burrow') {
+        scene.background = new THREE.Color("rgb(40, 40, 40)");
+    }else {
+        scene.background = new THREE.Color("rgb(125, 125, 125)");
+    }
 
 
     group = new THREE.Group();
@@ -132,6 +136,14 @@ function init() {
         blending: THREE.AdditiveBlending,
         transparent: true
     });
+
+    if ($('#create-hole').html() === 'Burrow') {
+        material.transparent = false;
+        material.color.setHex(0x000000);
+    }
+
+    // material.color.setHex(0x660000);
+    // material.color = new Color( 0x000000 );
 
     linesMesh = new THREE.LineSegments(geometry, material);
 
@@ -290,14 +302,85 @@ $(document).on('keypress', function(e) {
                 }
             }, 1);
         }, 2000);
-        
+
         let s = 1;
         setInterval(function() {
             if (particleCount < 750) {
-                particleCount += 4;
-                s -= .004;
+                particleCount += 6;
+                s -= .006;
                 linesMesh.scale.set(s, s, s);
             }
         }, 1);
     }
 });
+
+$(document).on('click', 'div#postz', function() {
+    setTimeout(function() {
+        if ($('#postz').html() == 'enter') {
+            $('#login, #postz').remove();
+            let s = 1;
+            setInterval(function() {
+                if (particleCount > 75) {
+                    particleCount -= 50;
+                    s += .05;
+                    linesMesh.scale.set(s, s, s);
+                } else {
+                    setTimeout(function() {
+                        $('#container').remove();
+                        $.get('/home', function() {});
+                        window.location.href = "/home";
+                    }, 2000);
+                }
+            }, 1);
+        }
+    }, 100);
+});
+
+//home
+
+if ($('#create-hole').html() === 'Burrow') {
+    particleCount = 0;
+    // let s = 1;
+    setTimeout(function() {
+        setInterval(function() {
+            if (particleCount < 150) {
+                particleCount += 1;
+                // s -= .05;
+                // linesMesh.scale.set(s, s, s);
+            }
+        }, 1);
+    }, 500);
+
+
+    let num = 40;
+    setInterval(function() {
+        num += 1;
+        if(num < 140 ) {
+            scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+        }
+    }, 5);
+}
+
+$('.portals').on('click', function() {
+    let s = 1;
+    setInterval(function() {
+        if (particleCount < 750) {
+            particleCount += 6;
+            s -= .0075;
+            // s -= .0075;
+            linesMesh.scale.set(s, s, s);
+        }
+    }, 10);
+
+//this animation is for right answer
+    // setTimeout(function() {
+    //     setInterval(function() {
+    //         if (particleCount > 50) {
+    //             particleCount -= 5;
+    //             s += .001;
+    //             // s -= .0075;
+    //             linesMesh.scale.set(s, s, s);
+    //         }
+    //     }, 1);
+    // }, 3500);
+})

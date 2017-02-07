@@ -1,9 +1,11 @@
+<div id="container"></div>
+<div id="create-hole">Burrow</div>
 
-<button id="create-hole">Dig Hole</button>
+<!-- <input id="test" width="300px"> -->
 
 <div id="portal-contain">
     {{#each users}}
-        <button id="{{this.name}}" class="portals">Fall into: {{this.name}}</button>
+        <div id="{{this.name}}" class="portals" data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">{{this.name}}</div>
     {{/each}}
 </div>
 

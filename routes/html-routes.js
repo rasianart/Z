@@ -25,8 +25,12 @@ module.exports = (app) => {
 
   app.get("/home", (req, res) => {
       db.User.findAll({
-          raw: true
+          raw: true,
+          where: {
+              riddle: { $not: null }
+          }
       }).then((response) => {
+            console.log(response);
             res.render("home", {users: response});
         });
   });

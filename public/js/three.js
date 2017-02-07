@@ -23310,8 +23310,11 @@
 		Material.call( this );
 
 		this.type = 'LineBasicMaterial';
-
-		this.color = new Color( 0xffffff );
+		//if ($('#create-hole').html() === 'Burrow') {
+		//	this.color = new Color( 0x000000 );
+		//} else {
+			this.color = new Color( 0xffffff );
+		//}
 
 		this.linewidth = 1;
 		this.linecap = 'round';
