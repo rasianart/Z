@@ -1,0 +1,18 @@
+html {
+    overflow: hidden;
+    background-color: #666;
+    text-align: center;
+}
+
+#create-hole {
+
+    margin-top: 25px;
+}
+
+#portal-contain {
+    margin-top: 200px;
+}
+
+.portals {
+    margin-left: 10px;
+}

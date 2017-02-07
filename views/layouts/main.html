@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - materials - cube reflection [cars]</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background:#000;
+				color:#fff;
+				padding:0;
+				margin:0;
+				overflow:hidden;
+				font-family:georgia;
+				text-align:center;
+			}
+			a { color:skyblue; text-decoration:none }
+			#info {
+				position: absolute;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<script src="build/three.js"></script>
+
+		<script src="js/controls/OrbitControls.js"></script>
+
+		<script src="js/libs/dat.gui.min.js"></script>
+
+		<script src="/js/myFirst3D.js"></script>
+
+		<!-- <div id="info">
+			<a href="http://threejs.org" target="_blank">three.js</a> - webgl environment mapping example<br/>
+			Equirectangular Map by <a href="http://gl.ict.usc.edu/Data/HighResProbes/">University of Southern California</a><br/>
+			Spherical Map by <a href="http://www.pauldebevec.com/Probes/">Paul Debevec</a>
+		</div> -->
+
+		<!-- <script>
+			var controls, camera, scene, renderer;
+			var cameraCube, sceneCube;
+			var textureEquirec, textureCube, textureSphere;
+			var cubeMesh, sphereMesh;
+			var sphereMaterial;
+			var refract;
+			init();
+			animate();
+			function init() {
+				// CAMERAS
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 100000 );
+				camera.position.set( 0, -25, 1000 );
+				cameraCube = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 100000 );
+				controls = new THREE.OrbitControls( camera );
+				controls.minDistance = 500;
+				controls.maxDistance = 2500;
+				// SCENE
+				scene = new THREE.Scene();
+				sceneCube = new THREE.Scene();
+				// Lights
+				var ambient = new THREE.AmbientLight( 0xffffff );
+				scene.add( ambient );
+				// Textures
+				var r = "textures/cube/mp_portal/";
+				var urls = [ r + "wordslf.jpg", r + "wordsrt.jpg",
+							 r + "wordsup.jpg", r + "wordsdn.jpg",
+							 r + "wordsft.jpg", r + "wordsbk.jpg" ];
+				textureCube = new THREE.CubeTextureLoader().load( urls );
+				textureCube.format = THREE.RGBFormat;
+				textureCube.mapping = THREE.CubeReflectionMapping;
+				var textureLoader = new THREE.TextureLoader();
+				textureEquirec = textureLoader.load( "textures/2294472375_24a3b8ef46_o.jpg" );
+				textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+				textureEquirec.magFilter = THREE.LinearFilter;
+				textureEquirec.minFilter = THREE.LinearMipMapLinearFilter;
+				textureSphere = textureLoader.load( "textures/metal.jpg" );
+				textureSphere.mapping = THREE.SphericalReflectionMapping;
+				// Materials
+				var equirectShader = THREE.ShaderLib[ "equirect" ];
+				var equirectMaterial = new THREE.ShaderMaterial( {
+					fragmentShader: equirectShader.fragmentShader,
+					vertexShader: equirectShader.vertexShader,
+					uniforms: equirectShader.uniforms,
+					depthWrite: false,
+					side: THREE.BackSide
+				} );
+				equirectMaterial.uniforms[ "tEquirect" ].value = textureEquirec;
+				var cubeShader = THREE.ShaderLib[ "cube" ];
+				var cubeMaterial = new THREE.ShaderMaterial( {
+					fragmentShader: cubeShader.fragmentShader,
+					vertexShader: cubeShader.vertexShader,
+					uniforms: cubeShader.uniforms,
+					depthWrite: false,
+					side: THREE.BackSide
+				} );
+				cubeMaterial.uniforms[ "tCube" ].value = textureCube;
+				// Skybox
+				cubeMesh = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ), cubeMaterial );
+				sceneCube.add( cubeMesh );
+				//
+				var geometry = new THREE.SphereGeometry( 400.0, 24, 24 );
+				sphereMaterial = new THREE.MeshLambertMaterial( { envMap: textureCube } );
+				sphereMesh = new THREE.Mesh( geometry, sphereMaterial );
+				scene.add( sphereMesh );
+				//
+				renderer = new THREE.WebGLRenderer();
+				renderer.autoClear = false;
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setFaceCulling( THREE.CullFaceNone );
+				document.body.appendChild( renderer.domElement );
+				//
+				var params = {
+					Cube: function () {
+						cubeMesh.material = cubeMaterial;
+						cubeMesh.visible = true;
+						sphereMaterial.envMap = textureCube;
+						sphereMaterial.needsUpdate = true;
+					},
+					Equirectangular: function () {
+						cubeMesh.material = equirectMaterial;
+						cubeMesh.visible = true;
+						sphereMaterial.envMap = textureEquirec;
+						sphereMaterial.needsUpdate = true;
+					},
+					Spherical: function () {
+							cubeMesh.visible = false;
+						sphereMaterial.envMap = textureSphere;
+						sphereMaterial.needsUpdate = true;
+					},
+					Refraction: false
+				};
+				// var gui = new dat.GUI();
+				// gui.add( params, 'Cube' );
+				// gui.add( params, 'Equirectangular' );
+				// gui.add( params, 'Spherical' );
+				// gui.add( params, 'Refraction' ).onChange( function( value ) {
+				// 	if ( value ) {
+				// 		textureEquirec.mapping = THREE.EquirectangularRefractionMapping;
+				// 		textureCube.mapping = THREE.CubeRefractionMapping;
+				// 	} else {
+				// 		textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+				// 		textureCube.mapping = THREE.CubeReflectionMapping;
+				// 	}
+				// 	sphereMaterial.needsUpdate = true;
+				// } );
+				// gui.open();
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				cameraCube.aspect = window.innerWidth / window.innerHeight;
+				cameraCube.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			//
+			function animate() {
+				requestAnimationFrame( animate );
+        // var xAxis = new THREE.Vector3(1,0,0);
+        // rotateAroundObjectAxis(sphereMesh, xAxis, Math.PI / 180);
+        // sphereMesh.rotateZ(90);
+        // sphereMesh.rotation.x = (2/180)*Math.PI;
+        sphereMesh.rotation.y += .003;
+        // console.log(Date.now() * 0.001);
+				render();
+				controls.update();
+			}
+      // quaternion = new THREE.Quaternion().setFromAxisAngle( 0,1,0, 90 );
+      // sphereMesh.rotation = new THREE.Euler().setFromQuaternion( quaternion );
+// sphereMesh.rotation.order = 'YXZ';
+      //declared once at the top of your code
+// var axis = new THREE.Vector3(0,1,0);//tilted a bit on x and y - feel free to plug your different axis here
+// //in your update/draw function
+// // var rad += radIncrement;
+// sphereMesh.rotateOnAxis(axis, 90);
+
+			function render() {
+				var timer = -0.0002 * Date.now();
+				camera.lookAt( scene.position );
+				cameraCube.rotation.copy( camera.rotation );
+				renderer.render( sceneCube, cameraCube );
+				renderer.render( scene, camera );
+			}
+
+
+      var rotObjectMatrix;
+function rotateAroundObjectAxis(object, axis, radians) {
+    rotObjectMatrix = new THREE.Matrix4();
+    rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
+
+    // old code for Three.JS pre r54:
+    // object.matrix.multiplySelf(rotObjectMatrix);      // post-multiply
+    // new code for Three.JS r55+:
+    object.matrix.multiply(rotObjectMatrix);
+
+    // old code for Three.js pre r49:
+    // object.rotation.getRotationFromMatrix(object.matrix, object.scale);
+    // old code for Three.js r50-r58:
+    // object.rotation.setEulerFromRotationMatrix(object.matrix);
+    // new code for Three.js r59+:
+    object.rotation.setFromRotationMatrix(object.matrix);
+}
+
+var rotWorldMatrix;
+// Rotate an object around an arbitrary axis in world space
+function rotateAroundWorldAxis(object, axis, radians) {
+    rotWorldMatrix = new THREE.Matrix4();
+    rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
+
+    // old code for Three.JS pre r54:
+    //  rotWorldMatrix.multiply(object.matrix);
+    // new code for Three.JS r55+:
+    rotWorldMatrix.multiply(object.matrix);                // pre-multiply
+
+    object.matrix = rotWorldMatrix;
+
+    // old code for Three.js pre r49:
+    // object.rotation.getRotationFromMatrix(object.matrix, object.scale);
+    // old code for Three.js pre r59:
+    // object.rotation.setEulerFromRotationMatrix(object.matrix);
+    // code for r59+:
+    object.rotation.setFromRotationMatrix(object.matrix);
+}
+ -->
+
+
+
+
+		<!-- </script> -->
+
+	</body>
+</html>

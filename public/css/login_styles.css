@@ -1,0 +1,274 @@
+html {
+    overflow: hidden;
+    background-color: #888;
+    font-family: 'Bungee Hairline', cursive;
+    /*transition: all 8s linear;*/
+}
+body{
+
+}
+
+textarea:focus, input:focus, button:focus {
+    outline: none;
+}
+/*#login-container {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+}*/
+
+#activate {
+    position: absolute;
+    z-index: 12;
+    background-color: transparent;
+    font-size: 18px;
+    left: 0;
+    top: 0;
+    margin-left: 46%;
+    margin-top: 50px;
+    border: 1px solid black;
+    /*opacity: .5;*/
+}
+
+#instructions {
+    position: absolute;
+    font-family: 'Bungee Hairline', cursive;
+    font-size: 20px;
+    color: white;
+    z-index: 12;
+    background-color: transparent;
+    font-size: 14px;
+    left: 0;
+    top: 0;
+    width: 90%;
+    margin-left: 5%;
+    /*margin-top: 15px;*/
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 1s ease;
+    line-height: 25px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#activate:hover {
+    cursor: pointer;
+}
+
+#login {
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    width: 100%;
+    transition: all 1s ease;
+}
+
+.login-group{
+    opacity: 1;
+    transition: all .5s ease;
+}
+
+#user-input {
+
+    position: absolute;
+    z-index: 11;
+    bottom: 0;
+    width: 950px;
+    left: 0;
+    margin-bottom: 399px;
+    margin-left: 15%;
+    background-color: transparent;
+    border: none;
+    border-color: white;
+    border-radius: 0;
+    border-bottom: 1px solid grey;
+    height: 24px;
+    color: white;
+    font-family: 'Bungee Hairline', cursive;
+    font-size: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    text-align: center;
+    opacity: 1;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+}
+
+#box {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    position: absolute;
+    top:0;
+    transition: all 1s ease;
+}
+/*#user-input:hover {
+    width: 900px;
+}*/
+
+#login-button {
+    font-family: 'Bungee Hairline', cursive;
+    color: white;
+    position: absolute;
+    width: 150px;
+    height: 24px;
+    z-index: 11;
+    bottom: 0;
+    left: 0;
+    margin-left: 14%;
+    margin-bottom: 400px;
+    opacity: 1;
+    /*background-color: transparent;*/
+    background-color: #888;
+    border: 1px solid white;
+    transition: all 1s ease;
+    overflow: hidden;
+}
+
+#login-border {
+    position: absolute;
+    width: 150px;
+    height: 24px;
+    z-index: 11;
+    bottom: 0;
+    left: 0;
+    margin-left: 14%;
+    margin-bottom: 400px;
+    opacity: .35;
+    transition: all .5s ease;
+    background-color: white;
+    overflow: hidden;
+    border-color: white;
+}
+
+#create-button {
+    font-family: 'Bungee Hairline', cursive;
+    color: white;
+    position: absolute;
+    z-index: 11;
+    width: 150px;
+    height: 24px;
+    bottom: 0;
+    right: 0;
+    margin-right: 15%;
+    margin-bottom: 400px;
+    /*background-color: transparent;*/
+    background-color: #888;
+    border: 1px solid white;
+    opacity: 1;
+    transition: all 1s ease;
+    overflow: hidden;
+}
+
+#create-border {
+    position: absolute;
+    width: 150px;
+    height: 24px;
+    z-index: 11;
+    bottom: 0;
+    right: 0;
+    margin-right: 15%;
+    margin-bottom: 400px;
+    opacity: .35;
+    transition: all .5s ease;
+    background-color: white;
+    overflow: hidden;
+    border-color: white;
+}
+
+.draw-frame {
+  width: 100%;
+  height: 100%;
+  /*border: 1px solid #ccc;*/
+  position: absolute;
+  top: 0;
+  /*z-index: 100;*/
+}
+
+#draw-border {
+    border: 1px solid white;
+    border-radius: 50%;
+    opacity: 0;
+    width: 1000px;
+    height: 1000px;
+    /*width: 400px;
+    height: 300px;*/
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 215px;
+    margin-top: -65px;
+    /*margin-left: 35%;*/
+    /*margin-top: 230px;*/
+    transition: all 5.15s linear;
+    /*z-index: -1;*/
+}
+
+#video {
+  height: 400px;
+  height: 300px;
+  position: absolute;
+  width: 400px;
+  padding-top: 66px;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+#canvas {
+    /*border: 1px solid black;*/
+    opacity: 1;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    margin-left: 34.5%;
+    margin-top: 230px;
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+    /*opacity: 0;*/
+}
+
+#video {
+    opacity: 0;
+}
+
+#canvas-wrap {
+    position: relative;
+}
+
+
+#canvas, video, {
+  -moz-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  filter: FlipH;
+  transform: scale(-1, 1);
+}
+
+#z {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    margin-left: 36%;
+    margin-top: 100px;
+    font-size: 572px;
+    color: white;
+    font-family: 'Bungee Hairline', cursive;
+    background-color: transparent;
+    transition: all .5s ease;
+}
+
+#o {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 45.8%;
+    margin-top: 350px;
+    font-size: 150px;
+    color: white;
+    font-family: 'Bungee Hairline', cursive;
+    background-color: transparent;
+}

@@ -5,31 +5,60 @@
 // Dependencies
 // =============================================================
 var path = require("path");
+var db = require("../models");
 
 // Routes
 // =============================================================
-module.exports = function(app) {
+module.exports = (app) => {
 
   // Each of the below routes just handles the HTML page that the user gets sent to.
 
   // index route loads view.html
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname + "/../public/site.html"));
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname + "/../public/login.html"));
   });
 
-  // cms route loads cms.html
-  app.get("/cms", function(req, res) {
-    res.sendFile(path.join(__dirname + "/../public/cms.html"));
+  // // home route loads home.html
+  // app.get("/home", function(req, res) {
+  //   res.render("home", {users: "Pat"});
+  // });
+
+  app.get("/home", (req, res) => {
+      db.User.findAll({
+          raw: true
+      }).then((response) => {
+            res.render("home", {users: response});
+        });
   });
 
-  // blog route loads blog.html
-  app.get("/gesture", function(req, res) {
-    res.sendFile(path.join(__dirname + "/../public/site.html"));
-  });
+  app.get('/portalentrance/:user', (req, res) => {
+      let userName = req.params.user
+      console.log(userName);
+      db.User.findAll({
+          where: {
+              name: userName
+          },
+          raw: true
+      }).then((response) => {
+            console.log(response);
+            // res.send(response);
+            res.render("portalentrance", {users: response});
+        });
+  })
 
-  // authors route loads author-manager.html
-  app.get("/users", function(req, res) {
-    res.sendFile(path.join(__dirname + "/../public/user-manager.html"));
-  });
+  // // home route loads home.html
+  // app.get("/home", function(req, res) {
+  //   res.sendFile(path.join(__dirname + "/../public/home.html"));
+  // });
+
+  // // blog route loads blog.html
+  // app.get("/gesture", function(req, res) {
+  //   res.sendFile(path.join(__dirname + "/../public/site.html"));
+  // });
+  //
+  // // authors route loads author-manager.html
+  // app.get("/users", function(req, res) {
+  //   res.sendFile(path.join(__dirname + "/../public/user-manager.html"));
+  // });
 
 };
