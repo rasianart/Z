@@ -1,7 +1,9 @@
 $(document).ready(function() {
   // Getting jQuery references to the post body, title, form, and author select
 
-$('#create-hole').css({'margin-bottom': '400px', 'opacity': '1'});
+$('#create-hole').css({'transition': 'all 5s ease', 'margin-bottom': '400px', 'opacity': '1'});
+
+let initDone = false;
 
 swap();
 
@@ -28,10 +30,15 @@ function swap() {
         chooseWidth();
         child.css({'margin-left': randomW});
         setTimeout(function() {
-            child.css({'transition': 'all 1.5s linear', 'margin-bottom': randomH, 'height': '16px', 'opacity': '1'});
+            if (initDone === false) {
+                child.css({'transition': 'all 4.5s linear', 'margin-bottom': randomH, 'height': '16px', 'opacity': '1'});
+            } else {
+                child.css({'transition': 'all 1.5s linear', 'margin-bottom': randomH, 'height': '16px', 'opacity': '1'});
+            }
             setTimeout(function() {
                 child.css({'transition': 'all .5s ease'});
                 $('#portal-contain').css('margin-bottom', '50px');
+                initDone = true;
             }, 500);
         }, 10);
     })

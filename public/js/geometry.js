@@ -353,12 +353,14 @@ if ($('#create-hole').html() === 'Burrow') {
 
 
     let num = 40;
-    setInterval(function() {
-        num += 1;
-        if(num < 140 ) {
-            scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
-        }
-    }, 5);
+    setTimeout(function() {
+        setInterval(function() {
+            num += 1;
+            if(num < 160 ) {
+                scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+            }
+        }, 5);
+    }, 750);
 }
 
 $('.portals').on('click', function() {

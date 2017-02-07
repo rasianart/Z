@@ -17,6 +17,40 @@ textarea:focus, input:focus, button:focus {
     bottom: 0;
 }*/
 
+
+
+#top-cover {
+    margin-left: 450px;
+    margin-top: 168px;
+    position: absolute;
+    /*border-radius: 35%;*/
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: rgba(125, 125, 125, 1);
+    /*background-color: #999;*/
+    width: 400px;
+    height: 200px;
+    transition: all 1s linear;
+}
+
+#btm-cover {
+    margin-right: 450px;
+    margin-top: 368px;
+    position: absolute;
+    /*border-radius: 35%;*/
+    top: 0;
+    right: 0;
+    z-index: 5;
+    /*opacity: 0;*/
+    background-color: rgba(125, 125, 125, 1);
+    /*background-color: #999;*/
+    width: 400px;
+    height: 200px;
+    transition: all 1s linear;
+}
+
+
 #activate {
     position: absolute;
     z-index: 12;
@@ -64,7 +98,7 @@ textarea:focus, input:focus, button:focus {
 }
 
 .login-group{
-    opacity: 1;
+    opacity: 0;
     transition: all .5s ease;
 }
 
@@ -123,6 +157,7 @@ textarea:focus, input:focus, button:focus {
     border: 1px solid white;
     transition: all 1s ease;
     overflow: hidden;
+    box-shadow: 0px 0px 0px 0px #999999;
 }
 
 #login-border {
@@ -135,7 +170,7 @@ textarea:focus, input:focus, button:focus {
     margin-left: 14%;
     margin-bottom: 400px;
     opacity: .35;
-    transition: all .5s ease;
+    transition: all .25s ease;
     background-color: white;
     overflow: hidden;
     border-color: white;
@@ -158,6 +193,7 @@ textarea:focus, input:focus, button:focus {
     opacity: 1;
     transition: all 1s ease;
     overflow: hidden;
+    box-shadow: 0px 0px 0px 0px #999999;
 }
 
 #create-border {
@@ -170,7 +206,7 @@ textarea:focus, input:focus, button:focus {
     margin-right: 15%;
     margin-bottom: 400px;
     opacity: .35;
-    transition: all .5s ease;
+    transition: all .25s ease;
     background-color: white;
     overflow: hidden;
     border-color: white;

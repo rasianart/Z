@@ -22,25 +22,61 @@ $(document).ready(function() {
     let userInput = $("#user-input");
     let loginForm = $("#login");
 
+    let initClick = false;
+
     let z = $('<div id="z">Z</div>');
     z.appendTo('body');
 
-    $('#login-button').mouseenter(function() {
-        $('#login-border').css({"width": '170px', 'height': '44px', 'left': '-10px', 'bottom': '-10px'});
-    });
-    $('#login-button').mouseleave(function() {
-        $('#login-border').css({"width": '150px', 'height': '24px', 'left': '0px', 'bottom': '0px'});
-    });
-    $('#create-button').mouseenter(function() {
-        $('#create-border').css({"width": '170px', 'height': '44px', 'right': '-10px', 'bottom': '-10px'});
-    });
-    $('#create-button').mouseleave(function() {
-        $('#create-border').css({"width": '150px', 'height': '24px', 'right': '0px', 'bottom': '0px'});
-    });
+    if (initClick === false) {
+        $('#login-button').mouseenter(function() {
+            $('#login-button').css({'transition': 'all 1s ease', 'box-shadow': '0px 0px 0px 0px #999999'});
+            $('#login-border').css({"width": '170px', 'height': '44px', 'left': '-10px', 'bottom': '-10px'});
+        });
+        $('#login-button').mouseleave(function() {
+            if (initClick === false) {
+                $('#login-button').css({'transition': 'all 1.6s ease', 'box-shadow': '0px 0px 60px 20px #999999'});
+            }
+            $('#login-border').css({"width": '150px', 'height': '24px', 'left': '0px', 'bottom': '0px'});
+        });
+        $('#create-button').mouseenter(function() {
+            $('#create-button').css({'transition': 'all 1s ease', 'box-shadow': '0px 0px 0px 0px #999999'});
+            $('#create-border').css({"width": '170px', 'height': '44px', 'right': '-10px', 'bottom': '-10px'});
+        });
+        $('#create-button').mouseleave(function() {
+            if (initClick === false) {
+                $('#create-button').css({'transition': 'all 1.6s ease', 'box-shadow': '0px 0px 60px 20px #999999'});
+            }
+            $('#create-border').css({"width": '150px', 'height': '24px', 'right': '0px', 'bottom': '0px'});
+        });
+    }
+
+    let btmCover = $('<div id="btm-cover" class="cover"></div>').appendTo('body');
+    let topCover = $('<div id="top-cover" class="cover"></div>').appendTo('body');
+    setTimeout(function() {
+        $('#btm-cover').css({'margin-top': '530px', 'margin-right': '550px', });
+        $('#top-cover').css({'margin-top': '40px', 'margin-left': '550px', });
+        $('.login-group').css({'transition': 'all 3s ease' ,'opacity': '1'});
+    }, 500);
+    setTimeout(function() {
+        $('#btm-cover').css({'transition': 'all 2s linear', 'margin-right': '175px'});
+        $('#create-button, #login-button').css({'transition': 'all 3.5s ease', 'box-shadow': '0px 0px 60px 20px #999999'});
+    }, 1150);
+    setTimeout(function() {
+        $('#top-cover').css({'transition': 'all 2.4s linear', 'margin-left': '175px'});
+    }, 750);
+    setTimeout(function() {
+        // $('#create-button, #login-button').css({'transition': 'box-shadow 1s ease'});
+        $('.cover').remove();
+    }, 3150);
+
+
 
     $('#create-button').on('click', function() {
         event.preventDefault();
         context.clearRect(0, 0, canvas.width, canvas.height);
+        initClick = true;
+        // $('#create-button, #login-button').css({'transition': 'all 0s ease', 'box-shadow': 'none'});
+        $('#create-button, #login-button').css({'transition': 'all 1s ease'});
         $('#z').css('opacity', '0');
         let createBar = $('#create-button');
         createBar.html('create user name');
@@ -97,6 +133,8 @@ $(document).ready(function() {
     $('#login-button').on('click', function() {
         event.preventDefault();
         context.clearRect(0, 0, canvas.width, canvas.height);
+        initClick = true;
+        $('#create-button, #login-button').css({'transition': 'all 1s ease'});
         $('#z').css('opacity', '0');
         let loginBar = $('#login-button');
         loginBar.html('enter user name');
@@ -347,7 +385,6 @@ $(document).ready(function() {
         requestAnimationFrame(loop);
     }());
 
-
-
+    // $('#btm-cover').css({'margin-right': '600px'});
 
 });
