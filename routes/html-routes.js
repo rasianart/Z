@@ -18,12 +18,8 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname + "/../public/login.html"));
   });
 
-  // // home route loads home.html
-  // app.get("/home", function(req, res) {
-  //   res.render("home", {users: "Pat"});
-  // });
-
-  app.get("/home", (req, res) => {
+  app.get("/home/:user", (req, res) => {
+      let currentUser = req.params.user;
       db.User.findAll({
           raw: true,
           where: {
@@ -31,7 +27,13 @@ module.exports = (app) => {
           }
       }).then((response) => {
             console.log(response);
-            res.render("home", {users: response});
+            let x = {
+                users: response,
+                user: currentUser
+            };
+            console.log(x);
+            res.render("home", {users: response,
+                                user: currentUser});
         });
   });
 
@@ -44,11 +46,15 @@ module.exports = (app) => {
           },
           raw: true
       }).then((response) => {
-            console.log(response);
+            console.log(response[0]);
             // res.send(response);
-            res.render("portalentrance", {users: response});
+            res.render("portalentrance", {users: response[0]});
         });
-  })
+  });
+
+  app.get("/createburrow/:user", (req, res) => {
+        res.sendFile(path.join(__dirname + "/../public/create_burrow.html"));
+  });
 
   // // home route loads home.html
   // app.get("/home", function(req, res) {

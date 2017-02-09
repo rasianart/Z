@@ -156,6 +156,7 @@ $(document).ready(function() {
             if (e.which == 13 && input.val() !== '') {
                 e.preventDefault();
                 inputName = $('#user-input').val().trim();
+                $('body').attr('data-user', inputName);
                 $('html').css('backgrouond-color', '#000');
                 $('#login-button').css({'transition': 'all 0s ease', 'border': 'none'});
                 setTimeout(function() {
@@ -191,8 +192,6 @@ $(document).ready(function() {
     $(document).on('click', 'div#postz', handleFormSubmit);
 
     function handleFormSubmit() {
-        console.log('hey');
-        // inputName = $('#user-input').val().trim();
         if (!inputName) {
             return;
         }
@@ -224,7 +223,8 @@ $(document).ready(function() {
                 };
                 $.post('/creategesture', newGesture, function(req, res){
                     console.log(res);
-                    $('#postz').html('enter');
+                    correct();
+                    // $('#postz').html('enter');
                     // $.get('/home', function() {});
                     // window.location.href = "/home";
                 });
@@ -313,12 +313,7 @@ $(document).ready(function() {
 
         // if (nullSkips < 10 && erraticMovement < 10) {
         if (1 === 1) {
-            console.log('You may enter.');
-            $('#postz').html('enter');
-            $('.draw-frame').css('opacity', '0');
-            setTimeout(function() {
-                $('.draw-frame').remove();
-            }, 1000);
+            correct();
             // $.get('/home', function() {});
             // window.location.href = "/home";
 
@@ -328,6 +323,15 @@ $(document).ready(function() {
         console.log("skipped: " + nullSkips);
         console.log("erratic: " + erraticMovement);
         console.log(match);
+    }
+
+    function correct() {
+        console.log('You may enter.');
+        $('#postz').html('enter');
+        $('.draw-frame').css('opacity', '0');
+        setTimeout(function() {
+            $('.draw-frame').remove();
+        }, 1000);
     }
 
     function incorrect() {

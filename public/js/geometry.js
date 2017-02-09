@@ -326,9 +326,10 @@ $(document).on('click', 'div#postz', function() {
                     linesMesh.scale.set(s, s, s);
                 } else {
                     setTimeout(function() {
+                        let user = $('body').attr('data-user');
                         $('#container').remove();
-                        $.get('/home', function() {});
-                        window.location.href = "/home";
+                        $.get('/home/' + user, function(data) {});
+                        window.location.href = "/home/" + user;
                     }, 2000);
                 }
             }, 1);
@@ -373,8 +374,7 @@ $('.portals').on('click', function() {
             linesMesh.scale.set(s, s, s);
         }
     }, 10);
-
-//this animation is for right answer
+////this animation is for right answer
     // setTimeout(function() {
     //     setInterval(function() {
     //         if (particleCount > 50) {
@@ -384,5 +384,26 @@ $('.portals').on('click', function() {
     //             linesMesh.scale.set(s, s, s);
     //         }
     //     }, 1);
-    // }, 3500);
+    // }, 5500);
+});
+
+//create burrow
+
+$('#create-hole').on('click', function() {
+    let s = 1;
+    setInterval(function() {
+        if (particleCount < 350) {
+            particleCount += 1;
+            s -= .005;
+            linesMesh.scale.set(s, s, s);
+        }
+    }, 1);
+
+    let num = 125;
+    setInterval(function() {
+        num += 1;
+        if(num < 256 ) {
+            scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+        }
+    }, 1);
 })
