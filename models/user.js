@@ -2,8 +2,17 @@ module.exports = function(sequelize, DataTypes) {
   let User = sequelize.define("User", {
     // Giving the User model a name of type STRING
     name: DataTypes.STRING,
+    userimg: DataTypes.TEXT,
     riddle: DataTypes.TEXT,
-    answer: DataTypes.STRING
+    answer: DataTypes.STRING,
+    info: DataTypes.TEXT,
+    link: DataTypes.TEXT,
+    color: DataTypes.STRING,
+    burrow1: DataTypes.STRING,
+    burrow2: DataTypes.STRING,
+    burrow3: DataTypes.STRING,
+    burrow4: DataTypes.STRING,
+    burrow5: DataTypes.STRING
   },
     // Here we'll pass a second "classMethods" object into the define method
     // This is for any additional configuration we want to give our models

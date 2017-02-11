@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    console.log(sessionStorage.user);
+
     let initDone = false;
     let chosen = false;
     let burrowed = false;
@@ -22,13 +24,15 @@ $(document).ready(function() {
         if (!chosen) {
             bottom = $(this).css("margin-bottom");
             let newBtm = parseInt(bottom) - 54 + 'px';
-            $(this).css({'height': '125px', 'border-radius': '50%', 'margin-bottom': newBtm, 'background-color': 'rgba(0, 0, 0, .3)', 'padding-top': '55px'});
+            let img = $(this).attr('data-img');
+            console.log(img);
+            $(this).css({'background-image': 'url(' + img + ')', 'background-size': '100px 100px', 'height': '125px', 'border-radius': '50%', 'margin-bottom': newBtm, 'background-color': 'rgba(0, 0, 0, .3)', 'padding-top': '55px'});
         }
     });
     $('.portals').mouseleave(function() {
         if (!chosen) {
             console.log('qwe');
-            $(this).css({'height': '16px', 'border-radius': '0%', 'margin-bottom': bottom, 'background-color': 'rgba(0, 0, 0, 0)', 'padding-top': '0px'});
+            $(this).css({'background-size': '0px 0px', 'height': '16px', 'border-radius': '0%', 'margin-bottom': bottom, 'background-color': 'rgba(0, 0, 0, 0)', 'padding-top': '0px'});
         }
     });
 
@@ -42,11 +46,10 @@ $(document).ready(function() {
         $('.portals').css({'transition': 'all 1s ease', 'margin-left': '42%', 'margin-bottom': '340px', 'opacity': '0'});
         $('#burrow-circle').css({'width': '0px', 'height': '0px', 'border': 'none', 'margin-left': '720px', 'margin-top': '375px'});
         $('#create-hole').css({'transition': 'all 1s ease', 'opacity': '0'});
-        let user = $('#create-hole').attr('data-name');
-        console.log(user);
+
         setTimeout(function() {
-            $.get('/createburrow/' + user, function(data) {});
-             window.location.href = "/createburrow/" + user;
+            $.get('/createburrow/', function(data) {});
+             window.location.href = "/createburrow/";
         }, 2000);
     });
 
@@ -88,6 +91,7 @@ $(document).ready(function() {
     }
 
     $('.portals').on('click', function() {
+        // $('#draw-frame').css('z-index', '1');
         chosen = true;
         $('#burrow-circle').remove();
         setTimeout(function() {
@@ -110,14 +114,15 @@ $(document).ready(function() {
         setTimeout(function() {
             burrow.html(riddle);
             console.log(burrow.html().length);
-            burrow.css({'transition': 'all 1s ease', 'height': '20px', 'padding-bottom': '10px', 'font-size': '20px'});
+            burrow.css({'transition': 'all 1s ease', 'height': '20px', 'padding-bottom': '40px', 'font-size': '20px'});
             if (burrow.html().length > 200) {
                 burrow.css('padding-bottom', '60px');
-            } else if (burrow.html().length > 110) {
-                burrow.css('padding-bottom', '40px');
             }
+            // else if (burrow.html().length > 110) {
+            //     burrow.css('padding-bottom', '40px');
+            // }
         }, 2250);
-        child.css({'line-height': '300px', 'padding-top': '0px'});
+        child.css({'background-image': 'none', 'line-height': '300px', 'padding-top': '0px'});
         child.addClass('chosen').removeClass('portals');
         child.css({'transition': 'all 1.55s ease', 'margin-left': '48.7%', 'margin-bottom': '315px', 'height': '50px', 'width': '50px', 'background-color': 'rgba(0, 0, 0, .6)', 'border-radius': '50%', 'line-height': '300px', 'font-size': '20px'});
         let childHMTL = $('<div id="child-html">' + child.html() + '</div>').appendTo('body');
@@ -173,25 +178,71 @@ $(document).ready(function() {
         }, 5000);
 
         let firstkey = false;
-        $(document).on('keypress', function(e) {
-            let submitGuess = $('<div id="submit-guess">Post Z</div>').appendTo('body');
-            $('#submit-guess').animate({'height': '20px', 'margin-top': '56px'});
+        let userImg = child.attr('data-img');
+        let imgContain = $('<div id="img-contain"></div>').appendTo('body');
+        let imgHolder = $('<img id="img-holder">').appendTo(imgContain);
+        let submitGuess = $('<div id="submit-guess">Post Z</div>').appendTo('body');
+
+        let ifCorrect = () => {
+            $('body').attr('data-correct', 'correct');
+            let userAnswer = $('#answer-input').val().trim();
+            if (userAnswer === answer) {
+                console.log('correct');
+                imgHolder.attr('src', userImg);
+                imgContain.css({'opacity': '1'});
+                $('.chosen').css({'transition': 'all 2s ease', 'background-color': 'rgba(0, 0, 0, .5)'});
+
+
+                setTimeout(() => {
+                    $('#img-holder').css({'width': '0px', 'height': '0px', 'margin-left': '20px', 'margin-top': '180px'});
+                    $('#submit-guess').css({'transition': 'all 1.5s ease', 'height': '0px', 'margin-top': '76px'});
+                    setTimeout(() => {
+                        $('#submit-guess').css({'width': '0px', 'margin-left': '715px', 'opacity': '0'});
+                    }, 1000);
+                    $('#answer-input').css({'transition': 'all 4s ease', 'width': '0px', 'height': '0px', 'margin-left': '715px', 'margin-top': '400px', 'opacity': '0'});
+                    $('#answer-line').css({'transition': 'all 3.5s ease', 'width': '0px', 'height': '0px', 'margin-left': '720px', 'margin-top': '400px'});
+                    $('#create-hole').css({'transition': 'all .5s ease', 'padding-bottom': '0px', 'height': '0px'});
+                    setTimeout(() => {
+                        $('#create-hole').css({'transition': 'all 2.5s ease', 'width': '0px', 'margin-left': '700px'});
+                    }, 750);
+                    $('.chosen').css({'transition': 'all 5s ease', 'width': '0px', 'height': '0px', 'margin-left': '725px', 'margin-bottom': '360px', 'opacity': '0'});
+                    setTimeout(() => {
+                        $('#img-holder, #submit-guess, #answer-input, #answer-line, #create-hole, .chosen').remove();
+                    }, 6000);
+                }, 1500);
+                setTimeout(() => {
+                    $.get('/portalentrance/' + idName, (data) => {
+                        console.log(data);
+                    });
+                    window.location.href = "/portalentrance/" + idName;
+                }, 10000);
+            } else {
+                console.log('incorrect');
+            }
+        }
+
+        let submit = () => {
+            $('#submit-guess').css({'height': '20px', 'margin-top': '56px', 'opacity': '1'});
             if (!firstkey) {
                 $('#answer-input').val('');
                 firstkey = true;
             }
+        }
+
+        $(document).on('keypress', function(e) {
+            submit();
+            if (e.which === 13 && $('#answer-input').val() !== '') {
+                ifCorrect();
+            }
         });
 
-        $(document).on('click', '#submit-guess', function() {
-            console.log('biotch');
-            $.get('/portalentrance/' + idName, (data) => {
-                console.log(data);
-            });
-            window.location.href = "/portalentrance/" + idName;
+        $(document).on('click', '#submit-guess', function(e) {
+            ifCorrect();
+            // $.get('/portalentrance/' + idName, (data) => {
+            //     console.log(data);
+            // });
+            // window.location.href = "/portalentrance/" + idName;
         });
-
-
-
 
 
 

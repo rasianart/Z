@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    console.log(sessionStorage.user);
+
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
@@ -15,7 +17,10 @@ $(document).ready(function() {
     let activate = false;
     let login = false;
     let loginUser;
-    let inputName;
+    let inputName = '';
+    let color = '';
+    let imgInput;
+    let loginColor;
 
     let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
@@ -70,7 +75,7 @@ $(document).ready(function() {
     }, 3150);
 
 
-
+    let wait = false;
     $('#create-button').on('click', function() {
         event.preventDefault();
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -79,7 +84,9 @@ $(document).ready(function() {
         $('#create-button, #login-button').css({'transition': 'all 1s ease'});
         $('#z').css('opacity', '0');
         let createBar = $('#create-button');
-        createBar.html('create user name');
+        if (inputName === '') {
+            createBar.html('create user name');
+        }
         createBar.css('width', '1040px');
         $('#login-button').css('opacity', '0');
         $('#login-border, #create-border').css('opacity', '0');
@@ -96,39 +103,63 @@ $(document).ready(function() {
 
         let input = $('#user-input');
         $(document).on('keypress', function(e) {
-            if (e.which == 13 && input.val() !== '') {
+            if (e.which == 13 && input.val() !== '' && inputName === '') {
                 e.preventDefault();
-                inputName = $('#user-input').val().trim();
-                $('#create-button').css({'transition': 'all 0s ease', 'border': 'none'});
-                setTimeout(function() {
-                    $('#create-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
-                }, 10);
-                $('#login-border').css({'transition': 'all 2.8s ease', 'margin-bottom': '760px', 'width': '0px', 'left': '520px'});
-                setTimeout(function(){
-                    $('#login-border').css({'width': '1040px', 'left': '0px'});
-                }, 2400);
-                setTimeout(function(){
-                    $('#login-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
-                }, 2900);
-                let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
-                instructions.appendTo('#login-border');
-                setTimeout(function(){
-                    $('#login-border').css({'transition': 'all 2.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
-                    instructions.css('opacity', '1');
-                }, 4500);
-                $('#user-input').remove();
-                setTimeout(function() {
-                    $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
-                }, 2666);
-                let postZ = $('<div id="postz">Post Z</div>');
-                postZ.appendTo('body');
-                setTimeout(function() {
-                    postZ.css({'height': '50px', 'margin-bottom': '15px;'})
-                }, 5500);
+                inputName = $('#user-input').val().trim().toLowerCase();
+                $('#user-input').val('');
+                createBar.html('enter a color: cyan, yellow, or magenta. this color will be tracked to record movement phrase');
+                setTimeout(() => {
+                    wait = true;
+                }, 100);
+            }
+        });
+        $(document).on('keypress', function(event) {
+            if (event.which == 13 && input.val() !== '' && inputName !== '' && wait === true) {
+                event.preventDefault();
+                color = $('#user-input').val().trim().toLowerCase();
+                if (color === 'cyan' ||  color === 'yellow' || color === 'magenta') {
+                    $('#create-button').css({'transition': 'all 0s ease', 'border': 'none'});
+                    setTimeout(function() {
+                        $('#create-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
+                    }, 10);
+                    $('#login-border').css({'transition': 'all 2.8s ease', 'margin-bottom': '760px', 'width': '0px', 'left': '520px'});
+                    setTimeout(function(){
+                        $('#login-border').css({'width': '1040px', 'left': '0px'});
+                    }, 2400);
+                    setTimeout(function(){
+                        $('#login-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
+                    }, 2900);
+                    let instructions = $('<div id="instructions">Choose a ' + color + ' object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise ' + color + ' object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
+                    instructions.appendTo('#login-border');
+                    setTimeout(function(){
+                        $('#login-border').css({'transition': 'all 2.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
+                        instructions.css('opacity', '1');
+                    }, 4500);
+                    $('#user-input').remove();
+                    setTimeout(function() {
+                        $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
+                    }, 2666);
+                    let postZ = $('<div id="postz">Post Z</div>');
+                    postZ.appendTo('body');
+                    let reset = $('<div id="reset">Reset</div>');
+                    reset.appendTo('body');
+                    setTimeout(function() {
+                        postZ.css({'height': '50px', 'margin-bottom': '15px;'});
+                        reset.css({'height': '50px', 'margin-bottom': '15px;'});
+                    }, 5500);
+                } else {
+                    createBar.html('Please enter either cyan, yellow, or magenta');
+                }
             }
         });
         activate = true;
     });
+
+    $(document).on('click', 'div#reset', () => {
+        drawSegments[segment] = [];
+        initArr = [];
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    })
 
     $('#login-button').on('click', function() {
         event.preventDefault();
@@ -156,7 +187,11 @@ $(document).ready(function() {
             if (e.which == 13 && input.val() !== '') {
                 e.preventDefault();
                 inputName = $('#user-input').val().trim();
-                $('body').attr('data-user', inputName);
+                sessionStorage.setItem("user", inputName);
+                console.log(sessionStorage.user);
+                $.get('/getuser/' + inputName, (data) => {
+                    loginColor = data.color;
+                });
                 $('html').css('backgrouond-color', '#000');
                 $('#login-button').css({'transition': 'all 0s ease', 'border': 'none'});
                 setTimeout(function() {
@@ -169,7 +204,7 @@ $(document).ready(function() {
                 setTimeout(function(){
                     $('#create-border').css({'background-color': 'rgba(255, 255, 255, .1)', 'border-color': 'rgba(255, 255, 255, .5)'});
                 }, 2900);
-                let instructions = $('<div id="instructions">Choose a green object.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise yellow object, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
+                let instructions = $('<div id="instructions">Prepare your login color.  &nbsp;&nbsp;Hold it in your hand, pressed against your stomach.  &nbsp;&nbsp;Slowly raise your color, facing your camera, and begin to lock in movement phrase.  &nbsp;&nbsp;Once compelte, lower to stomach again and click activate to proceed</div>');
                 instructions.appendTo('#create-border');
                 setTimeout(function(){
                     $('#create-border').css({'transition': 'all 2.5s ease', 'height': '100px', 'margin-bottom': '660px', 'background-color': 'rgba(255, 255, 255, .05)', 'border': '1px solid #666'});
@@ -180,9 +215,12 @@ $(document).ready(function() {
                     $('#draw-border').css({'opacity': '.3', 'width': '400px', 'height': '400px', 'left': '300px', 'top': '250px'});
                 }, 2666);
                 let postZ = $('<div id="postz">Post Z</div>');
+                let reset = $('<div id="reset">Reset</div>');
+                reset.appendTo('body');
                 postZ.appendTo('body');
                 setTimeout(function() {
-                    postZ.css({'height': '50px', 'margin-bottom': '15px;'})
+                    postZ.css({'height': '50px', 'margin-bottom': '15px;'});
+                    reset.css({'height': '50px', 'margin-bottom': '15px;'});
                 }, 5500);
             }
         });
@@ -210,8 +248,12 @@ $(document).ready(function() {
             });
         } else if (activate) {
             getCode();
+            imgInput = new Image();
+            imgInput.src = canvas.toDataURL("image/png");
             let newUser = {
-                name: loginName
+                name: loginName.toLowerCase(),
+                color: color,
+                userimg: imgInput.src
             }
             $.post('/createuser', newUser, function(data){
                 console.log(data);
@@ -311,8 +353,8 @@ $(document).ready(function() {
             }
         }
 
-        // if (nullSkips < 10 && erraticMovement < 10) {
-        if (1 === 1) {
+        if (nullSkips < 10 && erraticMovement < 10) {
+        // if (1 === 1) {
             correct();
             // $.get('/home', function() {});
             // window.location.href = "/home";
@@ -355,23 +397,28 @@ $(document).ready(function() {
         }
 
         event.data.forEach(function(rect) {
-            if (rect.color === 'yellow') {
+            if (rect.color === color || loginColor) {
                 draw(rect);
-            } else if (rect.color === 'cyan') {
-                erase(rect);
             }
+            // else if (rect.color === 'cyan') {
+            //     erase(rect);
+            // }
         });
     });
 
+    let x = 0;
     function draw(rect) {
-        drawSegments[segment].push(rect.x + rect.width / 2, rect.y + rect.height / 2);
-        // console.log(drawSegments[0]);
-        initArr.push(drawSegments[0]);
+        // if (x % 2 === 0) {
+            drawSegments[segment].push(rect.x + rect.width / 2, rect.y + rect.height / 2);
+            // console.log(drawSegments);
+            initArr.push(drawSegments[0]);
+        // }
+        x++;
     }
 
-    function erase(rect) {
-        context.clearRect(rect.x, rect.y, rect.width, rect.height);
-    }
+    // function erase(rect) {
+    //     context.clearRect(rect.x, rect.y, rect.width, rect.height);
+    // }
 
     function isInsideRect(x, y, rect) {
         return rect.x <= x && x <= rect.x + rect.width &&
@@ -380,7 +427,9 @@ $(document).ready(function() {
 
     (function loop() {
         for (var i = 0, len = drawSegments.length; i < len; i++) {
-            drawSpline(context, drawSegments[i], 0.5, false);
+            // if (i % 2 === 0) {
+                drawSpline(context, drawSegments[i], 0.5, false);
+            // }
         }
 
         drawSegments = [drawSegments[drawSegments.length - 1]];

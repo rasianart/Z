@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Gesture - Express</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/create_burrow_styles.css" media="screen" title="no title">
     <link rel="stylesheet" href="/css/reset.css" media="screen" title="no title">
+        <link rel="stylesheet" href="/css/create_burrow_styles.css" media="screen" title="no title">
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Six+Caps|Share+Techno+Mono|Bungee+Hairline|Iconsolata" rel="stylesheet">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -18,9 +18,18 @@
 </head>
 
 <body>
-    <div id="container"></div>
-    <!-- <div id="box"></div> -->
+    <div id="background"></div>
+    <!-- <div id="keyhole"></div> -->
+    <!-- <div id="c6" class="c"></div> -->
 
+
+
+
+
+    <div id="cover-circle"></div>
+    <!-- <div id="container"></div> -->
+    <!-- <div id="box"></div> -->
+    <!-- <button id="png-add">add</button> -->
     <!-- <form id="login">
         <div class="login-group">
             <div id="login-border"></div>
@@ -35,10 +44,54 @@
         <video id="video" width="400" height="300" preload autoplay loop muted></video>
         <canvas id="canvas" width="400" height="300"></canvas>
     </div>
+    <div id="c1" class="c">
 
+    </div>
+    <div id="c2" class="c">
+
+    </div>
+    <div id="c3" class="c"></div>
+    <div id="c4" class="c"></div>
+    <div id="c5" class="c"></div>
+
+    <div id="color-instruct">Choose the color that will be assigned to the movement guard phrase</div>
+
+    <div id="colors">
+        <div id="yellow" class="color">yellow</div>
+        <div id="magenta" class="color">magenta</div>
+        <div id="cyan" class="color">cyan</div>
+    </div>
+
+    <div id="instruct">Burrow Connections to the burrows of others.  Entry granted upon correct movement phrase</div>
+
+    <form id="form">
+        <input id="riddle" class="minis" autocomplete="off">
+        <input id="connect1" class="connections" autocomplete="off">
+        <div id="text1" class="text">Riddle - This will be you burrow's protection.  Upon correct guess user will have access to your burrow.</div>
+        <div id="chain1" class="chains">Burrow Connection 1</div>
+        <input id="answer" class="minis" autocomplete="off">
+        <input id="connect2" class="connections" autocomplete="off">
+        <div id="text2" class="text">Answer - This will be the correct answer to the riddle.  Correct answer will have access to your burrow.</div>
+        <div id="chain2" class="chains">Burrow Connection 2</div>
+        <input id="info" class="minis" autocomplete="off">
+        <input id="connect3" class="connections" autocomplete="off">
+        <div id="text3" class="text">Info - Enter any info about yourself here.</div>
+        <div id="chain3" class="chains">Burrow Connection 3</div>
+        <input id="link" class="minis" autocomplete="off">
+        <input id="connect4" class="connections" autocomplete="off">
+        <div id="text4" class="text">Link - Link to any personal websites or any link for user to burrow into.</div>
+        <div id="chain4" class="chains">Burrow Connection 4</div>
+        <input id="image" class="minis" autocomplete="off">
+        <input id="connect5" class="connections" autocomplete="off">
+        <div id="text5" class="text">Image - This image will be you personalized gesture.  Draw with selected color into camera to record gesture. <br> Click post z to confirm.  This image will appear next to your username.</div>
+        <div id="chain5" class="chains">Burrow Connection 5</div>
+    </form>
+    <div id="post">
+        <p id="post-text">Post Z</p>
+    </div>
     <!-- <div id="btm-cover" class="cover"></div>
     <div id="top-cover" class="cover"></div> -->
-
+    <div id="submit-all">Save All</div>
 </body>
 
 </html>

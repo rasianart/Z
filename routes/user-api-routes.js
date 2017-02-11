@@ -30,6 +30,44 @@ module.exports = function(app) {
         });
     });
 
+    app.post("/updateicon", function(req, res) {
+        db.User.update(
+            req.body, {
+                where: {
+                    name: req.body.name
+                }
+            }).then(function(response) {
+            res.send(response);
+        });
+    });
+
+    app.post("/updatebio", function(req, res) {
+        db.User.update(
+            req.body, {
+                where: {
+                    name: req.body.name
+                }
+            }).then(function(response) {
+            res.send(response);
+        });
+    });
+
+    app.get('/getuser/:user', (req, res) => {
+        let userName = req.params.user
+        console.log(userName);
+        db.User.findAll({
+            where: {
+                name: userName
+            },
+            raw: true
+        }).then((response) => {
+              console.log(response[0]);
+              // res.send(response);
+              res.send(response[0]);
+          });
+          // res.sendFile(path.join(__dirname + "/../public/portaltest.html"));
+    });
+
 
 
 

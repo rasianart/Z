@@ -25,8 +25,6 @@ var effectController = {
 init();
 animate();
 
-
-
 function initGUI() {
 
     var gui = new dat.GUI();
@@ -91,7 +89,6 @@ function init() {
         transparent: true,
         sizeAttenuation: false
     });
-    console.log(pMaterial.color);
 
     particles = new THREE.BufferGeometry();
     particlePositions = new Float32Array(maxParticleCount * 3);
@@ -142,6 +139,31 @@ function init() {
         material.color.setHex(0x000000);
     }
 
+    $(document).on('keypress', function(e) {
+        if (e.which === 13 && $('#answer-input').val() !== '') {
+            setTimeout(() => {
+                let body = $('body').attr('data-correct');
+                if (body === 'correct') {
+                    material.transparent = true;
+                    let int = 0;
+                    setInterval(() => {
+                        material.color = new THREE.Color("rgb(" + int + ", " + int + "," + int + ")");
+                        int++;
+                    }, 100);
+                }
+            }, 10);
+        }
+    });
+
+    $(document).on('click', '#submit-guess', function(e) {
+        material.transparent = true;
+        let int = 0;
+        setInterval(() => {
+            material.color = new THREE.Color("rgb(" + int + ", " + int + "," + int + ")");
+            int++;
+        }, 10);
+    });
+
     // material.color.setHex(0x660000);
     // material.color = new Color( 0x000000 );
 
@@ -166,7 +188,8 @@ function init() {
     //
 
     // stats = new Stats();
-    // container.appendChild( stats.dom );
+    // console.log(container);
+    // container.appendChild( stats.domElement );
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -252,6 +275,27 @@ function animate() {
         }
     }
 
+    // w = new Worker("/js/worker.js");
+    //
+    // w.onmessage = function(event){
+    //
+    //     var vertexpos = 0;
+    //     var colorpos = 0;
+    //     var numConnected = 0;
+    //
+    //     let data = event.data;
+    //     console.log(data);
+    //     positions[vertexpos] = data[0]
+    //     colors[colorpos] = data[1];
+    //     numConnected = data[2];
+    //
+    //     linesMesh.geometry.setDrawRange(0, numConnected * 2);
+    //     linesMesh.geometry.attributes.position.needsUpdate = true;
+    //     linesMesh.geometry.attributes.color.needsUpdate = true;
+    //
+    //     render();
+    // };
+
 
     linesMesh.geometry.setDrawRange(0, numConnected * 2);
     linesMesh.geometry.attributes.position.needsUpdate = true;
@@ -260,6 +304,7 @@ function animate() {
     // pointCloud.geometry.attributes.position.needsUpdate = true;
 
     requestAnimationFrame(animate);
+
 
     // stats.update();
     render();
@@ -289,35 +334,43 @@ function render() {
 //     }, 1);
 // })
 
-$(document).on('keypress', function(e) {
-    if (e.which == 13 && $('#user-input').val() !== '') {
-        e.preventDefault();
+let login = false;
+$('#login-button').on('click', () => {
+    login = true;
+});
 
-        let num = 125;
-        setTimeout(function() {
+$(document).on('keypress', function(e) {
+    if (e.which == 13 && $('#user-input').val() !== '' && $('body').attr('data-page') === 'login') {
+        e.preventDefault();
+        let inputData = $('#user-input').val();
+        if ( inputData === 'cyan' || inputData === 'yellow' || inputData === 'magenta' || login) {
+
+            let num = 125;
+            setTimeout(function() {
+                setInterval(function() {
+                    num -= 1;
+                    if(num > 40 ) {
+                        scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+                    }
+                }, 1);
+            }, 2000);
+
+            let s = 1;
             setInterval(function() {
-                num -= 1;
-                if(num > 40 ) {
-                    scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+                if (particleCount < 750) {
+                    particleCount += 6;
+                    s -= .006;
+                    linesMesh.scale.set(s, s, s);
                 }
             }, 1);
-        }, 2000);
-
-        let s = 1;
-        setInterval(function() {
-            if (particleCount < 750) {
-                particleCount += 6;
-                s -= .006;
-                linesMesh.scale.set(s, s, s);
-            }
-        }, 1);
+        }
     }
 });
 
 $(document).on('click', 'div#postz', function() {
     setTimeout(function() {
         if ($('#postz').html() == 'enter') {
-            $('#login, #postz').remove();
+            $('#login, #postz, #reset').remove();
             let s = 1;
             setInterval(function() {
                 if (particleCount > 75) {
@@ -326,15 +379,15 @@ $(document).on('click', 'div#postz', function() {
                     linesMesh.scale.set(s, s, s);
                 } else {
                     setTimeout(function() {
-                        let user = $('body').attr('data-user');
+                        // let user = $('body').attr('data-user');
                         $('#container').remove();
-                        $.get('/home/' + user, function(data) {});
-                        window.location.href = "/home/" + user;
+                        $.get('/home/', function(data) {});
+                        window.location.href = "/home/";
                     }, 2000);
                 }
             }, 1);
         }
-    }, 100);
+    }, 250);
 });
 
 //home
@@ -374,17 +427,35 @@ $('.portals').on('click', function() {
             linesMesh.scale.set(s, s, s);
         }
     }, 10);
-////this animation is for right answer
-    // setTimeout(function() {
-    //     setInterval(function() {
-    //         if (particleCount > 50) {
-    //             particleCount -= 5;
-    //             s += .001;
-    //             // s -= .0075;
-    //             linesMesh.scale.set(s, s, s);
-    //         }
-    //     }, 1);
-    // }, 5500);
+//this animation is for right answer
+    let correctAnswer = () => {
+        setTimeout(() => {
+            let body = $('body').attr('data-correct');
+            if (body === 'correct') {
+                setTimeout(function() {
+                    setInterval(function() {
+                        if (particleCount > 50) {
+                            particleCount -= 5;
+                            s += .01;
+                            // s -= .0075;
+                            linesMesh.scale.set(s, s, s);
+                        }
+                    }, 1);
+                }, 2100);
+            }
+        }, 10);
+    }
+
+    $(document).on('keypress', function(e) {
+        if (e.which === 13 && $('#answer-input').val() !== '') {
+            correctAnswer();
+        }
+    });
+
+    $(document).on('click', '#submit-guess', function(e) {
+        correctAnswer();
+    });
+
 });
 
 //create burrow

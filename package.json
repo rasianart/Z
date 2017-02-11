@@ -16,6 +16,7 @@
     "express-handlebars": "^3.0.0",
     "hover.css": "^2.0.2",
     "mysql": "^2.12.0",
+    "node-sass": "^4.5.0",
     "sequelize": "^3.28.0"
   }
 }

@@ -1,18 +1,88 @@
-<!--
-<button id="create-hole">Dig Hole</button>
+<!-- <link rel="stylesheet" href="/sass/portal_style.min.css" type="text/css"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Overpass+Mono|Josefin+Sans|Bungee|Bungee+Hairline|Bungee+Outline">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/sass/portal_style.min.css" type="text/css">
+<script src="/js/portalentrance.js" type="text/javascript"></script>
 
-<div id="portal-contain">
-    {{#each users}}
-        <button id="{{this.name}}" class="portals">Fall into: {{this.name}}</button>
-    {{/each}}
+
+
+<!-- <div id="display-match">FAN
+  <div id='subtext'>Find a Friend</div>
 </div> -->
-<style>
-div{
-    color: white;
-}
-</style>
+<!-- <div id='vidfill'></div> -->
+<!-- <video id="vid" playsinline autoplay muted loop>
+    <source id="sour" src="https://cdn.rawgit.com/rasianart/FAN/397e4779/app/public/videos/fanreverse.mp4" type="video/mp4">
+</video> -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <!-- <a href="#">
+                    Tell me about yourself
+                </a> -->
+            </li>
+            <li>
+                <div id="match1"></div>
+                <div id="button-holder"></div>
+                <div id="hide">Hide</div>
+                <div id="enter">Enter Burrow</div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- <form id="post">
+  <input id="name-input" placeholder="Enter Name" autocomplete="off">
+</form>
+<form id="photo">
+  <input id="photo-input" placeholder="Enter Link to Photo" autocomplete="off">
+</form> -->
+<div id="question-holder">
+  <div id="q1-contain">
+    <div id="q1">
+        <div id="name" class="user-info">{{users.name}}</div>
+        <img id="img" class="user-info" src="{{users.userimg}}" width="150px">
+        <div id="info" class="user-info">{{users.info}}</div>
+        <div id="color" class="user-info">{{users.color}}</div>
+        <div id="link" class="user-info">{{users.link}}</div>
+    </div>
+  </div>
+  <div id="q0-hover-box" class="all-box-left"></div>
+  <div id="q0" class="questions"></div>
+  <div id="left-light"></div>
+  <div id="q2-hover-box" class="four-left all-box-left"></div>
+  <div id="q2" class="questions"></div>
+  <div id="q3-hover-box" class="four-left all-box-left"></div>
+  <div id="q3" class="questions"></div>
+  <div id="q4-hover-box" class="four-left all-box-left"></div>
+  <div id="q4" class="questions"></div>
+  <div id="q5-hover-box" class="four-left all-box-left"></div>
+  <div id="q5" class="questions"></div>
+</div>
+<div id="question-holderB">
+  <div id="q1-containB">
+    <div id="q1B">
 
-<div id="{{users.name}}">{{users.name}}</div>
+    </div>
+  </div>
+  <div id="q0-hover-boxB" class="all-box-right"></div>
+  <div id="q0B" class="questionsB"></div>
+  <div id="right-light"></div>
+  <div id="q2-hover-boxB" class="four-right all-box-right"></div>
+  <div id="q2B" class="questionsB"></div>
+  <div id="q3-hover-boxB" class="four-right all-box-right"></div>
+  <div id="q3B" class="questionsB"></div>
+  <div id="q4-hover-boxB" class="four-right all-box-right"></div>
+  <div id="q4B" class="questionsB"></div>
+  <div id="q5-hover-boxB" class="four-right all-box-right"></div>
+  <div id="q5B" class="questionsB"></div>
+</div>
+<!-- <div id="{{users.name}}">{{users.name}} : {{users.info}} : {{users.link}} : {{users.color}} : {{users.burrow1}} : {{users.burrow2}}</div> -->
 
 	<!-- Custom Script -->
     <!-- <script src="/js/home.js" type="text/javascript"></script> -->
+
+<!-- <script src="/js/portalentrance.js" type="text/javascript"></script> -->
+<!-- <script src="/js/portalentrance2.js" type="text/javascript"></script> -->

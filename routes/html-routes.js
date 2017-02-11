@@ -18,22 +18,21 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname + "/../public/login.html"));
   });
 
-  app.get("/home/:user", (req, res) => {
-      let currentUser = req.params.user;
+  app.get("/home", (req, res) => {
+    //   let currentUser = req.params.user;
       db.User.findAll({
           raw: true,
           where: {
               riddle: { $not: null }
           }
       }).then((response) => {
-            console.log(response);
-            let x = {
-                users: response,
-                user: currentUser
-            };
-            console.log(x);
-            res.render("home", {users: response,
-                                user: currentUser});
+            // console.log(response);
+            // let x = {
+            //     users: response,
+            //     user: currentUser
+            // };
+            // console.log(x);
+            res.render("home", {users: response});
         });
   });
 
@@ -50,9 +49,10 @@ module.exports = (app) => {
             // res.send(response);
             res.render("portalentrance", {users: response[0]});
         });
+        // res.sendFile(path.join(__dirname + "/../public/portaltest.html"));
   });
 
-  app.get("/createburrow/:user", (req, res) => {
+  app.get("/createburrow", (req, res) => {
         res.sendFile(path.join(__dirname + "/../public/create_burrow.html"));
   });
 

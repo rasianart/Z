@@ -8,6 +8,13 @@ body{
 
 }
 
+#stats {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
 textarea:focus, input:focus, button:focus {
     outline: none;
 }
@@ -246,7 +253,7 @@ textarea:focus, input:focus, button:focus {
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-left: 48%;
+    margin-left: 43.5%;
     color: white;
     margin-bottom: 0px;
     font-family: 'Bungee Hairline', cursive;
@@ -257,6 +264,24 @@ textarea:focus, input:focus, button:focus {
 }
 
 #postz:hover {
+    cursor: pointer;
+}
+
+#reset {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 52%;
+    color: white;
+    margin-bottom: 0px;
+    font-family: 'Bungee Hairline', cursive;
+    height: 0px;
+    /*opacity: 0;*/
+    overflow: hidden;
+    transition: all 1.5s ease;
+}
+
+#reset:hover {
     cursor: pointer;
 }
 
