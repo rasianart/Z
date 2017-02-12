@@ -1,9 +1,9 @@
 var db = require("../models");
+var Sequelize = require("sequelize");
 
 module.exports = function(app) {
 
     app.get("/login:user", function(req, res) {
-        console.log(req.params.user);
         db.User.findOne({
             where: {
                 name: req.params.user
@@ -12,14 +12,12 @@ module.exports = function(app) {
                 model: db.Gesture
             }]
         }).then(function(user) {
-            console.log(user);
             res.send(user);
         });
     });
 
     app.post("/createuser", function(req, res) {
         db.User.create(req.body).then(function(dbGesture) {
-            console.log(dbGesture);
             res.send(dbGesture);
         });
     });
@@ -54,18 +52,46 @@ module.exports = function(app) {
 
     app.get('/getuser/:user', (req, res) => {
         let userName = req.params.user
-        console.log(userName);
         db.User.findAll({
             where: {
                 name: userName
             },
+            include: [{
+                model: db.Gesture
+            }],
             raw: true
         }).then((response) => {
-              console.log(response[0]);
-              // res.send(response);
               res.send(response[0]);
           });
-          // res.sendFile(path.join(__dirname + "/../public/portaltest.html"));
+    });
+
+    app.get('/getgesture/:user', (req, res) => {
+        let userName = req.params.user
+        db.User.findAll({
+            where: {
+                name: userName
+            },
+            include: [{
+                model: db.Gesture
+            }]
+        }).then((response) => {
+              res.send(response[0]);
+          });
+    });
+
+    app.get("/dig", (req, res) => {
+        db.User.findAll({
+            raw: true,
+            where: {
+                riddle: { $not: null }
+            },
+            limit : 15,
+            order: [
+                Sequelize.fn( 'RAND' ),
+              ]
+        }).then((response) => {
+              res.send(response);
+          });
     });
 
 

@@ -47,6 +47,15 @@ $(document).ready(function() {
         userColor = data.color;
     });
 
+    setTimeout(() => {
+        $('#bg-vid').css('opacity', '.5');   //city and all else unless stated otherwise
+                            //tracer doesn't need grayscale!
+                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
+    }, 2000);
+
+    let vid = document.getElementById("bg-vid");
+    // vid.playbackRate = 0.2;  //honeycomb
+
     let initCircle = (cId, mLeft, mTop) => {
         $(cId).css({'margin-left': mLeft, 'margin-top': mTop});
     }
@@ -91,24 +100,27 @@ $(document).ready(function() {
         $('#color-instruct').css('opacity', '0');
     });
 
-    $('.color').on('click', function() {
-        $('#color-instruct').css('opacity', '0');
-        color = $(this).html();
-        $('#submit-all').css('opacity', '1');
-        if (color === 'yellow') {
-            $('body').css('background-color', 'rgba(255, 255, 0, .25)');
-        } else if (color === 'magenta') {
-            $('body').css('background-color', 'rgba(139, 0, 139, .25');
-        } else if (color === 'cyan') {
-            $('body').css('background-color', 'rgba(32, 178, 170, .4');
-        }
-        $('#colors').css('opacity', '0');
-        setTimeout(function() {
-            $('#colors').remove();
-        }, 1000);
-        function slideUp(id, px) {
-            $(id).css('margin-top', px);
-        }
+    // $('.color').on('click', function() {
+    //     $('#color-instruct').css('opacity', '0');
+    //     color = $(this).html();
+    //     $('#submit-all').css('opacity', '1');
+    //     if (color === 'yellow') {
+    //         $('body').css('background-color', 'rgba(255, 255, 0, .25)');
+    //     } else if (color === 'magenta') {
+    //         $('body').css('background-color', 'rgba(139, 0, 139, .25');
+    //     } else if (color === 'cyan') {
+    //         $('body').css('background-color', 'rgba(32, 178, 170, .4');
+    //     }
+    //     $('#colors').css('opacity', '0');
+    //     setTimeout(function() {
+    //         $('#colors').remove();
+    //     }, 1000);
+
+    function slideUp(id, px) {
+        $(id).css('margin-top', px);
+    }
+
+    setTimeout(() => {
         slideUp('#riddle', '75px');
         slideUp('#answer', '225px');
         slideUp('#info', '375px');
@@ -119,7 +131,10 @@ $(document).ready(function() {
         slideUp('#connect3', '375px');
         slideUp('#connect4', '525px');
         slideUp('#connect5', '675px');
-    });
+    }, 3000);
+
+
+    // });
 
     let imgBox = $('<div id="img-box"></div>').appendTo('body');
     let img = $('<img id="canvas-img">').appendTo(imgBox);
@@ -171,11 +186,11 @@ $(document).ready(function() {
 
     $(document).on('keypress', function(e) {
         if (e.which === 13 && $('#' + chosenInput).val() !== '') {
-            $('#c1').css({'margin-left': '500px', 'margin-top': '200px', 'background-color': 'rgba(0, 0, 0, .15)'});
-            $('#c2').css({'margin-left': '425px', 'margin-top': '200px', 'background-color': 'rgba(0, 0, 0, .1)'});
-            $('#c3').css({'margin-left': '350px', 'margin-top': '200px', 'background-color': 'rgba(0, 0, 0, 0)'});
-            $('#c4').css({'margin-left': '575px', 'margin-top': '200px', 'background-color': 'rgba(0, 0, 0, .1)'});
-            $('#c5').css({'margin-left': '650px', 'margin-top': '200px', 'background-color': 'rgba(0, 0, 0, 0)'});
+            $('#c1').css({'margin-left': '500px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, .15)'});
+            $('#c2').css({'margin-left': '425px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, .1)'});
+            $('#c3').css({'margin-left': '350px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, 0)'});
+            $('#c4').css({'margin-left': '575px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, .1)'});
+            $('#c5').css({'margin-left': '650px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, 0)'});
             setTimeout(randCircle, 3000);
             setTimeout(function() {
                 $('.c').css('background-color', 'rgba(0, 0, 0, 0)');
@@ -196,9 +211,9 @@ $(document).ready(function() {
                 }, 5000);
                 setTimeout(function() {
                     if ($('#' + id).hasClass('connections')) {
-                        $('#' + id).css({'transition': 'all 1.5s ease', 'margin-right': '30px', 'margin-top': mTop, 'border': '1px solid black'});
+                        $('#' + id).css({'transition': 'all 1.5s ease', 'margin-right': '30px', 'margin-top': mTop, 'border': '1px solid white'});
                     } else {
-                        $('#' + id).css({'transition': 'all 1.5s ease', 'margin-left': '30px', 'margin-top': mTop, 'border': '1px solid black'});
+                        $('#' + id).css({'transition': 'all 1.5s ease', 'margin-left': '30px', 'margin-top': mTop, 'border': '1px solid white'});
                     }
                 }, 6000);
             }
@@ -271,9 +286,9 @@ $(document).ready(function() {
         }
         setTimeout(function() {
             if ($('#' + id).hasClass('minis')) {
-                $('#' + id).css({'transition': 'all 2s ease', 'width': '1000px', 'border': 'none', 'border-bottom': '1px solid black', 'border-radius': '0%', 'margin-left': '250px', 'placeholder': 'Enter riddle as portal protection'});
+                $('#' + id).css({'transition': 'all 2s ease', 'width': '1000px', 'border': 'none', 'border-bottom': '1px solid white', 'border-radius': '0%', 'margin-left': '250px', 'placeholder': 'Enter riddle as portal protection'});
             } else {
-                $('#' + id).css({'transition': 'all 2s ease', 'width': '1000px', 'border': 'none', 'border-bottom': '1px solid black', 'border-radius': '0%', 'margin-right': '250px', 'placeholder': 'Enter riddle as portal protection'});
+                $('#' + id).css({'transition': 'all 2s ease', 'width': '1000px', 'border': 'none', 'border-bottom': '1px solid white', 'border-radius': '0%', 'margin-right': '250px', 'placeholder': 'Enter riddle as portal protection'});
             }
         }, 1300);
         $('#instruct').css('opacity', '0');

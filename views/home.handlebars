@@ -2,8 +2,22 @@
 <script src="/js/tracking.js"></script>
 <script src="/js/splines.js"></script>
 
-
 <div id="container"></div>
+
+    <!-- <div id='vidfill'></div> -->
+    <video id="bg-vid" autoplay loop muted playsinline>
+        <source src="/video/fallingstar.mp4" type="video/mp4" />
+        <!-- <source src="/video/city.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/round2/wave.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/round2/tracer_sm.mp4" type="video/mp4" />  -->
+
+
+        <!-- <source src="/video/round2/specs.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/fiber.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/rain.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/round2/droplets.mp4" type="video/mp4" /> -->
+
+    </video>
 
 <div class="draw-frame">
     <div id="draw-border"></div>
@@ -14,15 +28,20 @@
 <div id="create-hole">Burrow</div>
 <div id="dig">Dig</div>
 
-
 <div id="portal-contain">
     {{#each users}}
-        <div id="{{this.name}}" class="portals" data-img="{{this.userimg}}" data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">{{this.name}}</div>
+        <div id="hoop-contain" data-name="{{this.name}}" class="portals" data-img="{{this.userimg}}"  data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">
+            <div id="bg-img" class="c" data-name="{{this.name}}"></div>
+            <div id="c1" class="c" data-name="{{this.name}}">{{this.name}}</div>
+            <div id="c2" class="c" data-name="{{this.name}}"></div>
+            <div id="c3" class="c" data-name="{{this.name}}"></div>
+            <div id="c4" class="c" data-name="{{this.name}}"></div>
+            <div id="c5" class="c" data-name="{{this.name}}"></div>
+        </div>
     {{/each}}
 </div>
 
 <script src="/js/dat.gui.min.js"></script>
 <script src="/js/three.js"></script>
 <script src="/js/geometry.js"></script>
-<script src="/js/hometracker.js"></script>
 <script src="/js/home.js" type="text/javascript"></script>

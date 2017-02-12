@@ -11,14 +11,14 @@ body {
   overflow:hidden;
 }
 
-#vidfill {
-  height: 900px;
-  width: 50px;
-  position: absolute;
-  right: 0;
-  background-color: #030303;
-  z-index: -1;
-}
+// #vidfill {
+//   height: 900px;
+//   width: 50px;
+//   position: absolute;
+//   right: 0;
+//   background-color: #030303;
+//   z-index: -1;
+// }
 
 a:hover, a:active, a:focus, a:visited {
   text-decoration: none;
@@ -453,7 +453,7 @@ textarea:focus, input:focus{
   margin-left: 41.5%;
   margin-top: 90px;
   height: 475px;
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, 1);
   transition: box-shadow 1.5s ease;
 }
 
@@ -464,7 +464,7 @@ textarea:focus, input:focus{
 
 #q2 {
   margin-left: 37.5%;
-  background-color: #777;
+  background-color: rgba(255, 255, 255, .9)
 }
 
 #q2B {
@@ -476,7 +476,7 @@ textarea:focus, input:focus{
   margin-left: 34.5%;
   margin-top: 170px;
   height: 325px;
-  background-color: #555;
+ background-color: rgba(255, 255, 255, .8)
 }
 
 #q3B {
@@ -488,7 +488,7 @@ textarea:focus, input:focus{
   margin-left: 31.5%;
   margin-top: 205px;
   height: 250px;
-  background-color: #444;
+  background-color: rgba(255, 255, 255, .7)
 }
 
 #q4B {
@@ -499,7 +499,8 @@ textarea:focus, input:focus{
 #q5 {
   margin-left: 28.5%;
   margin-top: 240px;
-  height: 175px;background-color: #222;
+  height: 175px;
+  background-color: rgba(255, 255, 255, .6)
 }
 
 #q5B {
@@ -507,21 +508,21 @@ textarea:focus, input:focus{
   margin-right: 30.5%;
 }
 
-video {
--webkit-font-smoothing: antialiased;
-  position: fixed;
-  top: 50%;
-  left: 47.4%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100;
-  transform: translateX(-50%) translateY(-50%);
-  background-size: cover;
-  transition: 1s opacity;
-  opacity: 0;
-}
+// video {
+// -webkit-font-smoothing: antialiased;
+//   position: fixed;
+//   top: 50%;
+//   left: 47.4%;
+//   min-width: 100%;
+//   min-height: 100%;
+//   width: auto;
+//   height: auto;
+//   z-index: -100;
+//   transform: translateX(-50%) translateY(-50%);
+//   background-size: cover;
+//   transition: 1s opacity;
+//   opacity: 0;
+// }
 
 #wrapper {
   margin-left: 400px;
@@ -712,4 +713,35 @@ video {
     // width: 50px;
     // line-height: 14px;
     // background-color: rgba(0, 0, 0, .2);
+}
+
+// #vidfill {
+//   height: 900px;
+//   width: 50px;
+//   position: absolute;
+//   right: 0;
+//   background-color: #030303;
+//   z-index: 1;
+// }
+
+#bg-vid {
+-webkit-font-smoothing: antialiased;
+  position: fixed;
+  top: 50%;
+  left: 47.4%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%;
+  width: 140%;
+
+  /*height: auto;*/
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%);
+  /*background-size: cover;*/
+  transition: all 3s ease;
+  /*opacity: 0;*/
+  filter: grayscale(100%);
+  //   filter: brightness(0.6);
+    // filter: brightness(0.6);
 }

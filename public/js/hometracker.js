@@ -18,14 +18,41 @@ $(document).ready(function() {
     let inputName;
     let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
-    // console.log('hey');
-    // $('.portals').on('click', function() {
-    //     inputName = $(this).attr('id');
-    //     // setTimeout(function() {
-    //     //     tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
-    //     // }, 5000);
-    //     // submitLogin(inputName);
-    // });
+    let user = sessionStorage.user;
+
+    $('.portals').on('click', function() {
+        let name = $(this).attr('id');
+        $.get('/getgesture/' + name, (data) => {
+            console.log(data.Gestures[0].gestureCode);
+        });
+    });
+    //this animation is for right answer
+        // let correctAnswer = () => {
+        //     setTimeout(() => {
+        //         let body = $('body').attr('data-correct');
+        //         if (body === 'correct') {
+        //             setInterval(() => {
+        //
+        //             }, 100);
+        //         }
+        //     }, 10);
+        // }
+        //
+        // $(document).on('keypress', function(e) {
+        //     if (e.which === 13 && $('#answer-input').val() !== '') {
+        //         correctAnswer();
+        //     }
+        // });
+        //
+        // $(document).on('click', '#submit-guess', function(e) {
+        //     correctAnswer();
+        // });
+
+
+
+
+
+
 
 
 //have variable with stored selected users name that will be input into the submit login function

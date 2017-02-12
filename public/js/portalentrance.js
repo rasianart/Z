@@ -1,7 +1,7 @@
 $(document).on('ready', function() {
 
     console.log(sessionStorage.user);
-    
+
     let isCreated = false;
     let newCharacter = {
         name: 'patrick',
@@ -24,6 +24,12 @@ $(document).on('ready', function() {
 
     let user;
     let burrow1, burrow2, burrow3, burrow4, burrow5;
+
+    setTimeout(() => {
+        $('#bg-vid').css('opacity', '.2');   //city and all else unless stated otherwise
+                            //tracer doesn't need grayscale!
+                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
+    }, 500);
 
     $.get('/getuser/' + thisUser, (data) => {
         console.log(data);
@@ -222,20 +228,22 @@ $(document).on('ready', function() {
       }
     }
 
-    $('#hide').on('click', () => {
-        $("#wrapper").toggleClass("toggled");
-        isToggled = false;
-        isQchosen = false;
-    })
+    // $('#hide').on('click', () => {
+    //     $("#wrapper").toggleClass("toggled");
+    //     isToggled = false;
+    //     isQchosen = false;
+    // })
 
     $('#enter').on('click', function() {
         let text = $('#match1').html();
         let last = text.lastIndexOf(' ');
         let burrowUser = text.substr(last + 1);
-        $.get('/portalentrance/' + burrowUser, (data) => {
-            console.log(data);
-        });
-        window.location.href = "/portalentrance/" + burrowUser;
+        setTimeout(() => {
+            $.get('/portalentrance/' + burrowUser, (data) => {
+                console.log(data);
+            });
+            window.location.href = "/portalentrance/" + burrowUser;
+        }, 3000);
     });
 
     $("#q2-hover-box").on('mouseenter', function() {
@@ -352,7 +360,7 @@ $(document).on('ready', function() {
     // });
 //functionality for each button/answer chosen
 //post sent after 10 questions have been answered
-    $('.all-buttons').on('click', function(e) {
+    $('.all-buttons, #enter, #hide').on('click', function(e) {
         e.preventDefault();
         allGlow();
         $('#q1').children().fadeOut('slow');

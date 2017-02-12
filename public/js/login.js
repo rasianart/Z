@@ -19,8 +19,8 @@ $(document).ready(function() {
     let loginUser;
     let inputName = '';
     let color = '';
-    let imgInput;
     let loginColor;
+    let imgInput;
 
     let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
@@ -31,6 +31,15 @@ $(document).ready(function() {
 
     let z = $('<div id="z">Z</div>');
     z.appendTo('body');
+
+    let imgBox = $('<div id="img-box"></div>').appendTo('body');
+    let img = $('<img id="canvas-img">').appendTo(imgBox);
+
+    $(document).on('click', 'div#postz', function(e) {
+            imgInput = new Image();
+            imgInput.src = canvas.toDataURL("png");
+            // $('#canvas-img').attr('src', imgInput.src);
+    });
 
     if (initClick === false) {
         $('#login-button').mouseenter(function() {
@@ -248,8 +257,9 @@ $(document).ready(function() {
             });
         } else if (activate) {
             getCode();
-            imgInput = new Image();
-            imgInput.src = canvas.toDataURL("image/png");
+            // let imgInput = new Image();
+            // imgInput.src = canvas.toDataURL("png");
+            // $('#img-hold').attr('src', imgInput.src);
             let newUser = {
                 name: loginName.toLowerCase(),
                 color: color,

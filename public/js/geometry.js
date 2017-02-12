@@ -131,13 +131,26 @@ function init() {
     var material = new THREE.LineBasicMaterial({
         vertexColors: THREE.VertexColors,
         blending: THREE.AdditiveBlending,
+        // lights: true,
+        // linewidth: 400,
         transparent: true
+
     });
 
-    if ($('#create-hole').html() === 'Burrow') {
-        material.transparent = false;
-        material.color.setHex(0x000000);
-    }
+    // var light = new THREE.DirectionalLight( 0xffffff );
+    // light.position = camera.position;
+    // scene.add(light);
+
+    // material.depthWrite = true;
+    // material.opacity = 1.0;
+    // material.combine = THREE.MultiplyOperation;
+
+
+
+    // if ($('#create-hole').html() === 'Burrow') {
+    //     material.transparent = false;
+    //     material.color.setHex(0x000000);
+    // }
 
     $(document).on('keypress', function(e) {
         if (e.which === 13 && $('#answer-input').val() !== '') {
@@ -379,7 +392,6 @@ $(document).on('click', 'div#postz', function() {
                     linesMesh.scale.set(s, s, s);
                 } else {
                     setTimeout(function() {
-                        // let user = $('body').attr('data-user');
                         $('#container').remove();
                         $.get('/home/', function(data) {});
                         window.location.href = "/home/";
@@ -387,7 +399,7 @@ $(document).on('click', 'div#postz', function() {
                 }
             }, 1);
         }
-    }, 250);
+    }, 350);
 });
 
 //home
@@ -429,8 +441,12 @@ $('.portals').on('click', function() {
     }, 10);
 //this animation is for right answer
     let correctAnswer = () => {
-        setTimeout(() => {
+        // setTimeout(() => {
+
+
+        setInterval(() => {
             let body = $('body').attr('data-correct');
+            console.log(body);
             if (body === 'correct') {
                 setTimeout(function() {
                     setInterval(function() {
@@ -443,7 +459,8 @@ $('.portals').on('click', function() {
                     }, 1);
                 }, 2100);
             }
-        }, 10);
+        }, 100);
+        // }, 10);
     }
 
     $(document).on('keypress', function(e) {
@@ -472,7 +489,7 @@ $('#create-hole').on('click', function() {
 
     let num = 125;
     setInterval(function() {
-        num += 1;
+        num += 2;
         if(num < 256 ) {
             scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
         }

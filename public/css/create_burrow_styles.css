@@ -44,12 +44,8 @@ body{
     height: 450px;
     border-radius: 50%;
     background-color: transparent;
-    /*border: 1px solid #222;*/
     top: 0;
     left: 0;
-    /*opacity: 0;*/
-    /*margin-left: 500px;*/
-    /*margin-top: 200px;*/
     transition: all 3s ease;
     text-align: center;
 }
@@ -57,27 +53,27 @@ body{
 #c1 {
     margin-left: 400px;
     margin-top: 100px;
-    border: 1px solid #222;
+    border: 1px solid white;
 }
 #c2 {
     margin-left: 400px;
     margin-top: 250px;
-    border: 1px solid #222;
+    border: 1px solid white;
 }
 #c3{
     margin-left: 450px;
     margin-top: 300px;
-    border: 2px solid #222;
+    border: 2px solid white;
 }
 #c4 {
     margin-left: 550px;
     margin-top: 200px;
-    border: 1px solid #222;
+    border: 1px solid white;
 }
 #c5 {
     margin-left: 600px;
     margin-top: 100px;
-    border: 2px solid #222;
+    border: 2px solid white;
 }
 
 #instruct {
@@ -96,7 +92,7 @@ body{
     position: absolute;
     left: 0;
     top: 0;
-    color: black;
+    color: white;
     font-size: 20px;
     margin-top: 20px;
     margin-left: 330px;
@@ -119,18 +115,22 @@ form {
     opacity: 0;
     transition: all .5s ease;
     margin-left: 70px;
-    font-family: 'VT323', monospace;
+    /*font-family: 'VT323', monospace;*/
+    font-family: 'Bungee Hairline', cursive;
     font-size: 16px;
+    color: white;
 }
 .chains {
     position: absolute;
     top: 0;
     opacity: 0;
     transition: all .5s ease;
-    font-family: 'VT323', monospace;
+    /*font-family: 'VT323', monospace;*/
+    font-family: 'Bungee Hairline', cursive;
     font-size: 16px;
     right: 0;
     margin-right: 70px;
+    color: white;
 }
 
 #text1 {
@@ -177,9 +177,9 @@ form {
     margin-left: 30px;
     width: 22px;
     height: 22px;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 50%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     transition: all 3.5s ease;
     margin-top: 900px;
     display: inline-block;
@@ -196,9 +196,9 @@ form {
     margin-right: 30px;
     width: 22px;
     height: 22px;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 50%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     transition: all 3.5s ease;
     margin-top: 900px;
     display: inline-block;
@@ -217,6 +217,10 @@ form {
     background-repeat: no-repeat;
     /*background-position: -615px -200px;*/
     background-position: center;
+}
+
+input {
+    color: white;
 }
 
 textarea:focus, input:focus, button:focus {
@@ -280,7 +284,7 @@ textarea:focus, input:focus, button:focus {
     z-index: 1000;
     width: 100px;
     height: 50px;
-    background-color: black;
+    background-color: white;
     color: white;
 }
 
@@ -437,4 +441,24 @@ textarea:focus, input:focus, button:focus {
 
 #submit-all:hover {
     cursor: pointer;
+}
+
+#bg-vid {
+-webkit-font-smoothing: antialiased;
+  position: fixed;
+  top: 50%;
+  left: 47.4%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 120%;
+  /*height: auto;*/
+  z-index: -1;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%);
+  /*background-size: cover;*/
+  transition: all 8s ease;
+  /*opacity: 0;*/
+  filter: grayscale(100%);
+  /*-webkit-filter: brightness(0.6);*/
+    /*filter: brightness(0.6);*/
 }

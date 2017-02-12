@@ -95,9 +95,11 @@ html {
     height: 0px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, .3);
+    color: rgba(255, 255, 255, 0);
     z-index: 0;
     border: none;
     transition: all 1s ease;
+    /*padding-top: 120px;*/
 }
 
 #portal-contain {
@@ -110,52 +112,32 @@ html {
     transition: all 1s linear;
     width: 100%;
     height: 100%;
+    /*opacity: 0;*/
     /*text-align: center;*/
 }
 
-.portals {
-    font-family: 'Bungee Hairline', cursive;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 125px;
-    color: white;
-    background-color: rgba(255, 255, 255, 0);
-    border: 1px solid white;
-    /*border-radius: 10%;*/
-    overflow: hidden;
-    transition: all 0s ease;
-    height: 0px;
-    opacity: 0;
-    line-height: 14px;
-    /*background-size: cover;*/
-    background-size: 0px 0px;
-    background-repeat: no-repeat;
-    background-position: center;
-    /*filter: grayscale(100%);*/
-}
 
-.portals:hover {
-    cursor: pointer;
-}
 
 .chosen {
     font-family: 'Bungee Hairline', cursive;
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 125px;
+    width: 75px;
+    height: 75px;
     color: white;
     background-color: rgba(255, 255, 255, 0);
     border: 1px solid white;
-    border-radius: 10%;
+    border-radius: 50%;
     /*overflow: hidden;*/
-    line-height: 14px;
+    line-height: 75px;
     transition: all 0s ease;
-    height: 0px;
     opacity: 0;
     font-size: 14px;
+    z-index: 10;
 }
+
+
 
 #answer-line {
     font-family: 'Bungee Hairline', cursive;
@@ -220,6 +202,7 @@ textarea:focus, input:focus, button:focus {
     overflow: hidden;
     width: 200px;
     text-align: center;
+    z-index: 1000;
 }
 
 
@@ -283,7 +266,7 @@ textarea:focus, input:focus, button:focus {
     position: relative;
 }
 
-#canvas, video, {
+#canvas, #video, {
   -moz-transform: scale(-1, 1);
   -o-transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
@@ -315,4 +298,135 @@ textarea:focus, input:focus, button:focus {
     filter: FlipH;
     transform: scale(-1, 1);
     transition: all 3s ease;
+}
+
+/*.portals {
+    font-family: 'Bungee Hairline', cursive;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 125px;
+    color: black;
+    background-color: rgba(255, 255, 255, .7);
+    border: 1px solid white;
+    overflow: hidden;
+    transition: all 0s ease;
+    height: 0px;
+    opacity: 0;
+    line-height: 14px;
+    background-size: 0px 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+}*/
+
+.portals:hover {
+    cursor: pointer;
+}
+
+.portals {
+    font-family: 'Bungee Hairline', cursive;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
+    /*overflow: hidden;*/
+    /*transition: all 3s ease;*/
+    margin-bottom: 0px;
+    transition: all 0s ease;
+    opacity: 0;
+    line-height: 75px;
+    background-size: 0px 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*text-align: center;*/
+    z-index: 1000;
+    color: white;
+
+}
+
+.c {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    transition: all 1s ease;
+    z-index: 2;
+    color: white;
+    opacity: 0;
+    /*text-align: center;*/
+}
+
+#bg-img {
+    margin-left: 13px;
+    margin-top: 13px;
+    border: 1px solid rgba(255, 255, 255, .6);
+    background-size: 0px 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*z-index: 1;*/
+}
+
+#c1 {
+    margin-left: 10px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, .6);
+    line-height: 50px;
+    /*padding-top: 20px;
+    color: white;*/
+}
+#c2 {
+    margin-left: 10px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, .7);
+}
+#c3{
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, .8);
+}
+#c4 {
+    margin-left: 20px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, .9);
+}
+#c5 {
+    margin-left: 25px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
+/*#vidfill {
+  height: 900px;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  background-color: #030303;
+  z-index: 1;
+}*/
+
+#bg-vid {
+-webkit-font-smoothing: antialiased;
+  position: fixed;
+  top: 50%;
+  left: 47.4%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 120%;
+  /*height: auto;*/
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%);
+  /*background-size: cover;*/
+  transition: all 8s ease;
+  /*opacity: 0;*/
+  filter: grayscale(100%);
+  /*-webkit-filter: brightness(0.6);*/
+    /*filter: brightness(0.6);*/
 }
