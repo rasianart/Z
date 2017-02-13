@@ -33,7 +33,6 @@ $(document).ready(function() {
     $('.portals').on('click', function() {
         let name = $(this).attr('data-name');
         $.get('/getgesture/' + name, (data) => {
-            // console.log(data.Gestures[0].gestureCode);
             let arr = data.Gestures[0].gestureCode;
             dbArr = arr.split(',').map(function(item) {
                 return parseInt(item);
@@ -45,20 +44,14 @@ $(document).ready(function() {
     });
 
     setTimeout(() => {
-        $('#bg-vid').css('opacity', '.8');   //city and all else unless stated otherwise
-                            //tracer doesn't need grayscale!
-                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
-    }, 2000);
+        $('#bg-vid').css('opacity', '1');
+    }, 1000);
 
     let vid = document.getElementById("bg-vid");
-    // vid.playbackRate = 0.2;  //honeycomb
-
 
     let initCircle = (cId, mLeft, mTop) => {
         $(cId).css({'margin-left': mLeft, 'margin-top': mTop});
     }
-
-
 
     initCircle('#c1', '4px', '10px');
     initCircle('#c2', '15px', '15px');
@@ -194,7 +187,7 @@ $(document).ready(function() {
         }, 150);
         $('.portals').css('transition', 'all 1.5s ease');
         $('#dig').css({'height': '0px', 'margin-bottom': '0px'});
-        let idName = $(this).attr('id');
+        let idName = sessionStorage.user;
         let burrow = $('#create-hole');
         let child = $(this);
         let parent = $(this).parent();
@@ -305,7 +298,7 @@ $(document).ready(function() {
 
         let ifCorrect = () => {
             // $('body').attr('data-correct', 'correct');
-            let userAnswer = $('#answer-input').val().trim();
+            let userAnswer = $('#answer-input').val().trim().toLowerCase();
             if (userAnswer === answer) {
                 console.log('correct');
                 imgHolder.attr('src', userImg);
@@ -326,6 +319,10 @@ $(document).ready(function() {
                 }, 1000);
                 correctFunc = () => {
                     $('body').attr('data-correct', 'correct');
+                    $('#access').css({'opacity': '1'});
+                    setTimeout(() => {
+                        $('#access').css('opacity', '0');
+                    }, 1500);
                     setTimeout(() => {
                         $('#img-holder').css({'width': '0px', 'height': '0px', 'margin-left': '20px', 'margin-top': '180px'});
                         $('#submit-guess').css({'transition': 'all 1.5s ease', 'height': '0px', 'margin-top': '76px'});
@@ -353,6 +350,10 @@ $(document).ready(function() {
                 }
             } else {
                 console.log('incorrect');
+                $('#alert').css('opacity', '1');
+                setTimeout(() => {
+                    $('#alert').css('opacity', '0');
+                }, 4500);
             }
         }
 
@@ -425,7 +426,8 @@ $(document).ready(function() {
         if (login){
             if (myArr.length > dbArrLength) {
                 console.log(myArr.length/dbArrLength);
-                if (myArr.length/dbArrLength < 7.5) {
+                // if (myArr.length/dbArrLength < 7.5) {
+                if (myArr.length/dbArrLength < 20) {
                     equalize = parseInt(myArr.length/dbArrLength);
                     newLength = equalize * dbArrLength;
                 } else {
@@ -513,7 +515,11 @@ $(document).ready(function() {
 
     function incorrect() {
         console.log('Sorry, incorrect password, try again.');
-        alert('Sorry, incorrect password, try again.');
+        $('#alert').html('Incorrect Movement Phrase <br> Please Try Again');
+        $('#alert').css('opacity', '1');
+        setTimeout(() => {
+            $('#alert').css('opacity', '0');
+        }, 4500);
         drawSegments[segment] = [];
         initArr = [];
         context.clearRect(0, 0, canvas.width, canvas.height);

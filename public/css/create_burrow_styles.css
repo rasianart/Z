@@ -20,6 +20,25 @@ body{
      box-sizing: border-box;
 }
 
+#alert {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 800px;
+    /*height: 100px;*/
+    margin-left: 330px;
+    margin-top: 300px;
+    background-color: transparent;
+    color: white;
+    font-size: 48px;
+    font-family: 'Bungee Hairline', cursive;
+    text-align: center;
+    line-height: 100px;
+    opacity: 0;
+    transition: all 1s ease;
+}
+
 #background {
     width: 100%;
     height: 100%;
@@ -402,14 +421,15 @@ textarea:focus, input:focus, button:focus {
     opacity: 0;
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    border: 1px solid white;
+    color: white;
     border-radius: 50%;
     background-color: transparent;
-    margin-left: 750px;
+    margin-left: 620px;
     margin-top: 50px;
     z-index: -1;
     text-align: center;
-    padding-top: 6px;
+    padding-top: 8px;
     overflow: hidden;
     transition: all .75s ease;
 }
@@ -420,8 +440,32 @@ textarea:focus, input:focus, button:focus {
 #post-text {
     opacity: 0;
     transition: all 3s ease;
-    font-size: 22px;
+    font-size: 18px;
 }
+
+#img-reset {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 150px;
+    height: 35px;
+    border: 1px solid white;
+    color: white;
+    background-color: transparent;
+    margin-left: 775px;
+    margin-top: 50px;
+    z-index: 1;
+    text-align: center;
+    padding-top: 8px;
+    overflow: hidden;
+    transition: all 2s ease;
+}
+#img-reset:hover {
+    cursor: pointer;
+}
+
+
 
 #submit-all {
     opacity: 0;
@@ -430,10 +474,12 @@ textarea:focus, input:focus, button:focus {
     bottom: 0;
     width: 150px;
     height: 40px;
-    border: 1px solid white;
+    border: 1px solid #777;
+    color: #777;
+    z-index: 10;
     background: transparent;
     margin-left: 655px;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
     padding-top: 10px;
     text-align: center;
     transition: all 1.5s ease;

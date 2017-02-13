@@ -4,18 +4,35 @@
 
 <div id="container"></div>
 
+<div id="alert">Incorrect Pass Phrase <br> Please Try Again</div>
+<div id="access">Access</div>
+
     <!-- <div id='vidfill'></div> -->
     <video id="bg-vid" autoplay loop muted playsinline>
-        <source src="/video/fallingstar.mp4" type="video/mp4" />
+        <source src="/video/lightrayBW.mp4" type="video/mp4" />
         <!-- <source src="/video/city.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/round2/wave.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/round2/tracer_sm.mp4" type="video/mp4" />  -->
+        <!-- <source src="/video/tracer_sm.mp4" type="video/mp4" />  -->
+
+        <!-- <source src="/video/dust2.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/rays.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/sky.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/skyhigh.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/silkBW.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/snow.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/sunray.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/softwhiteBW.mp4" type="video/mp4" /> -->
 
 
-        <!-- <source src="/video/round2/specs.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/fiber.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/rain.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/round2/droplets.mp4" type="video/mp4" /> -->
+
+        <!-- <source src="/video/r2/rays2.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/r2/rayparticle.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/r2/plains.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/r2/forest.mp4" type="video/mp4" /> -->
+        <!-- <source src="/video/r2/plains.mp4" type="video/mp4" /> -->
+
+
+
+
 
     </video>
 
@@ -30,9 +47,9 @@
 
 <div id="portal-contain">
     {{#each users}}
-        <div id="hoop-contain" data-name="{{this.name}}" class="portals" data-img="{{this.userimg}}"  data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">
+        <div id="hoop-contain" data-name="{{this.name}}" class="portals" data-img="{{this.userimg}}"  data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">{{this.name}}
             <div id="bg-img" class="c" data-name="{{this.name}}"></div>
-            <div id="c1" class="c" data-name="{{this.name}}">{{this.name}}</div>
+            <div id="c1" class="c" data-name="{{this.name}}"></div>
             <div id="c2" class="c" data-name="{{this.name}}"></div>
             <div id="c3" class="c" data-name="{{this.name}}"></div>
             <div id="c4" class="c" data-name="{{this.name}}"></div>

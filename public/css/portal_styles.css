@@ -503,19 +503,24 @@ textarea:focus, input:focus{
   margin-right: 30.5%;
 }
 
-video {
+#bg-vid {
 -webkit-font-smoothing: antialiased;
   position: fixed;
   top: 50%;
   left: 47.4%;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
-  height: auto;
+  width: 105%;
+  /*height: auto;*/
   z-index: -100;
   transform: translateX(-50%) translateY(-50%);
-  background-size: cover;
-  transition: 1s opacity;
+  /*background-size: cover;*/
+  transition: all 3s ease;
+  filter: grayscale(100%);
+  opacity: 0;
+  /*-webkit-filter: brightness(0.6);*/
+    /*filter: brightness(0.4);*/
+     /*filter: invert(100%);*/
 }
 
 #wrapper {

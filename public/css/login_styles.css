@@ -5,7 +5,7 @@ html {
     /*transition: all 8s linear;*/
 }
 body{
-
+    background-color: black;
 }
 
 #stats {
@@ -24,6 +24,11 @@ textarea:focus, input:focus, button:focus {
     bottom: 0;
 }*/
 
+#container {
+    opacity: 0;
+    transition: all 5s ease;
+}
+
 
 
 #top-cover {
@@ -34,8 +39,8 @@ textarea:focus, input:focus, button:focus {
     top: 0;
     left: 0;
     z-index: 5;
-    background-color: rgba(125, 125, 125, 1);
-    /*background-color: #999;*/
+    /*background-color: rgba(125, 125, 125, 1);*/
+    background-color: black;
     width: 400px;
     height: 200px;
     transition: all 1s linear;
@@ -50,8 +55,8 @@ textarea:focus, input:focus, button:focus {
     right: 0;
     z-index: 5;
     /*opacity: 0;*/
-    background-color: rgba(125, 125, 125, 1);
-    /*background-color: #999;*/
+    /*background-color: rgba(125, 125, 125, 1);*/
+    background-color: black;
     width: 400px;
     height: 200px;
     transition: all 1s linear;
@@ -368,6 +373,7 @@ textarea:focus, input:focus, button:focus {
     margin-top: 100px;
     font-size: 572px;
     color: white;
+    z-index: 1;
     font-family: 'Bungee Hairline', cursive;
     background-color: transparent;
     transition: all .5s ease;
@@ -401,4 +407,24 @@ textarea:focus, input:focus, button:focus {
     height: 400px;
     /*opacity: 0;*/
     transition: all 3s ease;
+}
+
+#bg-vid {
+-webkit-font-smoothing: antialiased;
+  position: fixed;
+  top: 50%;
+  left: 47.4%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 120%;
+  /*height: auto;*/
+  z-index: 0;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%);
+  /*background-size: cover;*/
+  transition: all 8s ease;
+  /*opacity: 0;*/
+  filter: grayscale(100%);
+  /*-webkit-filter: brightness(0.6);*/
+    /*filter: brightness(0.6);*/
 }

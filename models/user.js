@@ -2,6 +2,7 @@ module.exports = function(sequelize, DataTypes) {
   let User = sequelize.define("User", {
     // Giving the User model a name of type STRING
     name: DataTypes.STRING,
+    loginimg: DataTypes.TEXT,
     userimg: DataTypes.TEXT,
     riddle: DataTypes.TEXT,
     answer: DataTypes.STRING,

@@ -30,7 +30,7 @@ module.exports = (app) => {
         });
   });
 
-  app.get('/portalentrance/:user', (req, res) => {
+  app.get('/portalentrance', (req, res) => {
       let userName = req.params.user
       console.log(userName);
       db.User.findAll({

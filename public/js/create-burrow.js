@@ -26,20 +26,21 @@ $(document).ready(function() {
         connect3 = false,
         connect4 = false,
         connect5 = false;
-    let ridInput,
-        ansInput,
-        infInput,
-        linInput,
-        imgInput,
-        conInput1,
-        conInput2,
-        conInput3,
-        conInput4,
-        conInput5,
+    let ridInput = '',
+        ansInput = '',
+        infInput = '',
+        linInput = '',
+        imgInput = '',
+        conInput1 = 'No Burrow Connection',
+        conInput2 = 'No Burrow Connection',
+        conInput3 = 'No Burrow Connection',
+        conInput4 = 'No Burrow Connection',
+        conInput5 = 'No Burrow Connection',
         chosenInput,
         color,
         loginUser,
         inputName;
+    let hover = false;
 
     let user = sessionStorage.user;
     let userColor;
@@ -75,46 +76,11 @@ $(document).ready(function() {
         }
     }
 
-    // let rampUp = 0;
     $('.c').mouseenter(function() {
-        randCircle();
-        // if (rampUp < 9) {
-        //     if (userColor === 'yellow') {
-        //         $('body').css('background-color', 'rgba(255, 255, 0, .0' + rampUp + ')');
-        //     } else if (userColor === 'cyan') {
-        //         $('body').css('background-color', 'rgba(32, 178, 170, .0' + rampUp + ')');
-        //     } else if (userColor === 'magenta') {
-        //         $('body').css('background-color', 'rgba(139, 0, 139, .0' + rampUp + ')');
-        //     }
-        //     rampUp = rampUp + .75;
-        //     // rampUp++;
-        //     console.log(rampUp);
-        // }
+        if (hover === false) {
+            randCircle();
+        }
     });
-
-    $('.color').mouseenter(() => {
-        $('#color-instruct').css('opacity', '1');
-        console.log('hey');
-    });
-    $('.color').mouseleave(() => {
-        $('#color-instruct').css('opacity', '0');
-    });
-
-    // $('.color').on('click', function() {
-    //     $('#color-instruct').css('opacity', '0');
-    //     color = $(this).html();
-    //     $('#submit-all').css('opacity', '1');
-    //     if (color === 'yellow') {
-    //         $('body').css('background-color', 'rgba(255, 255, 0, .25)');
-    //     } else if (color === 'magenta') {
-    //         $('body').css('background-color', 'rgba(139, 0, 139, .25');
-    //     } else if (color === 'cyan') {
-    //         $('body').css('background-color', 'rgba(32, 178, 170, .4');
-    //     }
-    //     $('#colors').css('opacity', '0');
-    //     setTimeout(function() {
-    //         $('#colors').remove();
-    //     }, 1000);
 
     function slideUp(id, px) {
         $(id).css('margin-top', px);
@@ -133,24 +99,15 @@ $(document).ready(function() {
         slideUp('#connect5', '675px');
     }, 3000);
 
-
-    // });
-
     let imgBox = $('<div id="img-box"></div>').appendTo('body');
     let img = $('<img id="canvas-img">').appendTo(imgBox);
 
-    // let url = window.location.href;
-    // let last = url.lastIndexOf('/');
-    // let thisUser = url.substr(last + 1);
     let thisUser = sessionStorage.user;
 
     $('#post').on('click', function() {
         imgInput = new Image();
         imgInput.src = canvas.toDataURL("image/png");
         $('#canvas-img').attr('src', imgInput.src);
-        $.post('/updateicon', {name: thisUser, userimg: image.src}, (req, res) => {
-            console.log(res);
-        });
         setTimeout(function() {
             $('#img-box').css({'margin-left': '120px', 'margin-top': '25px', 'opacity': '1'});
         }, 100);
@@ -160,32 +117,47 @@ $(document).ready(function() {
             initArr = [];
         }, 200);
         setTimeout(function() {
-            $('#img-box').css({'opacity': '0'});
+            $('#img-box, #img-reset, #post').css({'transition': 'all 1s ease', 'opacity': '0'});
+            randCircle();
         }, 2000);
     });
 
     $('#submit-all').on('click', function() {
-        let body = {
-            name: thisUser,
-            userimg: imgInput.src,
-            riddle: ridInput,
-            answer: ansInput,
-            info: infInput,
-            link: linInput,
-            color: color,
-            burrow1: conInput1,
-            burrow2: conInput2,
-            burrow3: conInput3,
-            burrow4: conInput4,
-            burrow5: conInput5
-        };
-        $.post('/updatebio', body, (req, res) => {
-            console.log(res);
-        });
+        if (ridInput === '' || ansInput === '' || infInput === '' || linInput === '' ||  imgInput === '') {
+            $('#alert').css('opacity', '1');
+            setTimeout(() => {
+                $('#alert').css('opacity', '0');
+            }, 4500);
+        } else {
+            let body = {
+                name: thisUser,
+                userimg: imgInput.src,
+                riddle: ridInput,
+                answer: ansInput,
+                info: infInput,
+                link: linInput,
+                color: color,
+                burrow1: conInput1,
+                burrow2: conInput2,
+                burrow3: conInput3,
+                burrow4: conInput4,
+                burrow5: conInput5
+            };
+            $.post('/updatebio', body, (req, res) => {
+                console.log(res);
+            });
+            $('*').css({'transition': 'all 3s ease', 'opacity': '0'});
+            $('body').css({'opacity': '1', 'background-color': 'rgba(40, 40, 40, 1)'});
+            setTimeout(() => {
+                $.get('/home/', function(data) {});
+                window.location.href = "/home/";
+            }, 3000);
+        }
     })
 
-    $(document).on('keypress', function(e) {
+    $(document).on('keypress', function (e) {
         if (e.which === 13 && $('#' + chosenInput).val() !== '') {
+            $('#submit-all').css('opacity', '1');
             $('#c1').css({'margin-left': '500px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, .15)'});
             $('#c2').css({'margin-left': '425px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, .1)'});
             $('#c3').css({'margin-left': '350px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, 0)'});
@@ -217,6 +189,9 @@ $(document).ready(function() {
                     }
                 }, 6000);
             }
+            setTimeout(() => {
+                hover = false;
+            }, 7500);
 
             switch(chosenInput) {
                 case 'riddle':
@@ -225,7 +200,7 @@ $(document).ready(function() {
                     riddle = false;
                     break;
                 case 'answer':
-                    ansInput = $('#answer').val().trim();
+                    ansInput = $('#answer').val().trim().toLowerCase();
                     onInput('answer', '225px');
                     answer = false;
                     break;
@@ -245,27 +220,27 @@ $(document).ready(function() {
                     image = false;
                     break;
                 case 'connect1':
-                    conInput1 = $('#connect1').val().trim();
+                    conInput1 = $('#connect1').val().trim().toLowerCase();
                     onInput('connect1', '75px');
                     connect1 = false;
                     break;
                 case 'connect2':
-                    conInput2 = $('#connect2').val().trim();
+                    conInput2 = $('#connect2').val().trim().toLowerCase();
                     onInput('connect2', '225px');
                     connect2 = false;
                     break;
                 case 'connect3':
-                    conInput3 = $('#connect3').val().trim();
+                    conInput3 = $('#connect3').val().trim().toLowerCase();
                     onInput('connect3', '375px');
                     connect3 = false;
                     break;
                 case 'connect4':
-                    conInput4 = $('#connect4').val().trim();
+                    conInput4 = $('#connect4').val().trim().toLowerCase();
                     onInput('connect4', '525px');
                     connect4 = false;
                     break;
                 case 'connect5':
-                    conInput5 = $('#connect5').val().trim();
+                    conInput5 = $('#connect5').val().trim().toLowerCase();
                     onInput('connect5', '675px');
                     connect5 = false;
                     break;
@@ -274,6 +249,7 @@ $(document).ready(function() {
     });
 
     let onClick = (id, textId, cId) => {
+        hover = true;
         let newBool = eval(id);
         if (!newBool) {
             $(textId).css('opacity', '0');
@@ -293,7 +269,6 @@ $(document).ready(function() {
         }, 1300);
         $('#instruct').css('opacity', '0');
         chosenInput = id;
-        console.log(chosenInput);
     }
 
     $('.minis, .connections').on('click', function() {
@@ -318,21 +293,26 @@ $(document).ready(function() {
                 break;
             case 'image':
                 if (!image) {
+                    hover = true;
+                    $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
+                    let imgReset = $('<div id="img-reset">Reset</div>').appendTo('body');
                     $('#text5').css('opacity', '0');
-                    $('#image').css({'transition': 'all 1.5s ease', 'margin-left': '750px', 'margin-top': '50px'});
+                    $('#image').css({'transition': 'all 1.5s ease', 'margin-left': '620px', 'margin-top': '50px'});
                     $('#c5').css({'width': '450px', 'height': '450px'});
                     setTimeout(() => {
                         $('#post').css({'opacity': '1', 'z-index': '15'});
                         $('#image').css('opacity', '0');
                     }, 1300);
                     setTimeout(() => {
-                        $('#post').css({'width': '150px', 'height': '35px', 'margin-left': '690px', 'border-radius': '0%'});
+                        $('#img-reset').css({'opacity': '1', 'margin-bottom': '50px'});
+                        $('#post').css({'width': '150px', 'height': '35px', 'margin-left': '560px', 'border-radius': '0%'});
                         $('#c5').css({'margin-left': '500px', 'margin-top': '200px', 'background-color': 'rgba(255, 255, 255, 0)'});
                     }, 1800);
                     setTimeout(() => {
                         $('#post-text').css({'opacity': '1'});
                     }, 2300);
                 }
+
                 image = true;
                 break;
             case 'connect1':
@@ -352,11 +332,18 @@ $(document).ready(function() {
                 connect4= true;
                 break;
             case 'connect5':
+                $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
                 onClick(newId, '#chain5', '#c5');
                 connect5 = true;
                 break;
         }
     });
+
+    $(document).on('click', 'div#img-reset', function() {
+        drawSegments[segment] = [];
+        initArr = [];
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    })
 
 
     let hoverMouse = (miniId, miniHeight, cId, textId) => {
@@ -364,29 +351,41 @@ $(document).ready(function() {
         let mTop;
         let mRight;
         $('#' + miniId).mouseenter(function() {
-            mLeft = $(cId).css('margin-left');
-            mTop = $(cId).css('margin-top');
-            $(this).hasClass('connections') ? mRight = '750px' : mRight = '250px';
-            console.log(mRight);
-            let newId = eval(miniId);
-            if (!newId) {
-                $(this).css({'width': '30px', 'height': '30px', 'margin-left' : '26px', 'margin-top' : miniHeight + 'px'});
-                $(cId).css({'transition': 'all 1s ease', 'background-color': 'rgba(255, 255, 255, .4)', 'margin-left': mRight , 'margin-top': '180px'});
-                $(textId).css('opacity', '1');
-                if ($(this).hasClass('connections')) {
-                    $('#instruct').css('opacity', '1');
-                };
+            if (hover === false) {
+                mLeft = $(cId).css('margin-left');
+                mTop = $(cId).css('margin-top');
+                $(this).hasClass('connections') ? mRight = '750px' : mRight = '250px';
+                let newId = eval(miniId);
+                if (!newId) {
+                    $(this).css({'width': '30px', 'height': '30px', 'margin-left' : '26px', 'margin-top' : miniHeight + 'px'});
+                    $(cId).css({'transition': 'all 1s ease', 'background-color': 'rgba(255, 255, 255, .4)', 'margin-left': mRight , 'margin-top': '180px'});
+                    $(textId).css('opacity', '1');
+                    if ($(this).attr('id') === 'image') {
+                        $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '0'});
+                    }
+                    if ($(this).hasClass('connections')) {
+                        $('#instruct').css('opacity', '1');
+                    };
+                }
             }
         });
         $('#' + miniId).mouseleave(function() {
-            let newId = eval(miniId);
-            if (!newId) {
-                $(this).css({'width': '22px', 'height': '22px', 'margin-left' : '30px', 'margin-top' : (miniHeight + 4) + 'px'});
-                $(cId).css({'background-color': 'rgba(0, 0, 0, 0)', 'margin-left': mLeft, 'margin-top': mTop});
-                $(textId).css('opacity', '0');
-                if ($(this).hasClass('connections')) {
-                    $('#instruct').css('opacity', '0');
-                };
+            if (hover === false) {
+                let newId = eval(miniId);
+                if (!newId) {
+                    $(this).css({'width': '22px', 'height': '22px', 'margin-left' : '30px', 'margin-top' : (miniHeight + 4) + 'px'});
+                    $(cId).css({'background-color': 'rgba(0, 0, 0, 0)', 'margin-left': mLeft, 'margin-top': mTop});
+                    $(textId).css('opacity', '0');
+                    if ($(this).attr('id') === 'image') {
+                        $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
+                    }
+                    if ($(this).hasClass('connections')) {
+                        if ($(this).attr('id') === 'image') {
+                            $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
+                        }
+                        $('#instruct').css('opacity', '0');
+                    };
+                }
             }
         });
     }
@@ -416,160 +415,144 @@ $(document).ready(function() {
 
     let tracker = new tracking.ColorTracker(['yellow']);
 
-    // let burrowCircle = $('<div id="burrow-circle"></div>').appendTo('body');
-
-    // let imgBox = $('<div id="img-box"></div>').appendTo('body');
-    // let img = $('<img id="canvas-img">').appendTo(imgBox);
-    // let buttonP = $('<div id="png-add"></div').appendTo('body');
-    // buttonP.html('add');
+    // function submitLogin(loginName) {
+    //     if (login) {
+    //         $.get("/login" + loginName, function(data) {
+    //             console.log(data);
+    //             loginUser = data.name;
+    //             let arr = data.Gestures[0].gestureCode;
+    //             let dbArr = arr.split(',').map(function(item) {
+    //                 return parseInt(item);
+    //             });
+    //             console.log(dbArr);
+    //             getCode(dbArr, dbArr.length);
+    //         });
+    //     } else if (activate) {
+    //         getCode();
+    //         let newUser = {
+    //             name: loginName
+    //         }
+    //         $.post('/createuser', newUser, function(data){
+    //             console.log(data);
+    //             let userKey = data.id;
+    //             let newGesture = {
+    //                 title: 'shape',
+    //                 gestureCode: storeArr.toString(),
+    //                 UserId: userKey
+    //             };
+    //             $.post('/creategesture', newGesture, function(req, res){
+    //                 console.log(res);
     //
-    // $(document).click('div#png-add', function() {
-    //     let image = new Image();
-    //     image.src = canvas.toDataURL("image/png");
-    //     console.log(image);
-    //     $('#canvas-img').attr('src', image.src);
-    // })
-
-    function submitLogin(loginName) {
-        if (login) {
-            $.get("/login" + loginName, function(data) {
-                console.log(data);
-                loginUser = data.name;
-                let arr = data.Gestures[0].gestureCode;
-                let dbArr = arr.split(',').map(function(item) {
-                    return parseInt(item);
-                });
-                console.log(dbArr);
-                getCode(dbArr, dbArr.length);
-            });
-        } else if (activate) {
-            getCode();
-            let newUser = {
-                name: loginName
-            }
-            $.post('/createuser', newUser, function(data){
-                console.log(data);
-                let userKey = data.id;
-                let newGesture = {
-                    title: 'shape',
-                    gestureCode: storeArr.toString(),
-                    UserId: userKey
-                };
-                $.post('/creategesture', newGesture, function(req, res){
-                    console.log(res);
-                    // $('#postz').html('enter');
-                    // $.get('/home', function() {});
-                    // window.location.href = "/home";
-                });
-            });
-        }
-    }
-
-    function getCode(dbArray, dbArrLength) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        let drawArr = [];
-        let firstIndex = 0;
-        let equalize;
-        let newLength;
-
-        myArr = initArr[initArr.length - 1];
-
-        if (login){
-            if (myArr.length > dbArrLength) {
-                console.log(myArr.length/dbArrLength);
-                if (myArr.length/dbArrLength < 7.5) {
-                    equalize = parseInt(myArr.length/dbArrLength);
-                    newLength = equalize * dbArrLength;
-                } else {
-                    incorrect();
-                    return;
-                }
-            } else {
-                newLength = myArr.length;
-                equalize = 1;
-            }
-        } else {
-            newLength = myArr.length;
-            equalize = 5;
-        }
-
-        for (var x = 0; x < newLength; x++) {
-            if (x % equalize === 0 && x !== 0) {
-                let newMyArr = myArr.slice(firstIndex, x);
-                firstIndex = x;
-                var result = newMyArr.map(function(y) {
-                    return parseInt(y);
-                });
-                var sum = result.reduce(function(a, b) {
-                    return a + b;
-                });
-                var avg = parseInt(sum / result.length);
-                drawArr.push(avg);
-            }
-        }
-        storeArr = drawArr;
-
-        if (activate === false) {
-            compareCode(dbArray, drawArr);
-        }
-    }
-
-    function compareCode(arrDB, arrUser) {
-        let bigger = '';
-        let match = [];
-        let anyFalse = false;
-        let nullSkips = 0;
-        let erraticMovement = 0;
-
-        if (arrDB.length <= arrUser.length) {
-            bigger = arrUser.length;
-        } else {
-            bigger = arrDB.length;
-        }
-
-        for (var x = 0; x < bigger; x++) {
-            if (isNaN(arrDB[x]) === true) {
-                nullSkips++;
-            } else if (isNaN(arrUser[x]) === true) {
-                nullSkips++;
-            } else {
-                let diff = Math.abs(arrDB[x] - arrUser[x]);
-                console.log(diff);
-                if (diff >= 50) {
-                    match.push(0);
-                    erraticMovement++;
-                } else {
-                    match.push(1);
-                }
-            }
-        }
-
-        // if (nullSkips < 10 && erraticMovement < 10) {
-        if (1 === 1) {
-            console.log('You may enter.');
-            // $('#postz').html('enter');
-            $('.draw-frame').css('opacity', '0');
-            setTimeout(function() {
-                $('.draw-frame').remove();
-            }, 1000);
-            // $.get('/home', function() {});
-            // window.location.href = "/home";
-
-        } else {
-            incorrect();
-        }
-        console.log("skipped: " + nullSkips);
-        console.log("erratic: " + erraticMovement);
-        console.log(match);
-    }
-
-    function incorrect() {
-        console.log('Sorry, incorrect password, try again.');
-        alert('Sorry, incorrect password, try again.');
-        drawSegments[segment] = [];
-        initArr = [];
-        context.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    //             });
+    //         });
+    //     }
+    // }
+    //
+    // function getCode(dbArray, dbArrLength) {
+    //     context.clearRect(0, 0, canvas.width, canvas.height);
+    //     let drawArr = [];
+    //     let firstIndex = 0;
+    //     let equalize;
+    //     let newLength;
+    //
+    //     myArr = initArr[initArr.length - 1];
+    //
+    //     if (login){
+    //         if (myArr.length > dbArrLength) {
+    //             console.log(myArr.length/dbArrLength);
+    //             if (myArr.length/dbArrLength < 7.5) {
+    //                 equalize = parseInt(myArr.length/dbArrLength);
+    //                 newLength = equalize * dbArrLength;
+    //             } else {
+    //                 incorrect();
+    //                 return;
+    //             }
+    //         } else {
+    //             newLength = myArr.length;
+    //             equalize = 1;
+    //         }
+    //     } else {
+    //         newLength = myArr.length;
+    //         equalize = 5;
+    //     }
+    //
+    //     for (var x = 0; x < newLength; x++) {
+    //         if (x % equalize === 0 && x !== 0) {
+    //             let newMyArr = myArr.slice(firstIndex, x);
+    //             firstIndex = x;
+    //             var result = newMyArr.map(function(y) {
+    //                 return parseInt(y);
+    //             });
+    //             var sum = result.reduce(function(a, b) {
+    //                 return a + b;
+    //             });
+    //             var avg = parseInt(sum / result.length);
+    //             drawArr.push(avg);
+    //         }
+    //     }
+    //     storeArr = drawArr;
+    //
+    //     if (activate === false) {
+    //         compareCode(dbArray, drawArr);
+    //     }
+    // }
+    //
+    // function compareCode(arrDB, arrUser) {
+    //     let bigger = '';
+    //     let match = [];
+    //     let anyFalse = false;
+    //     let nullSkips = 0;
+    //     let erraticMovement = 0;
+    //
+    //     if (arrDB.length <= arrUser.length) {
+    //         bigger = arrUser.length;
+    //     } else {
+    //         bigger = arrDB.length;
+    //     }
+    //
+    //     for (var x = 0; x < bigger; x++) {
+    //         if (isNaN(arrDB[x]) === true) {
+    //             nullSkips++;
+    //         } else if (isNaN(arrUser[x]) === true) {
+    //             nullSkips++;
+    //         } else {
+    //             let diff = Math.abs(arrDB[x] - arrUser[x]);
+    //             console.log(diff);
+    //             if (diff >= 50) {
+    //                 match.push(0);
+    //                 erraticMovement++;
+    //             } else {
+    //                 match.push(1);
+    //             }
+    //         }
+    //     }
+    //
+    //     // if (nullSkips < 10 && erraticMovement < 10) {
+    //     if (1 === 1) {
+    //         console.log('You may enter.');
+    //         // $('#postz').html('enter');
+    //         $('.draw-frame').css('opacity', '0');
+    //         setTimeout(function() {
+    //             $('.draw-frame').remove();
+    //         }, 1000);
+    //         // $.get('/home', function() {});
+    //         // window.location.href = "/home";
+    //
+    //     } else {
+    //         incorrect();
+    //     }
+    //     console.log("skipped: " + nullSkips);
+    //     console.log("erratic: " + erraticMovement);
+    //     console.log(match);
+    // }
+    //
+    // function incorrect() {
+    //     console.log('Sorry, incorrect password, try again.');
+    //     alert('Sorry, incorrect password, try again.');
+    //     drawSegments[segment] = [];
+    //     initArr = [];
+    //     context.clearRect(0, 0, canvas.width, canvas.height);
+    // }
 
     tracking.track('#video', tracker, {
         camera: true

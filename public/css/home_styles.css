@@ -419,6 +419,7 @@ textarea:focus, input:focus, button:focus {
   min-width: 100%;
   min-height: 100%;
   width: 120%;
+  /*width: 105%;*/
   /*height: auto;*/
   z-index: 1;
   opacity: 0;
@@ -426,7 +427,46 @@ textarea:focus, input:focus, button:focus {
   /*background-size: cover;*/
   transition: all 8s ease;
   /*opacity: 0;*/
-  filter: grayscale(100%);
+  /*filter: grayscale(100%);*/
   /*-webkit-filter: brightness(0.6);*/
-    /*filter: brightness(0.6);*/
+    filter: brightness(0.4);
+     /*filter: invert(100%);*/
+}
+
+#alert {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    width: 800px;
+    /*height: 100px;*/
+    margin-left: 330px;
+    margin-top: 300px;
+    background-color: transparent;
+    color: white;
+    font-size: 48px;
+    font-family: 'Bungee Hairline', cursive;
+    text-align: center;
+    line-height: 100px;
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+#access {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    width: 800px;
+    /*height: 100px;*/
+    margin-left: 120px;
+    margin-top: 250px;
+    background-color: transparent;
+    color: white;
+    font-size: 300px;
+    font-family: 'Bungee Hairline', cursive;
+    text-align: center;
+    // line-height: 100px;
+    opacity: 0;
+    transition: all 2.5s ease;
 }

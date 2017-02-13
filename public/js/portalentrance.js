@@ -22,14 +22,18 @@ $(document).on('ready', function() {
     let last = url.lastIndexOf('/');
     let thisUser = url.substr(last + 1);
 
+    // let loginUser = sessionStorage.user;
+
     let user;
     let burrow1, burrow2, burrow3, burrow4, burrow5;
 
-    setTimeout(() => {
-        $('#bg-vid').css('opacity', '.2');   //city and all else unless stated otherwise
-                            //tracer doesn't need grayscale!
-                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
-    }, 500);
+    // setTimeout(() => {
+    //     $('#bg-vid').css('opacity', '.2');
+    // }, 500);
+
+    // setTimeout(() => {
+    //     $('#bg-vid').css('opacity', '.2');
+    // }, 500);
 
     $.get('/getuser/' + thisUser, (data) => {
         console.log(data);
@@ -54,6 +58,17 @@ $(document).on('ready', function() {
             console.log(bur5);
             burrow5 = bur5;
         });
+
+        $('#bg-vid').attr('src', user.link);
+        $("#bg-vid")[0].load();
+        if (thisUser === 'zy' || thisUser === 'dev' || thisUser === 'ona' || thisUser === 'nid') {
+            $('#bg-vid').css({'filter': 'brightness(0.6)'});
+        }
+        $('#bg-vid').css('opacity', '1');
+        if (thisUser === 'luc' || thisUser === 'fin') {
+            $('#bg-vid').css('opacity', '.5');
+        }
+
     });
 
     // setTimeout(() => {
