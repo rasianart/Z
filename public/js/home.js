@@ -20,34 +20,31 @@ $(document).ready(function() {
     let inputName;
     let dbArr;
     let dbArrLength;
-    let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
     let correctFunc;
-
+    let nullSkips = 0;
+    let erraticMovement = 0;
     let user = sessionStorage.user;
-
     let initDone = false;
     let chosen = false;
     let burrowed = false;
-    let instruction = "Enter your answer in the form of a movement phrase to enter user's portal ";
+    let instruction = "Enter answer to enter user's portal ";
+
+    let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
     $('.portals').on('click', function() {
         let name = $(this).attr('data-name');
         $.get('/getgesture/' + name, (data) => {
-            let arr = data.Gestures[0].gestureCode;
+            let arr = data.burrowcode;
             dbArr = arr.split(',').map(function(item) {
                 return parseInt(item);
             });
-            console.log(dbArr);
             dbArrLength = dbArr.length;
-            // getCode(dbArr, dbArr.length);
         });
     });
 
     setTimeout(() => {
         $('#bg-vid').css('opacity', '1');
     }, 1000);
-
-    let vid = document.getElementById("bg-vid");
 
     let initCircle = (cId, mLeft, mTop) => {
         $(cId).css({'margin-left': mLeft, 'margin-top': mTop});
@@ -85,18 +82,13 @@ $(document).ready(function() {
     let bottom;
     $('.portals').mouseenter(function() {
         if (!chosen) {
-            // bottom = $(this).css("margin-bottom");
-            // let newBtm = parseInt(bottom) - 54 + 'px';
             let img = $(this).attr('data-img');
-            // console.log($(this).children(":first"));
-            // $(this).css({'background-image': 'url(' + img + ')', 'background-size': '100px 100px', 'height': '125px', 'border-radius': '50%', 'margin-bottom': newBtm, 'background-color': 'rgba(0, 0, 0, .3)', 'padding-top': '55px'});
             $(this).children(":first").css({'background-image': 'url(' + img + ')', 'height': '125px', 'width': '125px', 'background-size': '100px 100px', 'margin-left': '-25px', 'margin-top': '-25px'});
             $(this).children().eq(1).css({'height': '90px', 'width': '90px', 'margin-left': '0px', 'margin-top': '0px'});
         }
     });
     $('.portals').mouseleave(function() {
         if (!chosen) {
-            // $(this).css({'background-size': '0px 0px', 'height': '16px', 'border-radius': '0%', 'margin-bottom': bottom, 'background-color': 'rgba(0, 0, 0, 0)', 'padding-top': '0px'});
             $(this).children(":first").css({'background-size': '0px 0px', 'height': '50px', 'width': '50px', 'margin-left': '13px', 'margin-top': '13px'});
             $(this).children().eq(1).css({'height': '50px', 'width': '50px', 'margin-left': '10px', 'margin-top': '10px'});
         }
@@ -105,12 +97,10 @@ $(document).ready(function() {
     $('#dig').on('click', () => {
         swap();
         $.get('/dig', (data) => {
-            console.log(data);
             let index = 0;
             $('#portal-contain').children().each(function() {
-                console.log($(this));
                 $(this).attr({'data-name': data[index].name, 'data-img': data[index].userimg, 'data-riddle': data[index].riddle, 'data-answer': data[index].answer});
-                $(this).children().eq(1).html(data[index].name);
+                $(this).contents().filter(function(){ return this.nodeType == 3; }).first().replaceWith(data[index].name);
                 index++;
             })
         })
@@ -176,7 +166,6 @@ $(document).ready(function() {
         setTimeout(() => {
             $('#bg-vid').css({'transition': 'all 3s ease', 'opacity': '.6'});
         }, 1500);
-        // $('#draw-frame').css('z-index', '1');
         $(this).children(":first").css({'background-size': '0px 0px', 'height': '50px', 'width': '50px', 'margin-left': '13px', 'margin-top': '13px'});
         $(this).children().eq(1).css({'height': '50px', 'width': '50px', 'margin-left': '10px', 'margin-top': '10px'});
         $(this).children().css('opacity', '0');
@@ -188,6 +177,7 @@ $(document).ready(function() {
         $('.portals').css('transition', 'all 1.5s ease');
         $('#dig').css({'height': '0px', 'margin-bottom': '0px'});
         let idName = sessionStorage.user;
+        let burrowName = $(this).attr('data-name');
         let burrow = $('#create-hole');
         let child = $(this);
         let parent = $(this).parent();
@@ -212,7 +202,6 @@ $(document).ready(function() {
         setTimeout(function() {
             child.html('');
         }, 2650);
-        // let answerInput = $('<input id="answer-input">').appendTo('#answer-line');
         burrow.css({'transition': 'all 1.5s ease', 'margin-bottom': '50px', 'pointer-events': 'none'});
         setTimeout(function() {
             burrow.css({'transition': 'all 1.25s linear', 'height': '0px', 'border-bottom': '1px solid white', 'width': '1200px', 'margin-left': '120px'});
@@ -225,15 +214,15 @@ $(document).ready(function() {
             if (burrow.html().length > 200) {
                 burrow.css('padding-bottom', '60px');
             }
-            // else if (burrow.html().length > 110) {
-            //     burrow.css('padding-bottom', '40px');
-            // }
         }, 2250);
 
         $('#portal-contain').css({'margin-left': '0px'});
         child.siblings().each(function() {
             let sibling = $(this);
-                sibling.css({'margin-bottom': '650px', 'height': '0px', 'margin-left': '45%'});
+                sibling.css({'margin-bottom': '660px', 'height': '0px', 'margin-left': '47.4%'});
+                setTimeout(() => {
+                    sibling.children().css({'transition': 'all .7s ease', 'height': '0px'});
+                }, 300);
         });
         setTimeout(function() {
             childHMTL.css({'transition': 'all 1s ease', 'width': '0px', 'left': '97px'});
@@ -262,24 +251,6 @@ $(document).ready(function() {
             }, 1);
         }, 4700);
 
-
-        // $(this).children(":first").css({'background-size': '0px 0px', 'height': '50px', 'width': '50px', 'margin-left': '13px', 'margin-top': '13px'});
-        // $(this).children().eq(1).css({'height': '50px', 'width': '50px', 'margin-left': '10px', 'margin-top': '10px'});
-        // child.siblings().remove();
-
-
-        // child.css({'background-image': 'none', 'line-height': '300px', 'padding-top': '0px'});
-        // let h = parseInt(child.css('margin-bottom'));
-        // let l = parseInt(child.css('margin-left'));
-        // console.log(h);
-
-                                                                                    //  'margin-bottom': + h-150 + 'px', 'margin-left': + l+80 + 'px'});
-
-        // parent.children().css({'transition': 'all 1.55s ease', 'margin-left': '48.7%', 'margin-bottom': '315px', 'height': '50px', 'width': '50px', 'background-color': 'rgba(0, 0, 0, .6)', 'border-radius': '50%', 'line-height': '300px', 'font-size': '20px'});
-
-        // child.css({'transition': 'all 1.55s ease', 'margin-left': '48.7%', 'margin-bottom': '315px', 'height': '50px', 'width': '50px', 'background-color': 'rgba(0, 0, 0, .6)', 'border-radius': '50%', 'line-height': '300px', 'font-size': '20px'});
-
-
         let hasClicked = false;
         setTimeout(function() {
             $('#answer-input').click(function() {
@@ -291,20 +262,22 @@ $(document).ready(function() {
         }, 5000);
 
         let firstkey = false;
-        let userImg = child.attr('data-img');
+        let userImg = $(this).attr('data-img');
         let imgContain = $('<div id="img-contain"></div>').appendTo('body');
         let imgHolder = $('<img id="img-holder">').appendTo(imgContain);
         let submitGuess = $('<div id="submit-guess">Post Z</div>').appendTo('body');
 
         let ifCorrect = () => {
-            // $('body').attr('data-correct', 'correct');
             let userAnswer = $('#answer-input').val().trim().toLowerCase();
             if (userAnswer === answer) {
-                console.log('correct');
+                $('#answer-input').css({'transition': 'all 1.5s ease', 'opacity': '0'});
+                setTimeout(() => {
+                    $('#answer-input').val('Follow movement passphrase with personal color to enter burrow');
+                    $('#answer-input').css({'opacity': '1'});
+                }, 1500);
                 imgHolder.attr('src', userImg);
                 imgContain.css({'opacity': '1'});
                 $('.chosen').css({'transition': 'all 2s ease', 'background-color': 'rgba(0, 0, 0, .5)'});
-                console.log(dbArrLength);
                 let oldArr = ['1', '2'];
                 setInterval(() => {
                     if (initArr.length > 1) {
@@ -319,7 +292,7 @@ $(document).ready(function() {
                 }, 1000);
                 correctFunc = () => {
                     $('body').attr('data-correct', 'correct');
-                    $('#access').css({'opacity': '1'});
+                    $('#access').css({'z-index': '1000', 'opacity': '1'});
                     setTimeout(() => {
                         $('#access').css('opacity', '0');
                     }, 1500);
@@ -342,11 +315,11 @@ $(document).ready(function() {
                         $('#bg-vid').css('opacity', '0');
                     }, 1500);
                     setTimeout(() => {
-                        $.get('/portalentrance/' + idName, (data) => {
+                        $.get('/portalentrance/' + burrowName, (data) => {
                             console.log(data);
                         });
-                        window.location.href = "/portalentrance/" + idName;
-                    }, 10000);
+                        window.location.href = "/portalentrance/" + burrowName;
+                    }, 9000);
                 }
             } else {
                 console.log('incorrect');
@@ -381,13 +354,11 @@ $(document).ready(function() {
     function submitLogin(loginName) {
         if (login) {
             $.get("/login" + loginName, function(data) {
-                console.log(data);
                 loginUser = data.name;
                 let arr = data.Gestures[0].gestureCode;
                 let dbArr = arr.split(',').map(function(item) {
                     return parseInt(item);
                 });
-                console.log(dbArr);
                 getCode(dbArr, dbArr.length);
             });
         } else if (activate) {
@@ -396,7 +367,6 @@ $(document).ready(function() {
                 name: loginName
             }
             $.post('/createuser', newUser, function(data){
-                console.log(data);
                 let userKey = data.id;
                 let newGesture = {
                     title: 'shape',
@@ -404,17 +374,12 @@ $(document).ready(function() {
                     UserId: userKey
                 };
                 $.post('/creategesture', newGesture, function(req, res){
-                    console.log(res);
-                    // $('#postz').html('enter');
-                    // $.get('/home', function() {});
-                    // window.location.href = "/home";
                 });
             });
         }
     }
 
     function getCode(dbArray, dbArrLength) {
-        console.log('made it');
         context.clearRect(0, 0, canvas.width, canvas.height);
         let drawArr = [];
         let firstIndex = 0;
@@ -424,10 +389,9 @@ $(document).ready(function() {
         myArr = initArr[initArr.length - 1];
 
         if (login){
+            console.log(myArr.length/dbArrLength);
             if (myArr.length > dbArrLength) {
-                console.log(myArr.length/dbArrLength);
-                // if (myArr.length/dbArrLength < 7.5) {
-                if (myArr.length/dbArrLength < 20) {
+                if (myArr.length/dbArrLength < 7.5) {
                     equalize = parseInt(myArr.length/dbArrLength);
                     newLength = equalize * dbArrLength;
                 } else {
@@ -458,10 +422,7 @@ $(document).ready(function() {
             }
         }
         storeArr = drawArr;
-
-        // if (activate === false) {
-            compareCode(dbArray, drawArr);
-        // }
+        compareCode(dbArray, drawArr);
     }
 
     function compareCode(arrDB, arrUser) {
@@ -484,7 +445,6 @@ $(document).ready(function() {
                 nullSkips++;
             } else {
                 let diff = Math.abs(arrDB[x] - arrUser[x]);
-                console.log(diff);
                 if (diff >= 50) {
                     match.push(0);
                     erraticMovement++;
@@ -494,27 +454,27 @@ $(document).ready(function() {
             }
         }
 
-        if (nullSkips < 10 && erraticMovement < 10) {
-        // if (1 === 1) {
+        if (nullSkips < 10 && erraticMovement < dbArr.length * .25) {
             console.log('You may enter.');
-            // $('#postz').html('enter');
+            console.log("skipped: " + nullSkips);
+            console.log("erratic: " + erraticMovement);
+            console.log("erraticMax: " + dbArr.length * .25);
+            console.log(match);
             $('.draw-frame').css('opacity', '0');
             setTimeout(function() {
                 $('.draw-frame').remove();
             }, 1000);
-            // $.get('/home', function() {});
-            // window.location.href = "/home";
             correctFunc();
         } else {
             incorrect();
         }
-        console.log("skipped: " + nullSkips);
-        console.log("erratic: " + erraticMovement);
-        console.log(match);
     }
 
     function incorrect() {
         console.log('Sorry, incorrect password, try again.');
+        console.log("skipped: " + nullSkips);
+        console.log("erratic: " + erraticMovement);
+        console.log("erraticMax: " + dbArr.length * .25);
         $('#alert').html('Incorrect Movement Phrase <br> Please Try Again');
         $('#alert').css('opacity', '1');
         setTimeout(() => {
@@ -532,23 +492,17 @@ $(document).ready(function() {
     tracker.on('track', function(event) {
         if (event.data.length === 0 && drawSegments[segment].length > 0) {
             segment++;
-            // if (!drawSegments[segment]) {
-            //     drawSegments[segment] = [];
-            // }
         }
 
         event.data.forEach(function(rect) {
             if (rect.color === 'yellow') {
                 draw(rect);
-            } else if (rect.color === 'cyan') {
-                erase(rect);
             }
         });
     });
 
     function draw(rect) {
         drawSegments[segment].push(rect.x + rect.width / 2, rect.y + rect.height / 2);
-        // console.log(drawSegments[0]);
         initArr.push(drawSegments[0]);
     }
 

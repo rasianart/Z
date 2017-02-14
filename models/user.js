@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     loginimg: DataTypes.TEXT,
     userimg: DataTypes.TEXT,
+    burrowcode: DataTypes.TEXT,
     riddle: DataTypes.TEXT,
     answer: DataTypes.STRING,
     info: DataTypes.TEXT,

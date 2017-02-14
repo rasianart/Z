@@ -71,10 +71,9 @@ module.exports = function(app) {
             where: {
                 name: userName
             },
-            include: [{
-                model: db.Gesture
-            }]
+            raw: true
         }).then((response) => {
+            console.log(response);
               res.send(response[0]);
           });
     });

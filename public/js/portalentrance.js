@@ -3,13 +3,6 @@ $(document).on('ready', function() {
     console.log(sessionStorage.user);
 
     let isCreated = false;
-    let newCharacter = {
-        name: 'patrick',
-        photo: 'https://pbs.twimg.com/profile_images/784404948700262400/xENRN2IK.jpg',
-        scores: [],
-        match: '',
-        matchPhoto: ''
-    };
     let scoreArr = [];
     let isPosted = false;
     let chosenBar;
@@ -17,23 +10,21 @@ $(document).on('ready', function() {
     let chosenQuestion;
     let isQchosen = false;
     let chosenBurrow;
-
     let url = window.location.href;
     let last = url.lastIndexOf('/');
     let thisUser = url.substr(last + 1);
-
-    // let loginUser = sessionStorage.user;
-
     let user;
     let burrow1, burrow2, burrow3, burrow4, burrow5;
 
-    // setTimeout(() => {
-    //     $('#bg-vid').css('opacity', '.2');
-    // }, 500);
+    $('#q0, #q0B').css('transition', 'all 1.5s ease');
+    //
+    setTimeout(() => {
 
-    // setTimeout(() => {
-    //     $('#bg-vid').css('opacity', '.2');
-    // }, 500);
+        $('.questions, .questionsB, #user').css({'opacity': '1'});
+        setTimeout(() => {
+            allGlow();
+        }, 350);
+    }, 2000);
 
     $.get('/getuser/' + thisUser, (data) => {
         console.log(data);
@@ -61,9 +52,9 @@ $(document).on('ready', function() {
 
         $('#bg-vid').attr('src', user.link);
         $("#bg-vid")[0].load();
-        if (thisUser === 'zy' || thisUser === 'dev' || thisUser === 'ona' || thisUser === 'nid') {
+        // if (thisUser === 'zy' || thisUser === 'dev' || thisUser === 'ona' || thisUser === 'nid') {
             $('#bg-vid').css({'filter': 'brightness(0.6)'});
-        }
+        // }
         $('#bg-vid').css('opacity', '1');
         if (thisUser === 'luc' || thisUser === 'fin') {
             $('#bg-vid').css('opacity', '.5');
@@ -71,16 +62,20 @@ $(document).on('ready', function() {
 
     });
 
-    // setTimeout(() => {
-    //     console.log(burrow1);
-    //     console.log(burrow2);
-    //     console.log(burrow3);
-    //     console.log(burrow4);
-    //     console.log(burrow5);
-    // }, 3000);
+    setTimeout(() => {
+        $('#return').css('opacity', '1');
+    }, 2500);
 
+    $('#return').on('click', () => {
+        $('*').css({'transition': 'all 3s ease', 'opacity': '0'});
+        $('body').css({'opacity': '1', 'background-color': 'rgba(40, 40, 40, 1)'});
+        setTimeout(() => {
+            $.get('/home', () => {});
+            window.location.href = "/home";
+        }, 3000);
+    })
 
-//pops out profile from left upon completion
+//pops out profile from left
     let popOutLeft = (id, direction) => {
         $('#'+id).css({
             'width': '250px',
@@ -92,7 +87,7 @@ $(document).on('ready', function() {
         $('#'+id).css('background-color', 'rgba(255,255,255, 0)');
         $('#'+id).children().css('margin-'+direction, '0px');
     }
-//pops out match from right upon completion
+//pops out match from right
     let popOutRight = (id, direction) => {
         $('#'+id).css({
             'width': '250px',
@@ -119,7 +114,7 @@ $(document).on('ready', function() {
 //fades in a glow over the bar filters
     let waitGlowFunc = (num, time, px, str) => {
       let waitGlow3 = setTimeout(function() {
-        $('#q'+num).css('box-shadow', '0px 0px '+px+'px '+str+'px white');
+        $('#q'+num).css({'transition': 'box-shadow 1s ease', 'box-shadow': '0px 0px '+px+'px '+str+'px white'});
       }, time);
     }
 //fades in and out over all the bar filters in a wave pattern
@@ -175,18 +170,6 @@ $(document).on('ready', function() {
     $('#q1-containB').mouseleave(() => {
         popIn('q1B', 'right', 'border-top-right-radius', 'border-bottom-right-radius');
     });
-//creates the post button once initial user info has been entered
-    // $(document).on('keypress', function(e) {
-    //     if (e.which == 13) {
-    //         e.preventDefault();
-    //     }
-    //     if ($('#name-input').val() !== '' && $('#photo-input').val() !== '' && !isCreated) {
-    //         let postInfo = $('<div id="postData">POST</div>');
-    //         postInfo.appendTo('body');
-    //         isCreated = true;
-    //         $('#postData').animate({ 'bottom': "150px" }, 'slow');
-    //     }
-    // });
 
     $('.all-box-left, .all-box-right').css('cursor', 'default');
     let isToggled = false;
@@ -233,7 +216,7 @@ $(document).on('ready', function() {
     }
 //function to dictate all hover actions
     let hoverState = (id, question, info, height, width) => {
-      $('#'+id).css({ 'width': width+'px', 'color': 'white' });
+      $('#'+id).css({'transition': 'all .3s ease', 'width': width+'px', 'color': 'white' });
       if (!isQchosen) {
         $('.sidebar-nav').css('margin-top', height+'px');
       }
@@ -243,22 +226,22 @@ $(document).on('ready', function() {
       }
     }
 
-    // $('#hide').on('click', () => {
-    //     $("#wrapper").toggleClass("toggled");
-    //     isToggled = false;
-    //     isQchosen = false;
-    // })
-
     $('#enter').on('click', function() {
         let text = $('#match1').html();
         let last = text.lastIndexOf(' ');
         let burrowUser = text.substr(last + 1);
         setTimeout(() => {
+            $('.questions, .questionsB, #user').css({'transition': 'all 2s ease', 'opacity': '0'});
+        }, 1000);
+        setTimeout(() => {
+            $('#bg-vid').css({'transition': 'all 2s ease', 'opacity': '0'});
+        }, 2000);
+        setTimeout(() => {
             $.get('/portalentrance/' + burrowUser, (data) => {
                 console.log(data);
             });
             window.location.href = "/portalentrance/" + burrowUser;
-        }, 3000);
+        }, 3500);
     });
 
     $("#q2-hover-box").on('mouseenter', function() {
@@ -288,7 +271,7 @@ $(document).on('ready', function() {
     });
 
     $("#q0-hover-box").on('mouseenter', function() {
-        $('#left-light').css('opacity', '1');
+        $('#left-light').css({'transition': 'all .1s ease', 'opacity': '1'});
         if (!isQchosen) {
           $('.sidebar-nav').css('margin-top', '-10px');
         }
@@ -298,7 +281,7 @@ $(document).on('ready', function() {
         }
     });
     $("#q0-hover-boxB").on('mouseenter', function() {
-        $('#right-light').css('opacity', '1');
+        $('#right-light').css({'transition': 'all .1s ease', 'opacity': '1'});
         if (!isQchosen) {
           $('.sidebar-nav').css('margin-top', '-10px');
         }
@@ -309,10 +292,10 @@ $(document).on('ready', function() {
     });
 
     $("#q0-hover-box").on('mouseleave', function() {
-        $('#left-light').css('opacity', '0');
+        $('#left-light').css({'transition': 'all .1s ease', 'opacity': '0'});
     });
     $("#q0-hover-boxB").on('mouseleave', function() {
-        $('#right-light').css('opacity', '0');
+        $('#right-light').css({'transition': 'all .1s ease', 'opacity': '0'});
     });
 
     $(".all-box-left, .all-box-right").on('mouseleave', function() {
@@ -354,25 +337,10 @@ $(document).on('ready', function() {
         $('#button-hover').css('opacity', 1);
         $('button').css('cursor', 'pointer');
     });
-//enables filter toggle functionality after the post button has begin clicked
-//user may begin survey
-    // $(document).on('click', 'div#postData', function() {
-        $('.all-box-left, .all-box-right').css('cursor', 'pointer');
-        isPosted = true;
-        // newCharacter.name = $('#name-input').val().trim();
-        // newCharacter.photo = $('#photo-input').val().trim();
-        // $('#name-input').css({'width': '0', 'margin-left': '250px', 'opacity': '0'});
-        // $('#photo-input').css({'width': '0', 'margin-right': '268px', 'opacity': '0'});
-        // $('#postData').fadeOut();
-        // $('<div id="instruct"></div>').appendTo('body');
-        // $('#instruct').html('Toggle filters for compatibility analysis<br>Double Click To Lock In Question');
-        // $('#instruct').fadeTo(1000, 1);
-        // $(document).on('click', function() {
-        // setTimeout(() => {
-            allGlow();
-        // }, 500);
-        // });
-    // });
+
+    $('.all-box-left, .all-box-right').css('cursor', 'pointer');
+    isPosted = true;
+
 //functionality for each button/answer chosen
 //post sent after 10 questions have been answered
     $('.all-buttons, #enter, #hide').on('click', function(e) {
@@ -388,26 +356,6 @@ $(document).on('ready', function() {
         let chosenId = $(this).attr('id');
         chosenBar.css('pointer-events', 'none');
         newCharacter.scores = scoreArr;
-        // if (newCharacter.scores.length > 9) {
-        //     newCharacter.scores = newCharacter.scores.toString();
-        //     $.post("/api/friends", newCharacter)
-        //         .done(function(req, res) {
-        //             popOutLeft('q1', 'right');
-        //             popOutRight('q1B', 'left');
-        //             let divName = $('<div id="div-name" class="stats"></div>');
-        //             divName.html("Name: " + req.name).appendTo('#q1');
-        //             let imgPhoto = $('<img id="img-photo" class="stats">');
-        //             imgPhoto.attr('src', req.photo).appendTo('#q1');
-        //             let divMatch = $('<div id="div-match" class="stats"></div>');
-        //             divMatch.html("Friend Match: " + req.match).appendTo('#q1B');
-        //             let matchPhoto = $('<img id="match-photo" class="stats">');
-        //             matchPhoto.attr('src', req.matchPhoto).appendTo('#q1B');
-        //             $('.stats').css('opacity', '1');
-        //             $('#instruct').html('');
-        //             let a = $('<a id="results" href="/results"></a>').html('Click Here to View All Friends');
-        //             a.appendTo('#instruct');
-        //         });
-        // }
     });
 
 });

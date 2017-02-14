@@ -1,15 +1,9 @@
 html {
     overflow: hidden;
-    /*background-color: rgb(41, 41, 41);*/
     font-family: 'Bungee Hairline', cursive;
-    /*transition: all 8s linear;*/
 }
 
 body{
-    /*background-image: url('/images/keyhole.jpg');
-    background-size: 25%;
-    background-repeat: no-repeat;
-    background-position: center center;*/
     background-color: rgba(255, 255, 255, 1);
     transition: all 8s ease;
 }
@@ -26,7 +20,6 @@ body{
     top: 0;
     z-index: -1;
     width: 800px;
-    /*height: 100px;*/
     margin-left: 330px;
     margin-top: 300px;
     background-color: transparent;
@@ -116,7 +109,6 @@ body{
     margin-top: 20px;
     margin-left: 330px;
     transition: all .5s ease;
-    /*font-family: 'VT323', monospace;*/
     font-family: 'Bungee Hairline', cursive;
 }
 
@@ -134,7 +126,6 @@ form {
     opacity: 0;
     transition: all .5s ease;
     margin-left: 70px;
-    /*font-family: 'VT323', monospace;*/
     font-family: 'Bungee Hairline', cursive;
     font-size: 16px;
     color: white;
@@ -144,7 +135,6 @@ form {
     top: 0;
     opacity: 0;
     transition: all .5s ease;
-    /*font-family: 'VT323', monospace;*/
     font-family: 'Bungee Hairline', cursive;
     font-size: 16px;
     right: 0;
@@ -183,8 +173,6 @@ form {
 }
 #chain5 {
     margin-top: 680px;
-    /*line-height: 24px;
-    text-align: center;*/
 }
 
 .minis {
@@ -225,16 +213,11 @@ form {
     background-color: transparent;
 }
 
-
-
 #keyhole {
     width: 100%;
     height: 776px;
     background-image: url('/images/overlap2.jpg');
-    /*background-size: 180%;*/
-    /*background-size: 180%;*/
     background-repeat: no-repeat;
-    /*background-position: -615px -200px;*/
     background-position: center;
 }
 
@@ -260,7 +243,6 @@ textarea:focus, input:focus, button:focus {
     background-color: transparent;
     transition: all 10s ease;
     box-shadow: 0px 0px 0px 900px white;
-
 }
 
 #cover1 {
@@ -315,7 +297,6 @@ textarea:focus, input:focus, button:focus {
     transform: scale(-1, 1);
     width: 400px;
     height: 400px;
-    /*opacity: 0;*/
     transition: all 3s ease;
 }
 
@@ -338,14 +319,11 @@ textarea:focus, input:focus, button:focus {
     transition: all 1s ease;
 }
 
-
 .draw-frame {
   width: 100%;
   height: 100%;
-  /*border: 1px solid #ccc;*/
   position: absolute;
   top: 0;
-  /*z-index: 100;*/
   opacity: 1;
   transition: all 1s ease;
 }
@@ -356,17 +334,12 @@ textarea:focus, input:focus, button:focus {
     opacity: 0;
     width: 1000px;
     height: 1000px;
-    /*width: 400px;
-    height: 300px;*/
     position: absolute;
     left: 0;
     top: 0;
     margin-left: 215px;
     margin-top: -65px;
-    /*margin-left: 35%;*/
-    /*margin-top: 230px;*/
     transition: all 3.4s linear;
-    /*z-index: -1;*/
 }
 
 #video {
@@ -381,7 +354,6 @@ textarea:focus, input:focus, button:focus {
 }
 
 #canvas {
-    /*border: 1px solid white;*/
     opacity: 1;
     width: 400px;
     height: 400px;
@@ -392,7 +364,6 @@ textarea:focus, input:focus, button:focus {
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
-    /*opacity: 0;*/
 }
 
 #video {
@@ -433,6 +404,7 @@ textarea:focus, input:focus, button:focus {
     overflow: hidden;
     transition: all .75s ease;
 }
+
 #post:hover {
     cursor: pointer;
 }
@@ -465,8 +437,6 @@ textarea:focus, input:focus, button:focus {
     cursor: pointer;
 }
 
-
-
 #submit-all {
     opacity: 0;
     position: absolute;
@@ -497,14 +467,23 @@ textarea:focus, input:focus, button:focus {
   min-width: 100%;
   min-height: 100%;
   width: 120%;
-  /*height: auto;*/
   z-index: -1;
   opacity: 0;
   transform: translateX(-50%) translateY(-50%);
-  /*background-size: cover;*/
   transition: all 8s ease;
-  /*opacity: 0;*/
   filter: grayscale(100%);
-  /*-webkit-filter: brightness(0.6);*/
-    /*filter: brightness(0.6);*/
+}
+
+#return {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: black;
+    font-size: 24px;
+    transition: all 3s ease;
+    opacity: 0;
+}
+
+#return:hover {
+    cursor: pointer;
 }

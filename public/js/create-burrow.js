@@ -14,8 +14,8 @@ $(document).ready(function() {
     let myArr = [];
     let drawArr = [];
     let storeArr = [];
-    let activate = true;
-    let login = true;
+    let activate = false;
+    let login = false;
     let riddle = false,
         answer = false,
         info = false,
@@ -41,6 +41,7 @@ $(document).ready(function() {
         loginUser,
         inputName;
     let hover = false;
+    let noclick = true;
 
     let user = sessionStorage.user;
     let userColor;
@@ -49,13 +50,8 @@ $(document).ready(function() {
     });
 
     setTimeout(() => {
-        $('#bg-vid').css('opacity', '.5');   //city and all else unless stated otherwise
-                            //tracer doesn't need grayscale!
-                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
+        $('#bg-vid').css('opacity', '.5');
     }, 2000);
-
-    let vid = document.getElementById("bg-vid");
-    // vid.playbackRate = 0.2;  //honeycomb
 
     let initCircle = (cId, mLeft, mTop) => {
         $(cId).css({'margin-left': mLeft, 'margin-top': mTop});
@@ -108,6 +104,8 @@ $(document).ready(function() {
         imgInput = new Image();
         imgInput.src = canvas.toDataURL("image/png");
         $('#canvas-img').attr('src', imgInput.src);
+        getCode();
+        console.log(storeArr);
         setTimeout(function() {
             $('#img-box').css({'margin-left': '120px', 'margin-top': '25px', 'opacity': '1'});
         }, 100);
@@ -132,6 +130,7 @@ $(document).ready(function() {
             let body = {
                 name: thisUser,
                 userimg: imgInput.src,
+                burrowcode: storeArr.toString(),
                 riddle: ridInput,
                 answer: ansInput,
                 info: infInput,
@@ -149,10 +148,23 @@ $(document).ready(function() {
             $('*').css({'transition': 'all 3s ease', 'opacity': '0'});
             $('body').css({'opacity': '1', 'background-color': 'rgba(40, 40, 40, 1)'});
             setTimeout(() => {
-                $.get('/home/', function(data) {});
-                window.location.href = "/home/";
+                $.get('/home', () => {});
+                window.location.href = "/home";
             }, 3000);
         }
+    })
+
+    setTimeout(() => {
+        $('#return').css('opacity', '1');
+    }, 5000);
+
+    $('#return').on('click', () => {
+        $('*').css({'transition': 'all 3s ease', 'opacity': '0'});
+        $('body').css({'opacity': '1', 'background-color': 'rgba(40, 40, 40, 1)'});
+        setTimeout(() => {
+            $.get('/home', () => {});
+            window.location.href = "/home";
+        }, 3000);
     })
 
     $(document).on('keypress', function (e) {
@@ -250,6 +262,7 @@ $(document).ready(function() {
 
     let onClick = (id, textId, cId) => {
         hover = true;
+        noclick = false;
         let newBool = eval(id);
         if (!newBool) {
             $(textId).css('opacity', '0');
@@ -340,8 +353,11 @@ $(document).ready(function() {
     });
 
     $(document).on('click', 'div#img-reset', function() {
-        drawSegments[segment] = [];
+        drawSegments = [];
         initArr = [];
+        storeArr = [];
+        drawArr = [];
+        segment = 0;
         context.clearRect(0, 0, canvas.width, canvas.height);
     })
 
@@ -360,10 +376,13 @@ $(document).ready(function() {
                     $(this).css({'width': '30px', 'height': '30px', 'margin-left' : '26px', 'margin-top' : miniHeight + 'px'});
                     $(cId).css({'transition': 'all 1s ease', 'background-color': 'rgba(255, 255, 255, .4)', 'margin-left': mRight , 'margin-top': '180px'});
                     $(textId).css('opacity', '1');
-                    if ($(this).attr('id') === 'image') {
+                    if ($(this).attr('id') === 'image' && noclick === false) {
                         $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '0'});
                     }
                     if ($(this).hasClass('connections')) {
+                        if ($(this).attr('id') === 'connect5' && noclick === false) {
+                            $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '0'});
+                        }
                         $('#instruct').css('opacity', '1');
                     };
                 }
@@ -376,11 +395,11 @@ $(document).ready(function() {
                     $(this).css({'width': '22px', 'height': '22px', 'margin-left' : '30px', 'margin-top' : (miniHeight + 4) + 'px'});
                     $(cId).css({'background-color': 'rgba(0, 0, 0, 0)', 'margin-left': mLeft, 'margin-top': mTop});
                     $(textId).css('opacity', '0');
-                    if ($(this).attr('id') === 'image') {
+                    if ($(this).attr('id') === 'image' && noclick === false) {
                         $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
                     }
                     if ($(this).hasClass('connections')) {
-                        if ($(this).attr('id') === 'image') {
+                        if ($(this).attr('id') === 'connect5' && noclick === false) {
                             $('#submit-all').css({'transition': 'all .5s ease', 'opacity': '1'});
                         }
                         $('#instruct').css('opacity', '0');
@@ -415,144 +434,49 @@ $(document).ready(function() {
 
     let tracker = new tracking.ColorTracker(['yellow']);
 
-    // function submitLogin(loginName) {
-    //     if (login) {
-    //         $.get("/login" + loginName, function(data) {
-    //             console.log(data);
-    //             loginUser = data.name;
-    //             let arr = data.Gestures[0].gestureCode;
-    //             let dbArr = arr.split(',').map(function(item) {
-    //                 return parseInt(item);
-    //             });
-    //             console.log(dbArr);
-    //             getCode(dbArr, dbArr.length);
-    //         });
-    //     } else if (activate) {
-    //         getCode();
-    //         let newUser = {
-    //             name: loginName
-    //         }
-    //         $.post('/createuser', newUser, function(data){
-    //             console.log(data);
-    //             let userKey = data.id;
-    //             let newGesture = {
-    //                 title: 'shape',
-    //                 gestureCode: storeArr.toString(),
-    //                 UserId: userKey
-    //             };
-    //             $.post('/creategesture', newGesture, function(req, res){
-    //                 console.log(res);
-    //
-    //             });
-    //         });
-    //     }
-    // }
-    //
-    // function getCode(dbArray, dbArrLength) {
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
-    //     let drawArr = [];
-    //     let firstIndex = 0;
-    //     let equalize;
-    //     let newLength;
-    //
-    //     myArr = initArr[initArr.length - 1];
-    //
-    //     if (login){
-    //         if (myArr.length > dbArrLength) {
-    //             console.log(myArr.length/dbArrLength);
-    //             if (myArr.length/dbArrLength < 7.5) {
-    //                 equalize = parseInt(myArr.length/dbArrLength);
-    //                 newLength = equalize * dbArrLength;
-    //             } else {
-    //                 incorrect();
-    //                 return;
-    //             }
-    //         } else {
-    //             newLength = myArr.length;
-    //             equalize = 1;
-    //         }
-    //     } else {
-    //         newLength = myArr.length;
-    //         equalize = 5;
-    //     }
-    //
-    //     for (var x = 0; x < newLength; x++) {
-    //         if (x % equalize === 0 && x !== 0) {
-    //             let newMyArr = myArr.slice(firstIndex, x);
-    //             firstIndex = x;
-    //             var result = newMyArr.map(function(y) {
-    //                 return parseInt(y);
-    //             });
-    //             var sum = result.reduce(function(a, b) {
-    //                 return a + b;
-    //             });
-    //             var avg = parseInt(sum / result.length);
-    //             drawArr.push(avg);
-    //         }
-    //     }
-    //     storeArr = drawArr;
-    //
-    //     if (activate === false) {
-    //         compareCode(dbArray, drawArr);
-    //     }
-    // }
-    //
-    // function compareCode(arrDB, arrUser) {
-    //     let bigger = '';
-    //     let match = [];
-    //     let anyFalse = false;
-    //     let nullSkips = 0;
-    //     let erraticMovement = 0;
-    //
-    //     if (arrDB.length <= arrUser.length) {
-    //         bigger = arrUser.length;
-    //     } else {
-    //         bigger = arrDB.length;
-    //     }
-    //
-    //     for (var x = 0; x < bigger; x++) {
-    //         if (isNaN(arrDB[x]) === true) {
-    //             nullSkips++;
-    //         } else if (isNaN(arrUser[x]) === true) {
-    //             nullSkips++;
-    //         } else {
-    //             let diff = Math.abs(arrDB[x] - arrUser[x]);
-    //             console.log(diff);
-    //             if (diff >= 50) {
-    //                 match.push(0);
-    //                 erraticMovement++;
-    //             } else {
-    //                 match.push(1);
-    //             }
-    //         }
-    //     }
-    //
-    //     // if (nullSkips < 10 && erraticMovement < 10) {
-    //     if (1 === 1) {
-    //         console.log('You may enter.');
-    //         // $('#postz').html('enter');
-    //         $('.draw-frame').css('opacity', '0');
-    //         setTimeout(function() {
-    //             $('.draw-frame').remove();
-    //         }, 1000);
-    //         // $.get('/home', function() {});
-    //         // window.location.href = "/home";
-    //
-    //     } else {
-    //         incorrect();
-    //     }
-    //     console.log("skipped: " + nullSkips);
-    //     console.log("erratic: " + erraticMovement);
-    //     console.log(match);
-    // }
-    //
-    // function incorrect() {
-    //     console.log('Sorry, incorrect password, try again.');
-    //     alert('Sorry, incorrect password, try again.');
-    //     drawSegments[segment] = [];
-    //     initArr = [];
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
-    // }
+    function getCode(dbArray, dbArrLength) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        let drawArr = [];
+        let firstIndex = 0;
+        let equalize;
+        let newLength;
+
+        myArr = initArr[initArr.length - 1];
+
+        if (login){
+            if (myArr.length > dbArrLength) {
+                if (myArr.length/dbArrLength < 7.5) {
+                    equalize = parseInt(myArr.length/dbArrLength);
+                    newLength = equalize * dbArrLength;
+                } else {
+                    incorrect();
+                    return;
+                }
+            } else {
+                newLength = myArr.length;
+                equalize = 1;
+            }
+        } else {
+            newLength = myArr.length;
+            equalize = 5;
+        }
+
+        for (var x = 0; x < newLength; x++) {
+            if (x % equalize === 0 && x !== 0) {
+                let newMyArr = myArr.slice(firstIndex, x);
+                firstIndex = x;
+                var result = newMyArr.map(function(y) {
+                    return parseInt(y);
+                });
+                var sum = result.reduce(function(a, b) {
+                    return a + b;
+                });
+                var avg = parseInt(sum / result.length);
+                drawArr.push(avg);
+            }
+        }
+        storeArr = drawArr;
+    }
 
     tracking.track('#video', tracker, {
         camera: true
@@ -567,9 +491,6 @@ $(document).ready(function() {
             if (rect.color === 'yellow') {
                 draw(rect);
             }
-            // else if (rect.color === 'cyan') {
-            //     erase(rect);
-            // }
         });
     });
 
@@ -577,10 +498,6 @@ $(document).ready(function() {
         drawSegments[segment].push(rect.x + rect.width / 2, rect.y + rect.height / 2);
         initArr.push(drawSegments[0]);
     }
-
-    // function erase(rect) {
-    //     context.clearRect(rect.x, rect.y, rect.width, rect.height);
-    // }
 
     function isInsideRect(x, y, rect) {
         return rect.x <= x && x <= rect.x + rect.width &&

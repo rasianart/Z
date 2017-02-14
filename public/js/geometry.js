@@ -1,5 +1,5 @@
 var group;
-var container, container2, controls, stats;
+var container, controls, stats;
 var particlesData = [];
 var camera, scene, renderer;
 var positions, colors;
@@ -50,14 +50,9 @@ function init() {
     // initGUI();
 
     container = document.getElementById('container');
-    // container2 = document.getElementById( 'container2' );
-
-    //
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 4000);
     camera.position.z = 1750;
-
-    // controls = new THREE.OrbitControls( camera, container );
 
     scene = new THREE.Scene();
     if ($('#create-hole').html() === 'Burrow') {
@@ -69,12 +64,6 @@ function init() {
 
     group = new THREE.Group();
     scene.add(group);
-
-    // var helper = new THREE.BoxHelper( new THREE.Mesh( new THREE.BoxGeometry( r, r, r ) ) );
-    // helper.material.color.setHex( 0x080808 );
-    // helper.material.blending = THREE.AdditiveBlending;
-    // helper.material.transparent = true;
-    // group.add( helper );
 
     var segments = maxParticleCount * maxParticleCount;
 
@@ -114,10 +103,6 @@ function init() {
     particles.setDrawRange(0, particleCount);
     particles.addAttribute('position', new THREE.BufferAttribute(particlePositions, 3).setDynamic(true));
 
-    // create the particle system
-    // pointCloud = new THREE.Points( particles, pMaterial );
-    // group.add( pointCloud );
-
     var geometry = new THREE.BufferGeometry();
 
     geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3).setDynamic(true));
@@ -131,26 +116,14 @@ function init() {
     var material = new THREE.LineBasicMaterial({
         vertexColors: THREE.VertexColors,
         blending: THREE.AdditiveBlending,
+        // blending: THREE.NormalBlending,
+        side: THREE.DoubleSide,
+        overdraw: true,
         // lights: true,
         // linewidth: 400,
         transparent: true
 
     });
-
-    // var light = new THREE.DirectionalLight( 0xffffff );
-    // light.position = camera.position;
-    // scene.add(light);
-
-    // material.depthWrite = true;
-    // material.opacity = 1.0;
-    // material.combine = THREE.MultiplyOperation;
-
-
-
-    // if ($('#create-hole').html() === 'Burrow') {
-    //     material.transparent = false;
-    //     material.color.setHex(0x000000);
-    // }
 
     $(document).on('keypress', function(e) {
         if (e.which === 13 && $('#answer-input').val() !== '') {
@@ -177,18 +150,16 @@ function init() {
         }, 10);
     });
 
-    // material.color.setHex(0x660000);
-    // material.color = new Color( 0x000000 );
-
     linesMesh = new THREE.LineSegments(geometry, material);
 
     group.add(linesMesh);
 
-    //
-
     renderer = new THREE.WebGLRenderer({
-        antialias: true
+        antialias: true,
+        // alpha: true
     });
+
+    // renderer.setClearColor( 0x000000, .2 ); // the default
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -196,13 +167,6 @@ function init() {
     renderer.gammaOutput = true;
 
     container.appendChild(renderer.domElement);
-    // container2.appendChild( renderer2.domElement );
-
-    //
-
-    // stats = new Stats();
-    // console.log(container);
-    // container.appendChild( stats.domElement );
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -288,64 +252,20 @@ function animate() {
         }
     }
 
-    // w = new Worker("/js/worker.js");
-    //
-    // w.onmessage = function(event){
-    //
-    //     var vertexpos = 0;
-    //     var colorpos = 0;
-    //     var numConnected = 0;
-    //
-    //     let data = event.data;
-    //     console.log(data);
-    //     positions[vertexpos] = data[0]
-    //     colors[colorpos] = data[1];
-    //     numConnected = data[2];
-    //
-    //     linesMesh.geometry.setDrawRange(0, numConnected * 2);
-    //     linesMesh.geometry.attributes.position.needsUpdate = true;
-    //     linesMesh.geometry.attributes.color.needsUpdate = true;
-    //
-    //     render();
-    // };
-
-
     linesMesh.geometry.setDrawRange(0, numConnected * 2);
     linesMesh.geometry.attributes.position.needsUpdate = true;
     linesMesh.geometry.attributes.color.needsUpdate = true;
 
-    // pointCloud.geometry.attributes.position.needsUpdate = true;
-
     requestAnimationFrame(animate);
-
-
-    // stats.update();
     render();
 
 }
 
 function render() {
 
-    // var time = Date.now() * 0.001;
-    //
-    // group.rotation.y = time * 0.1;
     renderer.render(scene, camera);
 
 }
-
-// particleCount = 1000;
-// linesMesh.scale.set(.1,.1,.1);
-
-// $(document).on('click', function() {
-//     let s = 1
-//     setInterval(function() {
-//         if (particleCount < 1000) {
-//             particleCount += 4;
-//             s -= .004;
-//             linesMesh.scale.set(s, s, s);
-//         }
-//     }, 1);
-// })
 
 let login = false;
 $('#login-button').on('click', () => {
@@ -353,31 +273,33 @@ $('#login-button').on('click', () => {
 });
 
 $(document).on('keypress', function(e) {
-    if (e.which == 13 && $('#user-input').val() !== '' && $('body').attr('data-page') === 'login') {
-        e.preventDefault();
-        let inputData = $('#user-input').val();
-        if ( inputData === 'cyan' || inputData === 'yellow' || inputData === 'magenta' || login) {
+    let inputData = $('#user-input').val();
+    setTimeout(() => {
+        if (e.which == 13 && $('#user-input').val() !== '' && $('body').attr('data-page') === 'login' && $('body').attr('data-login') === 'true') {
+            e.preventDefault();
+            console.log(inputData);
+            if ( inputData === 'cyan' || inputData === 'yellow' || inputData === 'magenta' || login) {
+                let num = 125;
+                setTimeout(function() {
+                    setInterval(function() {
+                        num -= 1;
+                        if(num > 40 ) {
+                            scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+                        }
+                    }, 1);
+                }, 2000);
 
-            let num = 125;
-            setTimeout(function() {
+                let s = 1;
                 setInterval(function() {
-                    num -= 1;
-                    if(num > 40 ) {
-                        scene.background = new THREE.Color("rgb(" + num + ", " + num + "," + num + ")");
+                    if (particleCount < 750) {
+                        particleCount += 6;
+                        s -= .006;
+                        linesMesh.scale.set(s, s, s);
                     }
                 }, 1);
-            }, 2000);
-
-            let s = 1;
-            setInterval(function() {
-                if (particleCount < 750) {
-                    particleCount += 6;
-                    s -= .006;
-                    linesMesh.scale.set(s, s, s);
-                }
-            }, 1);
+            }
         }
-    }
+    }, 50);
 });
 
 $(document).on('click', 'div#postz', function() {
@@ -406,13 +328,10 @@ $(document).on('click', 'div#postz', function() {
 
 if ($('#create-hole').html() === 'Burrow') {
     particleCount = 0;
-    // let s = 1;
     setTimeout(function() {
         setInterval(function() {
             if (particleCount < 150) {
                 particleCount += 1;
-                // s -= .05;
-                // linesMesh.scale.set(s, s, s);
             }
         }, 1);
     }, 500);
@@ -435,15 +354,12 @@ $('.portals').on('click', function() {
         if (particleCount < 750) {
             particleCount += 6;
             s -= .0075;
-            // s -= .0075;
             linesMesh.scale.set(s, s, s);
         }
     }, 10);
+
 //this animation is for right answer
     let correctAnswer = () => {
-        // setTimeout(() => {
-
-
         setInterval(() => {
             let body = $('body').attr('data-correct');
             console.log(body);
@@ -453,14 +369,12 @@ $('.portals').on('click', function() {
                         if (particleCount > 50) {
                             particleCount -= 5;
                             s += .01;
-                            // s -= .0075;
                             linesMesh.scale.set(s, s, s);
                         }
                     }, 1);
                 }, 2100);
             }
         }, 100);
-        // }, 10);
     }
 
     $(document).on('keypress', function(e) {

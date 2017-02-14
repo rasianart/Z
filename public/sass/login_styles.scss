@@ -2,7 +2,6 @@ html {
     overflow: hidden;
     background-color: rgb(41, 41, 41);
     font-family: 'Bungee Hairline', cursive;
-    /*transition: all 8s linear;*/
 }
 body{
     background-color: black;
@@ -18,48 +17,36 @@ body{
 textarea:focus, input:focus, button:focus {
     outline: none;
 }
-/*#login-container {
-    position: absolute;
-    z-index: 11;
-    bottom: 0;
-}*/
 
 #container {
     opacity: 0;
     transition: all 5s ease;
 }
 
-
-
 #top-cover {
     margin-left: 450px;
     margin-top: 168px;
     position: absolute;
-    /*border-radius: 35%;*/
     top: 0;
     left: 0;
     z-index: 5;
-    /*background-color: rgba(125, 125, 125, 1);*/
     background-color: black;
     width: 400px;
     height: 200px;
-    transition: all 1s linear;
+    transition: all .5s linear;
 }
 
 #btm-cover {
     margin-right: 450px;
     margin-top: 368px;
     position: absolute;
-    /*border-radius: 35%;*/
     top: 0;
     right: 0;
     z-index: 5;
-    /*opacity: 0;*/
-    /*background-color: rgba(125, 125, 125, 1);*/
     background-color: black;
     width: 400px;
     height: 200px;
-    transition: all 1s linear;
+    transition: all .5s linear;
 }
 
 
@@ -73,7 +60,6 @@ textarea:focus, input:focus, button:focus {
     margin-left: 46%;
     margin-top: 50px;
     border: 1px solid black;
-    /*opacity: .5;*/
 }
 
 #instructions {
@@ -88,7 +74,6 @@ textarea:focus, input:focus, button:focus {
     top: 0;
     width: 90%;
     margin-left: 5%;
-    /*margin-top: 15px;*/
     letter-spacing: 2px;
     opacity: 0;
     transition: all 1s ease;
@@ -148,9 +133,6 @@ textarea:focus, input:focus, button:focus {
     top:0;
     transition: all 1s ease;
 }
-/*#user-input:hover {
-    width: 900px;
-}*/
 
 #login-button {
     font-family: 'Bungee Hairline', cursive;
@@ -164,7 +146,6 @@ textarea:focus, input:focus, button:focus {
     margin-left: 14%;
     margin-bottom: 400px;
     opacity: 1;
-    /*background-color: transparent;*/
     background-color: #888;
     border: 1px solid white;
     transition: all 1s ease;
@@ -199,7 +180,6 @@ textarea:focus, input:focus, button:focus {
     right: 0;
     margin-right: 15%;
     margin-bottom: 400px;
-    /*background-color: transparent;*/
     background-color: #888;
     border: 1px solid white;
     opacity: 1;
@@ -224,8 +204,6 @@ textarea:focus, input:focus, button:focus {
     border-color: white;
 }
 
-
-
 #postz {
     position: absolute;
     bottom: 0;
@@ -235,7 +213,6 @@ textarea:focus, input:focus, button:focus {
     margin-bottom: 0px;
     font-family: 'Bungee Hairline', cursive;
     height: 0px;
-    /*opacity: 0;*/
     overflow: hidden;
     transition: all 1.5s ease;
 }
@@ -253,7 +230,6 @@ textarea:focus, input:focus, button:focus {
     margin-bottom: 0px;
     font-family: 'Bungee Hairline', cursive;
     height: 0px;
-    /*opacity: 0;*/
     overflow: hidden;
     transition: all 1.5s ease;
 }
@@ -277,7 +253,6 @@ textarea:focus, input:focus, button:focus {
 }
 
 #canvas-img {
-    /*border: 1px solid white;*/
     -moz-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
@@ -285,17 +260,14 @@ textarea:focus, input:focus, button:focus {
     transform: scale(-1, 1);
     width: 400px;
     height: 400px;
-    /*opacity: 0;*/
     transition: all 3s ease;
 }
 
 .draw-frame {
   width: 100%;
   height: 100%;
-  /*border: 1px solid #ccc;*/
   position: absolute;
   top: 0;
-  /*z-index: 100;*/
   opacity: 1;
   transition: all 1s ease;
 }
@@ -306,17 +278,12 @@ textarea:focus, input:focus, button:focus {
     opacity: 0;
     width: 1000px;
     height: 1000px;
-    /*width: 400px;
-    height: 300px;*/
     position: absolute;
     left: 0;
     top: 0;
     margin-left: 215px;
     margin-top: -65px;
-    /*margin-left: 35%;*/
-    /*margin-top: 230px;*/
     transition: all 3.4s linear;
-    /*z-index: -1;*/
 }
 
 #video {
@@ -331,7 +298,6 @@ textarea:focus, input:focus, button:focus {
 }
 
 #canvas {
-    /*border: 1px solid white;*/
     opacity: 1;
     width: 400px;
     height: 400px;
@@ -342,7 +308,6 @@ textarea:focus, input:focus, button:focus {
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
-    /*opacity: 0;*/
 }
 
 #video {
@@ -352,7 +317,6 @@ textarea:focus, input:focus, button:focus {
 #canvas-wrap {
     position: relative;
 }
-
 
 #canvas, video, {
   -moz-transform: scale(-1, 1);
@@ -376,19 +340,7 @@ textarea:focus, input:focus, button:focus {
     z-index: 1;
     font-family: 'Bungee Hairline', cursive;
     background-color: transparent;
-    transition: all .5s ease;
-}
-
-#o {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-left: 45.8%;
-    margin-top: 350px;
-    font-size: 150px;
-    color: white;
-    font-family: 'Bungee Hairline', cursive;
-    background-color: transparent;
+    transition: all 10s ease;
 }
 
 #img-hold {
@@ -397,7 +349,6 @@ textarea:focus, input:focus, button:focus {
     position: absolute;
     top: 0;
     left: 0;
-    /*background-color: black;*/
     -moz-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
@@ -405,7 +356,6 @@ textarea:focus, input:focus, button:focus {
     transform: scale(-1, 1);
     width: 400px;
     height: 400px;
-    /*opacity: 0;*/
     transition: all 3s ease;
 }
 
@@ -417,16 +367,11 @@ textarea:focus, input:focus, button:focus {
   min-width: 100%;
   min-height: 100%;
   width: 120%;
-  /*height: auto;*/
   z-index: 0;
   opacity: 0;
   transform: translateX(-50%) translateY(-50%);
-  /*background-size: cover;*/
-  transition: all 8s ease;
-  /*opacity: 0;*/
+  transition: all 5s ease;
   filter: grayscale(100%);
-  /*-webkit-filter: brightness(0.6);*/
-    /*filter: brightness(0.6);*/
 }
 
 #alert {
@@ -435,7 +380,6 @@ textarea:focus, input:focus, button:focus {
     top: 0;
     z-index: 0;
     width: 800px;
-    /*height: 100px;*/
     margin-left: 330px;
     margin-top: 300px;
     background-color: transparent;
@@ -454,7 +398,6 @@ textarea:focus, input:focus, button:focus {
     top: 0;
     z-index: 0;
     width: 800px;
-    /*height: 100px;*/
     margin-left: 120px;
     margin-top: 250px;
     background-color: transparent;
@@ -462,7 +405,6 @@ textarea:focus, input:focus, button:focus {
     font-size: 300px;
     font-family: 'Bungee Hairline', cursive;
     text-align: center;
-    // line-height: 100px;
     opacity: 0;
     transition: all 2.5s ease;
 }

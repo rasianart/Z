@@ -21,30 +21,41 @@ $(document).ready(function() {
     let color = '';
     let loginColor;
     let imgInput;
-
-    let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
-
     let userInput = $("#user-input");
     let loginForm = $("#login");
-
     let initClick = false;
 
-    setTimeout(() => {
-        $('#bg-vid, #container').css('opacity', '.8');   //city and all else unless stated otherwise
-                            //tracer doesn't need grayscale!
-                            //wave need the brightness adjustment! brightness cancels out grayscale and it works!
-    }, 250);
-
-
-
-    let vid = document.getElementById("bg-vid");
-    // vid.playbackRate = 0.2;  //honeycomb
+    let tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
     let z = $('<div id="z">Z</div>');
     z.appendTo('body');
 
-    // setTimeout
-    // $('#z').css('opacity', '1');
+    setTimeout(() => {
+        $('#bg-vid').css('opacity', '.8');
+        $('#container').css('opacity', '.8');
+    }, 2500);
+
+    let btmCover = $('<div id="btm-cover" class="cover"></div>').appendTo('body');
+    let topCover = $('<div id="top-cover" class="cover"></div>').appendTo('body');
+    setTimeout(function() {
+        $('.login-group').css({'transition': 'all 3s ease' ,'opacity': '1'});
+        setTimeout(function() {
+            $('#create-button, #login-button').css({'transition': 'all 3.5s ease', 'box-shadow': '0px 0px 60px 20px #999999'});
+        }, 650);
+    }, 1500);
+    setTimeout(function() {
+        $('#btm-cover').css({'margin-top': '530px', 'margin-right': '550px', });
+        $('#top-cover').css({'margin-top': '40px', 'margin-left': '550px', });
+    }, 500);
+    setTimeout(function() {
+        $('#btm-cover').css({'transition': 'all 1.5s linear', 'margin-right': '175px'});
+    }, 650);
+    setTimeout(function() {
+        $('#top-cover').css({'transition': 'all 1.5s linear', 'margin-left': '175px'});
+    }, 600);
+    setTimeout(function() {
+        $('.cover').remove();
+    }, 2800);
 
     let imgBox = $('<div id="img-box"></div>').appendTo('body');
     let img = $('<img id="canvas-img">').appendTo(imgBox);
@@ -52,7 +63,8 @@ $(document).ready(function() {
     $(document).on('click', 'div#postz', function(e) {
             imgInput = new Image();
             imgInput.src = canvas.toDataURL("png");
-            // $('#canvas-img').attr('src', imgInput.src);
+            console.log(inputName);
+            sessionStorage.setItem("user", inputName);
     });
 
     if (initClick === false) {
@@ -78,39 +90,14 @@ $(document).ready(function() {
         });
     }
 
-    // let btmCover = $('<div id="btm-cover" class="cover"></div>').appendTo('body');
-    // let topCover = $('<div id="top-cover" class="cover"></div>').appendTo('body');
-    setTimeout(function() {
-        // $('#btm-cover').css({'margin-top': '530px', 'margin-right': '550px', });
-        // $('#top-cover').css({'margin-top': '40px', 'margin-left': '550px', });
-        $('.login-group').css({'transition': 'all 3s ease' ,'opacity': '1'});
-    }, 500);
-    setTimeout(function() {
-        // $('#btm-cover').css({'transition': 'all 2s linear', 'margin-right': '175px'});
-        $('#create-button, #login-button').css({'transition': 'all 3.5s ease', 'box-shadow': '0px 0px 60px 20px #999999'});
-    }, 1150);
-    setTimeout(function() {
-        // $('#top-cover').css({'transition': 'all 2.4s linear', 'margin-left': '175px'});
-    }, 750);
-    // setTimeout(function() {
-    //     // $('#create-button, #login-button').css({'transition': 'box-shadow 1s ease'});
-    //     $('.cover').css({'opacity': '0'});
-    // }, 2150);
-    setTimeout(function() {
-        // $('#create-button, #login-button').css({'transition': 'box-shadow 1s ease'});
-        $('.cover').remove();
-    }, 3150);
-
-
     let wait = false;
     $('#create-button').on('click', function() {
         event.preventDefault();
         context.clearRect(0, 0, canvas.width, canvas.height);
         initClick = true;
         $('#create-button, #login-button').css('background-color', 'transparent');
-        // $('#create-button, #login-button').css({'transition': 'all 0s ease', 'box-shadow': 'none'});
         $('#create-button, #login-button').css({'transition': 'all 1s ease'});
-        $('#z').css('opacity', '0');
+        $('#z').css({'transition': 'all 1s ease', 'opacity': '0'});
         let createBar = $('#create-button');
         if (inputName === '') {
             createBar.html('create user name');
@@ -120,7 +107,7 @@ $(document).ready(function() {
         $('#login-border, #create-border').css('opacity', '0');
         setTimeout(function() {
             $('#login-border').css({'transition': 'all 0s ease', 'width': '1040px', 'height': '1px', 'opacity': '1'});
-            $('#create-border, #login-button, #z').remove();
+            $('#create-border, #login-button').remove();
             createBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
             setTimeout(function() {
                 createBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
@@ -128,6 +115,9 @@ $(document).ready(function() {
             let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
             inputField.prependTo('.login-group');
         }, 1000);
+        setTimeout(function() {
+            $('#z').remove();
+        }, 2000);
 
         let input = $('#user-input');
         $(document).on('keypress', function(e) {
@@ -146,6 +136,9 @@ $(document).ready(function() {
                 event.preventDefault();
                 color = $('#user-input').val().trim().toLowerCase();
                 if (color === 'cyan' ||  color === 'yellow' || color === 'magenta') {
+                    $('body').attr('data-login', 'true');
+                    sessionStorage.setItem("user", inputName);
+                    $('#bg-vid').css('opacity', '.4');
                     $('#create-button').css({'transition': 'all 0s ease', 'border': 'none'});
                     setTimeout(function() {
                         $('#create-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
@@ -195,7 +188,7 @@ $(document).ready(function() {
         initClick = true;
         $('#create-button, #login-button').css('background-color', 'transparent');
         $('#create-button, #login-button').css({'transition': 'all 1s ease'});
-        $('#z').css('opacity', '0');
+        $('#z').css({'transition': 'all 1s ease', 'opacity': '0'});
         let loginBar = $('#login-button');
         loginBar.html('enter user name');
         loginBar.css('width', '1040px');
@@ -203,7 +196,7 @@ $(document).ready(function() {
         $('#login-border, #create-border').css('opacity', '0');
         setTimeout(function() {
             $('#create-border').css({'transition': 'all 0s ease', 'width': '1040px', 'height': '1px', 'opacity': '1'});
-            $('#login-border, #create-button, #z').remove();
+            $('#login-border, #create-button').remove();
             loginBar.css({'height': '0px', 'overflow': 'visible', 'background-color': 'rgba(255, 255, 255, 0)'});
             setTimeout(function() {
                 loginBar.css({"border-top": 'none', "border-left": 'none',"border-right": 'none'});
@@ -211,6 +204,9 @@ $(document).ready(function() {
             let inputField = $('<input id="user-input" type="text" class="form-control" autocomplete="off" autofocus name="name">');
             inputField.prependTo('.login-group');
         }, 1000);
+        setTimeout(function() {
+            $('#z').remove();
+        }, 2000);
         let input = $('#user-input');
         $(document).on('keypress', function(e) {
             if (e.which == 13 && input.val() !== '') {
@@ -220,7 +216,9 @@ $(document).ready(function() {
                     loginColor = data.color;
                     if (data !== '') {
                         sessionStorage.setItem("user", data.name);
+                        $('body').attr('data-login', 'true');
                         $('html').css('backgrouond-color', '#000');
+                        $('#bg-vid').css('opacity', '.4');
                         $('#login-button').css({'transition': 'all 0s ease', 'border': 'none'});
                         setTimeout(function() {
                             $('#login-button').css({'transition': 'all 2.5s ease', 'opacity': '0', 'margin-bottom': '600px'});
@@ -256,7 +254,7 @@ $(document).ready(function() {
                         $('#alert').css('opacity', '1');
                         setTimeout(() => {
                             $('#alert').css('opacity', '0');
-                        }, 4500);
+                        }, 2500);
                     }
                 });
             }
@@ -276,6 +274,7 @@ $(document).ready(function() {
     function submitLogin(loginName) {
         if (login) {
             $.get("/login" + loginName, function(data) {
+                console.log(data);
                 loginUser = data.name;
                 let arr = data.Gestures[0].gestureCode;
                 let dbArr = arr.split(',').map(function(item) {
@@ -285,9 +284,6 @@ $(document).ready(function() {
             });
         } else if (activate) {
             getCode();
-            // let imgInput = new Image();
-            // imgInput.src = canvas.toDataURL("png");
-            // $('#img-hold').attr('src', imgInput.src);
             let newUser = {
                 name: loginName.toLowerCase(),
                 color: color,
@@ -304,9 +300,6 @@ $(document).ready(function() {
                 $.post('/creategesture', newGesture, function(req, res){
                     console.log(res);
                     correct();
-                    // $('#postz').html('enter');
-                    // $.get('/home', function() {});
-                    // window.location.href = "/home";
                 });
             });
         }
@@ -323,7 +316,6 @@ $(document).ready(function() {
 
         if (login){
             if (myArr.length > dbArrLength) {
-                console.log(myArr.length/dbArrLength);
                 if (myArr.length/dbArrLength < 7.5) {
                     equalize = parseInt(myArr.length/dbArrLength);
                     newLength = equalize * dbArrLength;
@@ -355,7 +347,6 @@ $(document).ready(function() {
             }
         }
         storeArr = drawArr;
-
         if (activate === false) {
             compareCode(dbArray, drawArr);
         }
@@ -381,7 +372,6 @@ $(document).ready(function() {
                 nullSkips++;
             } else {
                 let diff = Math.abs(arrDB[x] - arrUser[x]);
-                console.log(diff);
                 if (diff >= 50) {
                     match.push(0);
                     erraticMovement++;
@@ -391,17 +381,14 @@ $(document).ready(function() {
             }
         }
 
-        if (nullSkips < 10 && erraticMovement < 10) {
-        // if (1 === 1) {
+        if (nullSkips < 10 && erraticMovement < arrDB.length * .25) {
             correct();
-            // $correc('/home', function() {});
-            // window.location.href = "/home";
-
         } else {
             incorrect();
         }
         console.log("skipped: " + nullSkips);
         console.log("erratic: " + erraticMovement);
+        console.log("erraticMax: " + arrDB.length * .25);
         console.log(match);
     }
 
@@ -438,18 +425,12 @@ $(document).ready(function() {
     tracker.on('track', function(event) {
         if (event.data.length === 0 && drawSegments[segment].length > 0) {
             segment++;
-            // if (!drawSegments[segment]) {
-            //     drawSegments[segment] = [];
-            // }
         }
 
         event.data.forEach(function(rect) {
             if (rect.color === color || loginColor) {
                 draw(rect);
             }
-            // else if (rect.color === 'cyan') {
-            //     erase(rect);
-            // }
         });
     });
 
@@ -462,10 +443,6 @@ $(document).ready(function() {
         // }
         x++;
     }
-
-    // function erase(rect) {
-    //     context.clearRect(rect.x, rect.y, rect.width, rect.height);
-    // }
 
     function isInsideRect(x, y, rect) {
         return rect.x <= x && x <= rect.x + rect.width &&
@@ -484,7 +461,5 @@ $(document).ready(function() {
 
         requestAnimationFrame(loop);
     }());
-
-    // $('#btm-cover').css({'margin-right': '600px'});
 
 });

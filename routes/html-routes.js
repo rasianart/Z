@@ -30,7 +30,7 @@ module.exports = (app) => {
         });
   });
 
-  app.get('/portalentrance', (req, res) => {
+  app.get('/portalentrance/:user', (req, res) => {
       let userName = req.params.user
       console.log(userName);
       db.User.findAll({
@@ -39,6 +39,7 @@ module.exports = (app) => {
           },
           raw: true
       }).then((response) => {
+          console.log(response);
             res.render("portalentrance", {users: response[0]});
         });
   });
