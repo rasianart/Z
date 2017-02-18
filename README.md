@@ -8,4 +8,4 @@ Users' burrows are personalized and link to other burrows.  Solve a protection p
 
 [![Z](https://cdn.rawgit.com/rasianart/Z/d1722ffb/public/video/zshort.gif)](https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be)
 
-[![Z](https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be)]
+https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be
