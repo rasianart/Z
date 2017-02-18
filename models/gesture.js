@@ -12,12 +12,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       len: [1]
     }
-  },
-    {
-      // We're saying that we want our Author to have Gestures
+  },{
       classMethods: {
         associate: function(models) {
-          // An Author (foreignKey) is required or a Gesture can't be made
           Gesture.belongsTo(models.User, {
             foreignKey: {
               allowNull: false
@@ -27,6 +24,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   );
-  // Gesture.sync();
   return Gesture;
 };

@@ -11,5 +11,4 @@ var sequelize = new Sequelize("gester", "root", "Loonylupin87", {
   }
 });
 
-// Exports the connection for other files to use
 module.exports = sequelize;

@@ -390,6 +390,9 @@ $(document).ready(function() {
 
         if (login){
             console.log(myArr.length/dbArrLength);
+            console.log(myArr.length);
+            console.log(dbArrLength);
+
             if (myArr.length > dbArrLength) {
                 if (myArr.length/dbArrLength < 7.5) {
                     equalize = parseInt(myArr.length/dbArrLength);
@@ -445,7 +448,8 @@ $(document).ready(function() {
                 nullSkips++;
             } else {
                 let diff = Math.abs(arrDB[x] - arrUser[x]);
-                if (diff >= 50) {
+                console.log(diff);
+                if (diff >= 100) {
                     match.push(0);
                     erraticMovement++;
                 } else {
@@ -453,6 +457,8 @@ $(document).ready(function() {
                 }
             }
         }
+
+        console.log(match);
 
         if (nullSkips < 10 && erraticMovement < dbArr.length * .25) {
             console.log('You may enter.');

@@ -1,39 +1,12 @@
-<link rel="stylesheet" href="/css/home_styles.css" type="text/css">
+<link rel="stylesheet" href="/sass/home_styles.min.css" type="text/css">
 <script src="/js/tracking.js"></script>
 <script src="/js/splines.js"></script>
 
 <div id="container"></div>
 
-
-
-    <!-- <div id='vidfill'></div> -->
-    <video id="bg-vid" autoplay loop muted playsinline>
+<video id="bg-vid" autoplay loop muted playsinline>
         <source src="/video/lightrayBW.mp4" type="video/mp4" />
-        <!-- <source src="/video/city.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/tracer_sm.mp4" type="video/mp4" />  -->
-
-        <!-- <source src="/video/dust2.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/rays.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/sky.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/skyhigh.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/silkBW.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/snow.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/sunray.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/softwhiteBW.mp4" type="video/mp4" /> -->
-
-
-
-        <!-- <source src="/video/r2/rays2.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/r2/rayparticle.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/r2/plains.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/r2/forest.mp4" type="video/mp4" /> -->
-        <!-- <source src="/video/r2/plains.mp4" type="video/mp4" /> -->
-
-
-
-
-
-    </video>
+</video>
 
 <div class="draw-frame">
     <div id="draw-border"></div>
@@ -46,7 +19,7 @@
 
 <div id="portal-contain">
     {{#each users}}
-        <div id="hoop-contain" data-name="{{this.name}}" class="portals" data-img="{{this.userimg}}"  data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">{{this.name}}
+        <div id="hoop-contain" data-name="{{this.name}}" class="portals" data-img="{{this.userimg}}" data-riddle="{{this.riddle}}" data-answer="{{this.answer}}">{{this.name}}
             <div id="bg-img" class="c" data-name="{{this.name}}"></div>
             <div id="c1" class="c" data-name="{{this.name}}"></div>
             <div id="c2" class="c" data-name="{{this.name}}"></div>
@@ -57,10 +30,8 @@
     {{/each}}
 </div>
 
-
 <div id="alert">Incorrect Pass Phrase <br> Please Try Again</div>
 <div id="access">Access</div>
-
 
 <script src="/js/dat.gui.min.js"></script>
 <script src="/js/three.js"></script>

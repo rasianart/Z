@@ -299,7 +299,7 @@ $(document).on('keypress', function(e) {
                 }, 1);
             }
         }
-    }, 50);
+    }, 100);
 });
 
 $(document).on('click', 'div#postz', function() {
