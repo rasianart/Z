@@ -6,6 +6,6 @@ Users create burrows with gesture protections and passwords.  Camera tracks user
 
 Users' burrows are personalized and link to other burrows.  Solve a protection phrase to gain access to new burrow.
 
-[![Z](https://cdn.rawgit.com/rasianart/Z/d1722ffb/public/video/zshort.gif)](https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be)
+[![Z](https://github.com/rasianart/Z/blob/master/public/video/zshort.gif)](https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be)
 
 https://www.youtube.com/watch?v=d4cymefOtCo&feature=youtu.be
